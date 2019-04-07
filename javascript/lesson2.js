@@ -20,6 +20,9 @@ var fn2 = () => new Promise(resolve => {
 function promiseReduce(asyncFunctions, reduce, initialValue) {
 
 
+	"use strict"
+
+
 	var accumulator = initialValue;
 
 	var i = 0;
@@ -70,5 +73,12 @@ function promiseReduce(asyncFunctions, reduce, initialValue) {
 
 
 
-promiseReduce([fn1, fn2], function (memo, value) { console.log('reduce'); return memo * value; }, 1)
+promiseReduce(
+[fn1, fn2],
+function (memo, value) {
+console.log('reduce');
+return memo * value;
+},
+1)
+
 .then(console.log);
