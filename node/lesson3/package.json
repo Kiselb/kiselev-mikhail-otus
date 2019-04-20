@@ -1,0 +1,11 @@
+{
+  "name": "lesson3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tree.js",
+  "scripts": {
+    "tree": "node tree.js"
+  },
+  "author": "Mikhail V. Kiselev",
+  "license": "ISC"
+}
