@@ -44,7 +44,7 @@ const transformable = (function() {
 
 		transform(chunk, encoding, callback) {
 
-			wait(1000);
+			wait(1000); // 
 
 			this.push(((+chunk) + 1000).toString());
 			callback();
