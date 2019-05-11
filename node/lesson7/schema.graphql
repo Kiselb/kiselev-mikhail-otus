@@ -1,0 +1,45 @@
+	type Category {
+		CategoryID: String!
+		CategoryName: String!
+	}
+	type Manufacturer {
+		ManufacturerID: String!
+		ManufacturerName: String!
+	}
+	type Photo {
+		PhotoID: String!
+		URL: String!
+		Height: Int!
+		Width: Int!
+	}
+	type Product {
+		id:	String!
+		name:	String!
+		price:	Float!
+		sale: 	Boolean!
+	}
+	type ProductUI {
+		id:	String!
+		name:	String!
+		price:	Float!
+		category: Category!
+		manufacturer: Manufacturer!
+	}
+  	type Query {
+		allProducts: [Product!]!
+		allProductsUI: [ProductUI!]!
+		allCategories: [Category!]!
+		allManufacturers: [Manufacturer!]!
+		allPhotos: [Photo!]!
+
+		Product(ProductID: ID!): Product!
+		ProductPhotos(ProductID: ID!): [Photo!]!
+		Category(CategoryID: ID!): Category!	
+		Manufacturer(ManufacturerID: ID!): Manufacturer!	
+  	}
+	type Mutation {
+		ProductSetSale(ProductID: ID!): Product!
+		ProductSetUnSale(ProductID: ID!): Product!
+		ProductSetPrice(ProductID: ID! NewPrice: Float!): Product!
+		ProductAddNew(Name: String!, Sale: Boolean, Price: Float!, ManufacturerID: String, CategoryID: String!): Product!
+	}
