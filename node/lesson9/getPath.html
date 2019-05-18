@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+	<div>0</div>
+	<div>1</div>
+	<div>2
+		<div>2.0</div>
+		<div>2.1</div>
+		<div>2.2</div>
+		<div>2.3</div>
+		<div>2.4
+			<div>2.4.0</div>
+			<div>2.4.1</div>
+			<div>2.4.2</div>
+			<div>2.4.3</div>
+			<div>2.4.4
+				<div>2.4.4.0</div>
+				<p>paragraph</p>
+				<div>2.4.4.1</div>
+				<div>2.4.4.2</div>
+				<div>2.4.4.3</div>
+				<div>2.4.4.4
+					<div>2.4.4.4.0</div>
+					<div>2.4.4.4.1</div>
+					<div>2.4.4.4.2</div>
+					<div>2.4.4.4.3</div>
+					<div>2.4.4.4.4</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>3</div>
+	<div>4
+		<div>4.0</div>
+		<div>4.1</div>
+		<div>4.2</div>
+		<div>4.3</div>
+		<div>4.4
+			<div>4.4.0</div>
+			<div>4.4.1</div>
+			<div>4.4.2</div>
+			<div>4.4.3</div>
+			<div>4.4.4
+				<div>4.4.4.0</div>
+				<p>paragraph</p>
+				<div>4.4.4.1</div>
+				<div>4.4.4.2</div>
+				<div>4.4.4.3</div>
+				<div>4.4.4.4
+					<div>4.4.4.4.0</div>
+					<div>4.4.4.4.1</div>
+					<div>4.4.4.4.2</div>
+					<div>4.4.4.4.3</div>
+					<div>4.4.4.4.4</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>5</div>
+	<div>6</div>
+	<div>7</div>
+
+	<script>
+		var OTUS_EDU = (function() {
+
+			"use strict"
+
+		function getPath(element) {
+
+
+
+			var css_selector = "";
+
+			if (typeof element === undefined) {
+
+				return "";
+
+			}
+
+			if (element.parentElement === document.documentElement) {
+
+
+				return "body";
+
+
+			}
+
+			var parent_element = element.parentElement;
+	
+			for(var i = 0; i < parent_element.children.length; i++) {
+				if (element === parent_element.children[i]) {
+			
+		css_selector = getPath(parent_element) + " > :nth-child(" + (i + 1).toString() + ")";
+				}
+			}
+
+			return css_selector;
+
+			};
+
+			return {
+
+				getPath: getPath
+			
+			};
+		})();
+	</script>
+</body>
+</html>
