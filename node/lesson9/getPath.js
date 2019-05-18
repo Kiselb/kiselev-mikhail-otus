@@ -1,4 +1,4 @@
-﻿		function getPath(element) {
+		function getPath(element) {
 
 
 
