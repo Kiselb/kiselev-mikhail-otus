@@ -3,11 +3,6 @@
 			var origin_element = element;
 			var css_selector = "";
 
-			if (typeof element === undefined) {
-
-				return undefined;
-
-			}
 			if (element instanceof HTMLBodyElement) {
 
 				return "body";
@@ -15,27 +10,18 @@
 			}
 			if (element instanceof HTMLElement) {
 
-				if (typeof element.id.length > 0) {
+				if (element.id) {
 
 					return "#" + element.id;
 
 				}
 
-				var is_element = true;
+				while(!(origin_element instanceof HTMLBodyElement)) {
 
-				while(is_element) {
+					var index = [].indexOf.call(origin_element.parentElement.children, origin_element);
+					css_selector = " > :nth-child(" + (index + 1).toString() + ")" + css_selector;
 
-					var parent_element = origin_element.parentElement;
-
-					for(var i = 0; i < parent_element.children.length; i++) {
-						if (origin_element === parent_element.children[i]) {
-							css_selector = " > :nth-child(" + (i + 1).toString() + ")" + css_selector;
-							break;
-						}
-					}
-
-					origin_element = parent_element;
-					is_element = !(parent_element instanceof HTMLBodyElement);
+					origin_element = origin_element.parentElement;
 				}
 
 				css_selector = "body " + css_selector
