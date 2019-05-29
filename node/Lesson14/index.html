@@ -14,6 +14,19 @@
                 constructor() {
                     super();
                 }
+
+                get leaf_id() {
+                    return this._id;
+                }
+
+                set leaf_id(val) {
+                    this._id = val;
+                    render();
+                }
+
+                render() {
+                    this.innerHTML = '<p style="margin-left: 20px">Leaf ' + this._id.toString() + '</p>'
+                }
             }
 
             window.customElements.define('my-leaf', myLeaf);
@@ -21,8 +34,37 @@
             class myTree extends HTMLElement {
                 constructor() {
                     super();
+                    this._node = {};
+                }
+                get node() {
+                    return this._node;
                 }
 
+                set node(val) {
+                    this._node.id = val.id;
+                    this._node.items = val.items;
+
+                    render();
+                }
+
+                render() {
+
+                    const tree_element;
+
+                    if (this._node.items) {
+                        tree_element = document.createElement('my-tree');
+                        
+                        for(let i = 0; i < this._node.items.length; i++) {
+                            tree_element.node = this._node.items[i];
+                            this.appendChild(tree_element);
+                        }
+                    }
+                    else {
+                        tree_element = document.createElement('my-leaf');
+                        tree_element.leaf_id = this._node.id;
+                        this.appendChild(tree_element);
+                    }
+                }
             }
 
             window.customElements.define('my-tree', myTree);
