@@ -6,6 +6,29 @@
             <title>OTUS. Shadow DOM</title>
     </head>
     <body>
+        <template id="node_template">
+            <style>
+                .node {
+                    margin-left: 20px;
+                }
+            </style>
+            <div class="node">
+                <slot name="id"></slot>
+                <slot name="items"></slot>
+            </div>
+        </template>
+
+        <template id="leaf_template">
+            <style>
+                .leaf {
+                    margin-left: 20px;
+                }
+            </style>
+            <p class="leaf"><slot name="id"></slot></p>
+        </template>
+
+        <my-tree id="TreeRoot"></my-tree>
+
         <script>
 
             "use strict"
@@ -21,11 +44,21 @@
 
                 set leaf_id(val) {
                     this._id = val;
-                    render();
+                    this.render();
                 }
 
                 render() {
-                    this.innerHTML = '<p style="margin-left: 20px">Leaf ' + this._id.toString() + '</p>'
+                    //this.innerHTML = '<p style="margin-left: 20px">Лист ' + this._id.toString() + '</p>'
+                    let template = document.getElementById("leaf_template");
+                    let content = template.content;
+                    let shadow_root = this.attachShadow({mode: 'open'});
+                    shadow_root.appendChild(content.cloneNode(true));
+
+
+                    let label_element = document.createElement('p');
+                    label_element.innerText = 'Лист' + this._id.toString();
+                    label_element.slot = "id";
+                    this.appendChild(label_element);
                 }
             }
 
@@ -44,31 +77,43 @@
                     this._node.id = val.id;
                     this._node.items = val.items;
 
-                    render();
+                    this.render();
                 }
 
                 render() {
 
-                    const tree_element;
-
                     if (this._node.items) {
-                        tree_element = document.createElement('my-tree');
-                        
+                        let template = document.getElementById("node_template");
+                        let content = template.content;
+                        let shadow_root = this.attachShadow({mode: 'open'});
+                        shadow_root.appendChild(content.cloneNode(true));
+
+
+                        let label_element = document.createElement('span');
+                        label_element.innerText = 'Узел' + this._node.id.toString();
+                        label_element.slot = "id";
+                        this.appendChild(label_element);
+
                         for(let i = 0; i < this._node.items.length; i++) {
+                            let tree_element = document.createElement('my-tree');
                             tree_element.node = this._node.items[i];
+                            tree_element.slot = "items";
                             this.appendChild(tree_element);
                         }
                     }
                     else {
-                        tree_element = document.createElement('my-leaf');
-                        tree_element.leaf_id = this._node.id;
-                        this.appendChild(tree_element);
+                        let leaf_element = document.createElement('my-leaf');
+                        leaf_element.leaf_id = this._node.id;
+                        this.appendChild(leaf_element);
                     }
                 }
             }
 
             window.customElements.define('my-tree', myTree);
 
+            const root = document.getElementById("TreeRoot");
+
+            root.node = {"id": 1, "items": [{"id": 2, "items": [{"id": 3, "items": [{"id": 4}]} ]}, {"id": 5} ]};
 
         </script>
         
