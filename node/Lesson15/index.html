@@ -1,27 +1,64 @@
 <!DOCTYPE html>
 <html>
     <head>
-
-            <style>
-                    .node { margin-left: 10px; }
-            </style>
     </head>
     <body>
-        <script type="module">
-            import {html, render} from 'https://unpkg.com/lit-html?module';
-            //import {html, render} from 'lit-html';
 
-            const myLeaf = ({id}) => html`<div style="margin-left: 20px;">Leaf ID:${id}</div>`;
-            const myTree = ({id, items}) => html`
-                <div class="node">
-                    Node ID:${id} ${items.map((node)=>(node.items ? myTree : myLeaf)(node))}
-                </div>`;
+        <div>
+            <my-tree id="TreeRoot"></my-tree>
+        </div>
+
+        <script type="module">
+
+            import {LitElement, html} from 'lit-element';
+
+            class myLeaf extends LitElement {
+                constructor() {
+                    super();
+                }
+                set data(node) {
+                    this._id = node.id;
+                }
+                render() {
+                    return html`
+                        <style>
+                            .leaf { margin-left: 20px; }
+                        </style>
+                        <div class="leaf">Leaf ID:${this._id}</div>`
+                }
+            }
+            class myTree extends LitElement {
+                constructor() {
+                    super();
+                }
+                set data(node) {
+                    this._node = node;
+                }
+                render() {
+                    return html`
+                        <style>
+                            .node { margin-left: 10px; }
+                        </style>
+                        <div class="node">
+                            Node ID:${this._node.id} ${this._node.items.map((node)=>{
+                                var node_element = (node.items) ? (document.createElement('my-tree')) : (document.createElement('my-leaf'));
+                                node_element.data = node;
+                                return node_element;
+                        })}
+                        </div>`;
+                }
+            }
+
+            customElements.define('my-leaf', myLeaf);
+            customElements.define('my-tree', myTree);
 
             debugger;
             
             const tree_data = {id:1, items:[{id:2, items:[{id:3}, {id:4}]}, {id:5, items:[{id:6}, {id:7}]}]};
-            render(myTree(tree_data), document.body);
+
+            const tree_root = document.getElementById("TreeRoot");
+            tree_root.data = tree_data;
+
         </script>
-        
     </body>
 </html>
