@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+            <style>
+                    .node { margin-left: 10px; }
+            </style>
+    </head>
+    <body>
+        <script type="module">
+            //import {html, render} from 'https://unpkg.com/lit-html?module';
+            import {html, render} from 'lit-html'; //'../modules/lit-element.js';
+
+            const myLeaf = ({id}) => html`<div style="margin-left: 20px;">Leaf ID:${id}</div>`;
+            const myTree = ({id, items}) => html`
+                <div class="node">
+                    Node ID:${id} ${items.map((node)=>(node.items ? myTree : myLeaf)(node))}
+                </div>`;
+
+            debugger;
+            
+            const tree_data = {id:1, items:[{id:2, items:[{id:3}, {id:4}]}, {id:5, items:[{id:6}, {id:7}]}]};
+            render(myTree(tree_data), document.body);
+        </script>
+        
+    </body>
+</html>
