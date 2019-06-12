@@ -1,0 +1,43 @@
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   .gitignore
+	new file:   README.md
+	new file:   package-lock.json
+	new file:   package.json
+	new file:   public/favicon.ico
+	new file:   public/index.html
+	new file:   public/manifest.json
+	new file:   src/App.css
+	new file:   src/App.js
+	new file:   src/App.test.js
+	new file:   src/index.css
+	new file:   src/index.js
+	new file:   src/logo.svg
+	new file:   src/serviceWorker.js
+	new file:   ../../react_helper.docx
+	new file:   ../../test/.gitignore
+	new file:   ../../test/README.md
+	new file:   ../../test/package-lock.json
+	new file:   ../../test/package.json
+	new file:   ../../test/public/favicon.ico
+	new file:   ../../test/public/index.html
+	new file:   ../../test/public/manifest.json
+	new file:   ../../test/src/App.css
+	new file:   ../../test/src/App.js
+	new file:   ../../test/src/App.test.js
+	new file:   ../../test/src/index.css
+	new file:   ../../test/src/index.js
+	new file:   ../../test/src/logo.svg
+	new file:   ../../test/src/serviceWorker.js
+	new file:   ../../~$act_helper.docx
+	new file:   ../../~WRL1599.tmp
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	page
+
