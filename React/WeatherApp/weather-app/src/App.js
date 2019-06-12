@@ -86,7 +86,7 @@ const weather_on_cities = [
     weather: [
       { description: 'солнечно', temperature: 32, wind_dir: 'ЮЗ', wind_vel: 2, pressure: 765, humidity: 50},
       { description: 'солнечно', temperature: 31, wind_dir: 'ЮЗ', wind_vel: 2, pressure: 765, humidity: 50},
-      { description: 'солнечно', temperature: 25, wind_dir: 'ЮЗ', wind_vel: 2, pressure: 765, humidity: 50},
+      { description: 'солнечно', temperature: 28, wind_dir: 'ЮЗ', wind_vel: 2, pressure: 765, humidity: 50},
       { description: 'солнечно', temperature: 25, wind_dir: 'ЮЗ', wind_vel: 2, pressure: 765, humidity: 50}
     ]
   },
