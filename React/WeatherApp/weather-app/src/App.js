@@ -132,7 +132,7 @@ const CityForecastTableCell = (props) => (
       +{props.day.avgtemp_c}&deg;C
     </div>
     <div className="CityWeatherCellWind">
-      {"E"} {Math.round(props.day.maxwind_kph * 1000 /3600 * 10) / 10} м/с {props.day.avghumidity}%
+      {"?"} {Math.round(props.day.maxwind_kph * 1000 /3600 * 10) / 10} м/с {props.day.avghumidity}%
     </div>
     <div className="CityWeatherCellCond">
       {props.day.condition.text}
