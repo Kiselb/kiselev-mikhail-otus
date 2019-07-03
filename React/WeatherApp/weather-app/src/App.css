@@ -1,33 +1,101 @@
-.App {
+.Cities {
+  margin-left: 10px;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.City {
+  display: table-row
+}
+
+.CityName {
+  display: table-cell;
+  font-size: 18px;
+  height: 120px;
+  border-width: 1px;
+  border-style: none;
+  border-color: #C8C8C8;
+  vertical-align: middle;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.CityForecastTable {
+    margin-left: 10px;
+    margin-top: 20px;
+    border-collapse: collapse
+}
+
+.CityForecastHeaderRow {
+  display: table-row;
+  height: 20px;
+}
+
+.CityForecastHeaderCell {
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
   text-align: center;
+  width: 150px;
+  min-width: 150px;
+  height: 20px;
+  font-size: 14px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.CityForecastRow {
+  display: table-row;
+  font-size: 18px;
+  height: 120px;
+  border-width: 1px;
+  border-style: none;
+  border-color: #C8C8C8;
+  vertical-align: middle;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.CityWeatherCell {
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  width: 150px;
+  min-width: 150px;
+  height: 120px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #C8C8C8;
+  font-size: 14px;
 }
 
-.App-link {
-  color: #61dafb;
+.CityWeatherCell img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 120px;
+  width: 150px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.CityWeatherCellTemp {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 24px;
+  display: table-cell;
+}
+
+.CityWeatherCellWind {
+  position: absolute;
+  top: 95px;
+  left: 5px;
+  font-size: 16px;
+  display: table-cell;
+}
+
+.CityWeatherCellCond {
+  position: absolute;
+  top: 45px;
+  left: 5px;
+  font-size: 14px;
+  display: table-cell
 }
