@@ -1,137 +1,232 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Route, BrowserRouter } from 'react-router-dom';
+import { Provider, connect } from 'react-redux';
+import { createStore } from 'redux';
+
+import { CitiesReducer } from './reducers'
+import { addCity, delCity } from './actions'
+import { loadState, saveState } from './localStorage'
 import './App.css';
+
+const persistedState = loadState();
+const store = createStore(
+  CitiesReducer,
+  persistedState
+);
+
+store.subscribe(() => {
+  saveState({ cities: store.getState().cities });
+});
+
+const APIXU_URL = (cityName) => (`http://api.apixu.com/v1/forecast.json?key=01b1d58699d7441eb7133613191006&q=${cityName}&days=5`);
 
 const AppTitle = ({title}) => (
   <div style={{ fontSize: '32px', marginLeft: "10px"}}>{title}</div>
 )
 
-const AddCity = (props) => (
+const CityInput = (props) => (
   <div>
-    <input type="text" placeholder="Введите название города" style={{ marginLeft: "10px", marginTop: "10px"}} />
-    <button style={{ width: "80px"}} onClick = {props.onPressButton}>Добавить</button>
+    <input type="text" id="input-city-name" placeholder="Enter city name here" style={{ marginLeft: "10px", marginTop: "10px"}} />
+    <button style={{ width: "80px"}} onClick = {props.onPressButton}>Add city</button>
   </div>
 )
 
-const WeatherCell = (weather_state) => (
-  <div style={{position: "relative", display: "table-cell", verticalAlign: "middle", textAlign: "center", width: "150px", minWidth: "150px", borderWidth: "1px", borderStyle: "solid", borderColor: "#C8C8C8", fontSize: "14px"}}>
-    <div style={{position: "absolute", top: "5px", left: "5px", fontSize: "28px", display: "table-cell"}}>
-      +{weather_state.temperature}&deg;C
-    </div>
-    <div style={{position: "absolute", top: "95px", left: "5px", fontSize: "16px", display: "table-cell"}}>
-      {weather_state.wind_dir} {weather_state.wind_vel} м/с {weather_state.humidity}%
-    </div>
-    <div style={{position: "absolute", top: "5px", left: "95px", fontSize: "16px", display: "table-cell"}}>
-      {weather_state.pressure} мм
-    </div>
-    {weather_state.description}
-  </div>
-)
-
-const CityWeather = (city_weather_state) => (
-  <div style={{ display: "table-row"}}>
-    <div style={{ display: "table-cell", fontSize: "18px", height: "120px", borderWidth: "1px", borderStyle: "none", borderColor: "#C8C8C8", verticalAlign: "middle", paddingLeft: "10px", paddingRight: "10px"}}>
-    {city_weather_state.city}
-    </div>
-    {city_weather_state.weather.map((value, index) => ( <WeatherCell { ...value} />))}
-  </div>
-)
-
-const CityWeatherTable = ({data}) => (
-  <div style={{ marginLeft: "10px", marginTop: "20px", borderCollapse: "collapse"}}>
-    <div style={{ display: "table-row"}}>
-      <div style={{ display: "table-cell", fontSize: "18px", height: "50px", borderWidth: "1px", borderStyle: "none", borderColor: "#C8C8C8", verticalAlign: "middle", paddingLeft: "10px", paddingRight: "10px"}}>
-      </div>
-      <div style={{display: "table-cell", verticalAlign: "middle", textAlign: "center", width: "150px", minWidth: "150px", borderWidth: "1px", borderStyle: "none", borderColor: "#C8C8C8"}}>
-        Сегодня
-      </div>
-      <div style={{display: "table-cell", verticalAlign: "middle", textAlign: "center", width: "150px", minWidth: "150px", borderWidth: "1px", borderStyle: "none", borderColor: "#C8C8C8"}}>
-        Завтра
-      </div>
-      <div style={{display: "table-cell", verticalAlign: "middle", textAlign: "center", width: "150px", minWidth: "150px", borderWidth: "1px", borderStyle: "none", borderColor: "#C8C8C8"}}>
-        Послезавтра
-      </div>
-      <div style={{display: "table-cell", verticalAlign: "middle", textAlign: "center", width: "150px", minWidth: "150px", borderWidth: "1px", borderStyle: "none", borderColor: "#C8C8C8"}}>
-        Послепослезавтра
-      </div>
-    </div>
-
-    {data.map((value, index) => ( <CityWeather { ...value} />))}
-
-  </div>
-)
-
-class AppWeather extends React.Component {
+class CityItem extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = props.data;
+    this.state = { fetched: false, json: {} };
+  }
+  componentDidMount() {
+    fetch(APIXU_URL(this.props.cityName))
+      .then(response => {
+        if (response.ok) return response.json();
+        throw Error("Communication error");
+      })
+      .then(json => {
+        this.setState( { fetched: true, json: json } );
+      })
+      .catch(e => (this.setState( { fetched: false })));
   }
   render() {
 
-    const onPressButton = event => { alert('City added'); }
+    const removeCity = () => (this.props.CityRemoveRequest(this.props.cityName));
 
     return (
-      <div>
-      <AppTitle title="OTUS. Приложение погоды" />
-      <AddCity onPressButton = {onPressButton}/>
-      <CityWeatherTable data = {this.state}/>
-    </div>
+      (this.state.fetched)
+        ? (
+          <div className="City">
+            <div className="CityName">
+              <a href={"/" + this.props.cityName}>{this.props.cityName}</a>
+            </div>
+            <div className="CityWeatherCell">
+              <img src={this.state.json.current.condition.icon} alt={this.state.json.current.condition.text} />
+              <div className="CityWeatherCellTemp">
+                +{this.state.json.current.temp_c}&deg;C
+              </div>
+              <div className="CityWeatherCellWind">
+                {this.state.json.current.wind_dir} {Math.round(this.state.json.current.wind_kph * 1000 /3600 * 10) / 10} м/с {this.state.json.current.humidity}%
+              </div>
+              <div className="CityWeatherCellCond">
+                {this.state.json.current.condition.text}
+              </div>
+            </div>
+            <div className="CityName">
+              <button style={{ top: "25px", left: "10px"}} onClick={removeCity}>Remove</button>
+            </div>
+          </div>
+          )
+        : null
     );
   }
 }
 
-const weather_on_cities = [
-  {
-    city: 'Москва',
-    weather: [
-      { description: 'солнечно', temperature: 32, wind_dir: 'ЮЗ', wind_vel: 2, pressure: 765, humidity: 50},
-      { description: 'солнечно', temperature: 31, wind_dir: 'ЮЗ', wind_vel: 2, pressure: 765, humidity: 50},
-      { description: 'солнечно', temperature: 28, wind_dir: 'ЮЗ', wind_vel: 2, pressure: 765, humidity: 50},
-      { description: 'солнечно', temperature: 27, wind_dir: 'ЮЗ', wind_vel: 2, pressure: 765, humidity: 50}
-    ]
-  },
-  {
-    city: 'Санкт-Петербург',
-    weather: [
-      { description: 'облачно', temperature: 24, wind_dir: 'Ю', wind_vel: 1, pressure: 760, humidity: 80},
-      { description: 'облачно', temperature: 24, wind_dir: 'Ю', wind_vel: 1, pressure: 760, humidity: 80},
-      { description: 'облачно', temperature: 24, wind_dir: 'Ю', wind_vel: 1, pressure: 760, humidity: 80},
-      { description: 'облачно', temperature: 24, wind_dir: 'Ю', wind_vel: 1, pressure: 760, humidity: 80},
-    ]
-  },
-  {
-    city: 'Казань',
-    weather: [
-      { description: 'переменная облачность', temperature: 23, wind_dir: 'СЗ', wind_vel: 2.5, pressure: 755, humidity: 70},
-      { description: 'переменная облачность', temperature: 23, wind_dir: 'СЗ', wind_vel: 2.5, pressure: 755, humidity: 70},
-      { description: 'переменная облачность', temperature: 23, wind_dir: 'СЗ', wind_vel: 2.5, pressure: 755, humidity: 70},
-      { description: 'переменная облачность', temperature: 23, wind_dir: 'СЗ', wind_vel: 2.5, pressure: 755, humidity: 70}
-    ]
-  },
-  {
-    city: 'Волгоград',
-    weather: [
-      { description: 'солнечно', temperature: 22, wind_dir: 'СВ', wind_vel: 2.1, pressure: 750, humidity: 60},
-      { description: 'солнечно', temperature: 22, wind_dir: 'СВ', wind_vel: 2.1, pressure: 750, humidity: 60},
-      { description: 'солнечно', temperature: 22, wind_dir: 'СВ', wind_vel: 2.1, pressure: 750, humidity: 60},
-      { description: 'солнечно', temperature: 22, wind_dir: 'СВ', wind_vel: 2.1, pressure: 750, humidity: 60}
-    ]
-  },
-  {
-    city: 'Хабаровск',
-    weather: [
-      { description: 'облачно, незначительные осадки', temperature: 21, wind_dir: 'С', wind_vel: 1.1, pressure: 770, humidity: 80},
-      { description: 'облачно, незначительные осадки', temperature: 21, wind_dir: 'С', wind_vel: 1.1, pressure: 770, humidity: 80},
-      { description: 'облачно, незначительные осадки', temperature: 21, wind_dir: 'С', wind_vel: 1.1, pressure: 770, humidity: 80},
-      { description: 'облачно, незначительные осадки', temperature: 21, wind_dir: 'С', wind_vel: 1.1, pressure: 770, humidity: 80}
-    ]
+class Cities extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = { fetched: false };
+    this.CityAddRequest = this.CityAddRequest.bind(this);
+    this.CityRemoveRequest = this.CityRemoveRequest.bind(this);
   }
-];
+  CityAddRequest(event) {
+    const cityName = document.getElementById("input-city-name").value
+    if (!cityName) return;
 
-function App() {
-  return (
-    <AppWeather data={weather_on_cities} />
-  );
+    // Check city name (http request) on validity
+    // If city name is valid then save city name 
+    fetch(APIXU_URL(cityName))
+      .then(response => {
+        if (response.ok) return;
+        throw Error("Invalid city name or communication error");
+      })
+      .then(() => {
+        store.dispatch(addCity(cityName));
+      })
+      .catch(e => (console.log(e)));
+  }
+  CityRemoveRequest(cityName) {
+    console.log(cityName);
+    store.dispatch(delCity(cityName));
+  }
+  render() {
+    const onPressButton = event => { this.CityAddRequest(event); }
+
+    return (
+      <div>
+        <AppTitle title="OTUS. Weather info application" />
+        <CityInput onPressButton = {onPressButton}/>
+        <div className="Cities">
+          { (this.props.cities)
+            ? this.props.cities.map((value, index)=>(<CityItem key={index} cityName={value} CityRemoveRequest={this.CityRemoveRequest}/>))
+            : null
+          }
+        </div>
+      </div>
+    );
+  }
 }
+
+const CityForecastTableCell = (props) => (
+  <div className="CityWeatherCell">
+    <img src={props.day.condition.icon} alt={props.day.condition.text} />
+    <div className="CityWeatherCellTemp">
+      +{props.day.avgtemp_c}&deg;C
+    </div>
+    <div className="CityWeatherCellWind">
+      {"E"} {Math.round(props.day.maxwind_kph * 1000 /3600 * 10) / 10} м/с {props.day.avghumidity}%
+    </div>
+    <div className="CityWeatherCellCond">
+      {props.day.condition.text}
+    </div>
+  </div>
+)
+
+const CityForecastTableRow = (props) => (
+  <div className="CityForecastRow">
+    {props.data && props.data.map((value, index) => ( <CityForecastTableCell { ...value } key={index} />))}
+  </div>
+)
+
+const CityForecastTable = (props) => (
+  <div className="CityForecastTable">
+    <div className="CityForecastHeaderRow">
+      <div className="CityForecastHeaderCell">
+        Today
+      </div>
+      <div className="CityForecastHeaderCell">
+        Tomorrow
+      </div>
+      <div className="CityForecastHeaderCell">
+        + 2 days
+      </div>
+      <div className="CityForecastHeaderCell">
+        + 3 days
+      </div>
+      <div className="CityForecastHeaderCell">
+        + 4 days
+      </div>
+    </div>
+
+    <CityForecastTableRow data = {(props.data) ? props.data : []} />
+
+  </div>
+)
+
+class CityInfo extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = { fetched: false, json: {} }
+  }
+  componentDidMount() {
+    fetch(APIXU_URL(this.props.cityName))
+      .then(response => {
+        if (response.ok) return response.json();
+        throw Error("Communication error");
+      })
+      .then(json => {
+        this.setState( { fetched: true, json: json } );
+      })
+      .catch(e => (this.setState( { fetched: false })));
+  }
+  render() {
+
+    const data = this.state.json;
+
+    return (
+      (this.state.fetched)
+      ? (
+        <div>
+          <div className="CityName">
+            {this.props.cityName}
+          </div>
+          <div className="CityWeatherCell">
+            <img src={this.state.json.current.condition.icon} alt={this.state.json.current.condition.text} />
+            <div className="CityWeatherCellTemp">
+              +{this.state.json.current.temp_c}&deg;C
+            </div>
+            <div className="CityWeatherCellWind">
+              {this.state.json.current.wind_dir} {Math.round(this.state.json.current.wind_kph * 1000 /3600 * 10) / 10} м/с {this.state.json.current.humidity}%
+            </div>
+            <div className="CityWeatherCellCond">
+              {this.state.json.current.condition.text}
+            </div>
+          </div>
+          <div>
+            <CityForecastTable data = {(data) ? data.forecast.forecastday : []} />
+          </div>
+        </div>
+        )
+      : null
+    );
+  }
+}
+
+const CitiesConnected = connect(state => ({ cities: state.cities }))(Cities);
+
+const App = () => (
+  <BrowserRouter>
+    <Route exact path="/" render={() => { return (<Provider store={store}><CitiesConnected /></Provider>); }}></Route>
+    <Route exact path="/:cityname" render={({ match }) => (<CityInfo cityName={ match.params.cityname }/>)}></Route>
+  </BrowserRouter>
+);
 
 export default App;
