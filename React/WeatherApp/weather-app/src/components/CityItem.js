@@ -39,7 +39,7 @@ export class CityItem extends React.Component {
                 </div>
               </div>
               <div className="CityName">
-                <button style={{ top: "25px", left: "10px"}} onClick={removeCity}>Remove</button>
+                <button onClick={removeCity}>Remove</button>
               </div>
             </div>
             )
