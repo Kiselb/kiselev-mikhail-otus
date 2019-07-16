@@ -18,7 +18,7 @@ const CityForecastTableCell = (props) => (
   
   const CityForecastTableRow = (props) => (
     <div className="CityForecastRow">
-      {props.data && props.data.map((value, index) => ( <CityForecastTableCell { ...value } key={index} />))}
+      {props.data && props.data.map((value, index) => <CityForecastTableCell { ...value } key={index} />)}
     </div>
   )
   
@@ -46,5 +46,4 @@ const CityForecastTableCell = (props) => (
   
     </div>
   )
-  
   

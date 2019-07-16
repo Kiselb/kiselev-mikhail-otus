@@ -47,7 +47,7 @@ const AppTitle = ({title}) => (
           <CityInput onPressButton = {onPressButton}/>
           <div className="Cities">
             { (this.props.cities)
-              ? this.props.cities.map((value, index)=>(<CityItem key={index} cityName={value} cityRemoveRequest={this.cityRemoveRequest}/>))
+              ? this.props.cities.map((value, index) => <CityItem key={index} cityName={value} cityRemoveRequest={this.cityRemoveRequest}/>)
               : null
             }
           </div>

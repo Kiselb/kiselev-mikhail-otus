@@ -12,8 +12,8 @@ const CitiesConnected = connect(state => ({ cities: state.cities }))(Cities);
 
 const App = () => (
   <BrowserRouter>
-    <Route path="/" render={() => <Provider store={store}><CitiesConnected /></Provider>}></Route>
-    <Route exact path="/:cityname" render={({ match }) => <CityInfo cityName={ match.params.cityname }/>}></Route>
+    <Route exact path="/" render={() => <Provider store={store}><CitiesConnected /></Provider>}></Route>
+    <Route path="/:cityname" render={({ match }) => <CityInfo cityName={ match.params.cityname }/>}></Route>
   </BrowserRouter>
 );
 
