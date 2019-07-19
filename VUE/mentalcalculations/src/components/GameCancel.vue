@@ -1,5 +1,5 @@
 <template>
-    <div :style="styleOuter">
+    <div :style="styleOuter" @click="click">
         <div class="inner">
             <p><span>&#x2716;</span> ОТМЕНА</p>
         </div>
@@ -11,7 +11,8 @@
         name: 'GameCancel',
         props: {
             top: Number,
-            left: Number
+            left: Number,
+            click: Function
         },
         computed: {
             styleOuter() {

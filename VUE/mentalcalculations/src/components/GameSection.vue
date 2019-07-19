@@ -1,7 +1,7 @@
 <template>
-  <div @click="cancel">
+  <div>
     <GameTime :top=10 :left=435 />
-    <GameCancel :top=20 :left=10 />
+    <GameCancel :top=20 :left=10  :click="cancel"/>
     <GameTask :top=150 :left=200 :operand1=13 :operand2=null :operand3=null :result=84240 operation1="*" operation2="*" />
     <GameButtonPad :top=300 :left=120 />
   </div>
