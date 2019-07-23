@@ -32,12 +32,6 @@
             operand3Changed: Function,
             gameStatus: String
         },
-        //data: function() {
-        //    return {
-        //        inputOperand2: this.operand1,
-        //        inputOperand3: this.operand2,
-        //    };
-        //},
         methods: {
             operand2Focus() {
                 this.operandSelected(2);
