@@ -1,7 +1,7 @@
 <template>
     <div :style="styleOuter">
         <span class="scale-min">{{min}}</span><span class="scale-max">{{max}}</span>
-        <input type="range" :min="min" :max="max" v-model="sliderValue" class="slider">
+        <input type="range" :min="min" :max="max" v-bind:value="value" v-on:input="$emit('input', $event.target.value)" class="slider">
         <p>{{ sliderStatus }}</p>
     </div>
 </template>
@@ -12,16 +12,12 @@
         props: {
             top: Number,
             left: Number,
+            width: Number,
             min: Number,
             max: Number,
-            initialValue: Number,
             caption: String,
-            units: String
-        },
-        data: function() {
-            return {
-                sliderValue: this.initialValue
-            };
+            units: String,
+            value: String,
         },
         computed: {
             styleOuter() {
@@ -33,7 +29,7 @@
                 };
             },
             sliderStatus() {
-                return (this.caption + ' ' + this.sliderValue + ' ' + this.units);
+                return (this.caption + ' ' + this.value + ' ' + this.units);
             }
         }
     }
@@ -42,7 +38,7 @@
 <style scoped>
 
     .scale-min {
-
+        float:left;
     }
     
     .scale-max {

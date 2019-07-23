@@ -3,14 +3,14 @@
         <div class="inner">
             <span class="operand">{{ operand1 }}</span>
             <span class="operation">{{ operation1 }}</span>
-            <input type="text" />
-            <template v-if="operation2 !== null">
+            <input type="text" :value=operand2 @focus="operand2Focus" @input="input2Changed" />
+            <template v-if="operation2 !== null" >
                 <span class="operation">{{ operation2 }}</span>
-                <input type="text" />
+                <input type="text" :value=operand3 @focus="operand3Focus" @input="input3Changed" />
             </template>
             <br />
             <br />
-            <span>= {{ result }}?</span>
+            <span :gameStatus=gameStatus>= {{ result }}?</span>
         </div>
     </div>
 </template>
@@ -26,12 +26,32 @@
             operand3: Number,
             result: Number,
             operation1: String,
-            operation2: String
+            operation2: String,
+            operandSelected: Function,
+            operand2Changed: Function,
+            operand3Changed: Function,
+            gameStatus: String
         },
         //data: function() {
+        //    return {
+        //        inputOperand2: this.operand1,
+        //        inputOperand3: this.operand2,
+        //    };
         //},
-        //methods: {
-        //},
+        methods: {
+            operand2Focus() {
+                this.operandSelected(2);
+            },
+            operand3Focus() {
+                this.operandSelected(3);
+            },
+            input2Changed(event) {
+                this.operand2Changed(event.target.value);
+            },
+            input3Changed(event) {
+                this.operand3Changed(event.target.value);
+            }
+        },
         computed: {
             styleOuter() {
                 return {
@@ -73,5 +93,14 @@
     .operation {
         display:inline-block;
         width: 10px;
+    }
+    span[gameStatus="WIN"] {
+        color: chartreuse;
+    }
+    span[gameStatus="LOSS"] {
+        color:tomato;
+    }
+    span[gameStatus="UNKNOWN"] {
+        color: silver;
     }
 </style>

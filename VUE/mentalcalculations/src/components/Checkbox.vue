@@ -1,7 +1,7 @@
 <template>
     <div id="test" :style="styleOuter">
         <label class="container">{{ caption}}
-            <input type="checkbox" checked="checked">
+            <input type="checkbox" checked="checked" v-bind:value="checked" v-on:input="$emit('input', $event.target.checked)">
             <span class="checkmark"></span>
         </label>
     </div>
@@ -14,6 +14,7 @@
             caption: String,
             top: Number,
             left: Number,
+            checked: String
         },
         computed: {
             styleOuter() {

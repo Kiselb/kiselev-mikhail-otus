@@ -15,9 +15,10 @@ export default new Router({
       component: StartSection
     },
     {
-      path: '/Game',
+      path: '/Game/:gametoken',
       name: 'GameSection',
-      component: GameSection
+      component: GameSection,
+      props: true
     }
   ]
 })

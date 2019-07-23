@@ -1,5 +1,5 @@
 <template>
-    <div :style="styleOuter" class="outer">
+    <div :style="styleOuter" class="outer" @click="onClick">
         <div :style="styleButton" class="inner">
             <p>{{ caption }}</p>
         </div>
@@ -13,7 +13,13 @@
             caption: String,
             top: Number,
             left: Number,
-            color: String
+            color: String,
+            onButton: Function
+        },
+        methods: {
+            onClick() {
+                this.onButton(this.caption);
+            }
         },
         computed: {
             styleOuter() {

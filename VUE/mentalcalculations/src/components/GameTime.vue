@@ -2,32 +2,40 @@
     <div :style="styleOuter">
         <div class="inner">
             <p>
-                {{ elapsedTimeText }}
+                {{ leftTime | formatTime }}
             </p>
         </div>
     </div>
 </template>
 
 <script>
-    import { setInterval } from 'timers';
+    import { setInterval, clearInterval } from 'timers';
 
     export default {
         name: 'GameTime',
         props: {
             top: Number,
-            left: Number
+            left: Number,
+            gameTime: Number,
+            timeExhausted: Function
         },
         data: function() {
             return {
-                elapsedTime: 0
+                leftTime: this.gameTime
             };
         },
         methods: {
             startTimer: function() {
-                function updateElapsedTime() {
-                    this.elapsedTime = this.elapsedTime + 1;
+                let timer;
+                function updateLeftTime() {
+                    if (this.leftTime > 0) {
+                        this.leftTime = this.leftTime - 1;
+                    } else {
+                        clearInterval(timer);
+                        this.timeExhausted();
+                    }
                 }
-                setInterval(updateElapsedTime.bind(this), 1000)
+                timer = setInterval(updateLeftTime.bind(this), 1000);
             }
         },
         computed: {
@@ -37,10 +45,12 @@
                     'top': this.top + 'px',
                     'left': this.left + 'px'
                 };
-            },
-            elapsedTimeText: function() {
-                const minutes = Math.floor((this.elapsedTime) / 60);
-                const seconds = this.elapsedTime - minutes * 60;
+            }
+        },
+        filters: {
+            formatTime: function(value) {
+                const minutes = Math.floor((value) / 60);
+                const seconds = value - minutes * 60;
 
                 return(('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2));
             }

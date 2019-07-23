@@ -1,5 +1,14 @@
 <template>
-    <Slider :top=top :left=left :width=width :min=1 :max=15 :initialValue=8 caption="Длительность" units="минут" />
+    <Slider
+        :top=top
+        :left=left
+        :width=width
+        :min=1
+        :max=15
+        v-bind:value="duration"
+        v-on:input="duration = $event"
+        caption="Длительность"
+        units="минут" />
 </template>
 
 <script>
@@ -10,7 +19,12 @@
         props: {
             top: Number,
             left: Number,
-            width: Number
+            width: Number,
+        },
+        data: function() {
+            return {
+                duration: "8"
+            };
         },
         components: {
             Slider

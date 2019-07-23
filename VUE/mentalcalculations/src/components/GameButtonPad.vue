@@ -1,6 +1,6 @@
 <template>
     <div :style="styleOuter">
-        <Button v-for="(button, index) in buttonsPlacements" v-bind="button" :key="index" />
+        <Button v-for="(button, index) in buttonsPlacements" v-bind="button" :key="index" :onButton="onButton"/>
     </div>
 </template>
 
@@ -11,7 +11,8 @@
         name: 'GameButtonPad',
         props: {
             top: Number,
-            left: Number
+            left: Number,
+            buttonPressed: Function
         },
         data: () => ({
             buttonsPlacements: [
@@ -31,6 +32,11 @@
                     { buttonType: "CONTROL",  caption: '=', top: 300,   left: 300,    color: "#808080" }
                 ]
         }),
+        methods: {
+            onButton(value) {
+                this.buttonPressed(value);
+            }
+        },
         computed: {
             styleOuter() {
                 return {

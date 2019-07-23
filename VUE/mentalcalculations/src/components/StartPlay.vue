@@ -11,13 +11,12 @@
         name: 'StartPlay',
         props: {
             top: Number,
-            left: Number
+            left: Number,
+            startGame: Function
         },
         methods: {
             play() {
-                this.$router.push({
-                    name: 'GameSection'
-                })
+                this.startGame();
             }
         },
         computed: {
