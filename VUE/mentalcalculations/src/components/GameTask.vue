@@ -1,16 +1,20 @@
 <template>
     <div :style="styleOuter">
         <div class="inner">
-            <span class="operand">{{ operand1 }}</span>
-            <span class="operation">{{ operation1 }}</span>
-            <input type="text" :value=operand2 @focus="operand2Focus" @input="input2Changed" />
-            <template v-if="operation2 !== null" >
-                <span class="operation">{{ operation2 }}</span>
-                <input type="text" :value=operand3 @focus="operand3Focus" @input="input3Changed" />
+            <span class="operand">{{ game.task.operand1 }}</span>
+            <span class="operation">{{ game.task.operation1 }}</span>
+            <input type="text" :value=game.task.operand2 @focus="operand2Focus" @input="input2Changed" />
+            <template v-if="game.task.operation2 !== null" >
+                <span class="operation">{{ game.task.operation2 }}</span>
+                <input type="text" :value=game.task.operand3 @focus="operand3Focus" @input="input3Changed" />
             </template>
             <br />
             <br />
-            <span :gameStatus=gameStatus>= {{ result }}?</span>
+            <span v-bind:class="{
+                'status-win': game.misc.gameStatus === 'WIN',
+                'status-loss': game.misc.gameStatus === 'LOSS',
+                'status-unknown': game.misc.gameStatus === 'UNKNOWN'
+            }" >= {{ game.task.targetResult }}?</span>
         </div>
     </div>
 </template>
@@ -21,16 +25,10 @@
         props: {
             top: Number,
             left: Number,
-            operand1: Number,
-            operand2: Number,
-            operand3: Number,
-            result: Number,
-            operation1: String,
-            operation2: String,
+            game: Object,
             operandSelected: Function,
             operand2Changed: Function,
             operand3Changed: Function,
-            gameStatus: String
         },
         methods: {
             operand2Focus() {
@@ -88,13 +86,13 @@
         display:inline-block;
         width: 10px;
     }
-    span[gameStatus="WIN"] {
+    .status-win {
         color: chartreuse;
     }
-    span[gameStatus="LOSS"] {
+    .status-loss {
         color:tomato;
     }
-    span[gameStatus="UNKNOWN"] {
+    .status-unknown {
         color: silver;
     }
 </style>

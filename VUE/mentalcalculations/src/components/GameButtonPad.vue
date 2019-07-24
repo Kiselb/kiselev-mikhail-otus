@@ -1,12 +1,12 @@
 <template>
     <div :style="styleOuter">
-        <Button v-for="(button, index) in buttonsPlacements" v-bind="button" :key="index" :onButton="onButton"/>
+        <Button v-for="(button, index) in buttonsPlacements" v-bind="button" :key="index" @click="$emit('button', $event)"/>
     </div>
 </template>
 
 <script>
     import Button from '../components/Button.vue'
-
+    
     export default {
         name: 'GameButtonPad',
         props: {
@@ -32,11 +32,6 @@
                     { buttonType: "CONTROL",  caption: '=', top: 300,   left: 300,    color: "#808080" }
                 ]
         }),
-        methods: {
-            onButton(value) {
-                this.buttonPressed(value);
-            }
-        },
         computed: {
             styleOuter() {
                 return {

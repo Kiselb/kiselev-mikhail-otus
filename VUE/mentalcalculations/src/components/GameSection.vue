@@ -1,25 +1,17 @@
 <template>
   <div class="root">
-    <GameTime :top=10 :left=435 :gameTime=gameduration :timeExhausted=timeExhausted />
+    <GameTime :top=10 :left=435 :gameTime=game.task.gameduration :timeExhausted=timeExhausted />
     <GameCancel :top=20 :left=10  :click="cancel"/>
     <GameTask
       :top=150
-      :left=200
-      
-      :operand1=operand1
-      :operand2=operand2
-      :operand3=operand3
-      :operation1=operation1
-      :operation2=operation2
-      :result=targetResult
-      
+      :left=200  
+      :game=game
       :operandSelected="operandSelected"
       :operand2Changed="operand2Changed"
       :operand3Changed="operand3Changed"
-
-      :gameStatus=gameStatus />
-    <GameButtonPad :top=300 :left=120 :buttonPressed=buttonPressed />
-    <div class="game-status">{{ gameStatus }}</div>
+    />
+    <GameButtonPad :top=300 :left=120 @button=buttonPressed />
+    <div class="game-status">{{ game.misc.gameStatus }}</div>
   </div>
 </template>
 
@@ -36,28 +28,18 @@
     },
     data: function() {
       return {
-        task: null,
-        gameduration: null,
-        operand1: null,
-        operand2: null,
-        operand3: null,
-        operation1: null,
-        operation2: null,
-        targetResult: null,
-        gameResult: 0,
-        selectedOperand: 3,
-        gameStatus: 'UNKNOWN'
+        game: {
+          task: null,
+          misc: {
+            gameResult: 0,
+            selectedOperand: 3,
+            gameStatus: 'UNKNOWN'
+          }
+        }
       };
     },
     created: function() {
-      this.task = this.$store.getters.getTask(this.gametoken);
-      this.gameduration = this.task.gameduration;
-      this.operand1 = this.task.operand1;
-      this.operand2 = this.task.operand2;
-      this.operand3 = this.task.operand3;
-      this.operation1 = this.task.operation1;
-      this.operation2 = this.task.operation2;
-      this.targetResult = this.task.targetResult;
+      this.game.task = this.$store.getters.getTask(this.gametoken);
     },
     methods: {
         cancel() {
@@ -66,67 +48,67 @@
             })
         },
         buttonPressed(button) {
-          if (this.gameStatus.toUpperCase() !== "UNKNOWN"){
+          if (this.game.misc.gameStatus.toUpperCase() !== "UNKNOWN"){
             return;
           }
           if (["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].indexOf(button) >= 0) {
-            if (this.selectedOperand === 2) {
-              this.operand2 = this.operand2 * 10 + Number(button);
+            if (this.game.misc.selectedOperand === 2) {
+              this.game.task.operand2 = this.game.task.operand2 * 10 + Number(button);
             } else {
-              this.operand3 = this.operand3 * 10 + Number(button);
+              this.game.task.operand3 = this.game.task.operand3 * 10 + Number(button);
             }
           } else {
             if (button === "=") {
-              if (this.operation1) {
-                if (this.operand2) {
-                  this.gameResult = eval('' + this.operand1 + this.operation1 + this.operand2)
+              if (this.game.task.operation1) {
+                if (this.game.task.operand2) {
+                  this.game.misc.gameResult = eval('' + this.game.task.operand1 + this.game.task.operation1 + this.game.task.operand2)
                 } else {
-                  this.gameResult = null;
+                  this.game.misc.gameResult = null;
                   return;
                 }
               }
-              if (this.operation2) {
-                if (this.operand3) {
-                  this.gameResult = eval('' + this.operand1 + this.operation1 + this.operand2 + this.operation2 + this.operand3)
+              if (this.game.task.operation2) {
+                if (this.game.task.operand3) {
+                  this.game.misc.gameResult = eval('' + this.game.task.operand1 + this.game.task.operation1 + this.game.task.operand2 + this.game.task.operation2 + this.game.task.operand3)
                 } else {
-                  this.gameResult = null;
+                  this.game.misc.gameResult = null;
                   return;
                 }
               }
-              if (this.gameResult === this.targetResult) {
-                this.gameStatus = "WIN";
+              if (this.game.misc.gameResult === this.game.task.targetResult) {
+                this.game.misc.gameStatus = "WIN";
               } else {
-                this.gameStatus = "LOSS"
+                this.game.misc.gameStatus = "LOSS"
               }
-              this.task.gamestatus = this.gameStatus;
-              this.$store.commit('updateTask', this.task);
+              this.game.task.gamestatus = this.game.misc.gameStatus;
+              this.$store.commit('updateTask', this.game.task);
             }
           }
         },
         operandSelected(operand) {
-            this.selectedOperand = operand;
+            this.game.misc.selectedOperand = operand;
         },
         operand2Changed(value) {
           if (typeof (+value) === "number") {
-            this.operand2 = (+value);
+            this.game.task.operand2 = (+value);
           }
           this.buttonPressed("=");
         },
         operand3Changed(value) {
           if (typeof (+value) === "number") {
-            this.operand3 = (+value);
+            this.game.task.operand3 = (+value);
           }
-          if (this.operand2) {
+          if (this.game.task.operand2) {
             this.buttonPressed("=");
           }
         },
         timeExhausted() {
-          if (this.gameStatus.toUpperCase() !== "UNKNOWN"){
+          if (this.game.misc.gameStatus.toUpperCase() !== "UNKNOWN"){
             return;
           }
-          this.gameStatus = "LOSS"
-          this.task.gamestatus = this.gameStatus;
-          this.$store.commit('updateTask', this.task);
+          this.game.misc.gameStatus = "LOSS"
+          this.game.task.gamestatus = this.gameStatus;
+          this.$store.commit('updateTask', this.game.task);
         }
     },
     components: {

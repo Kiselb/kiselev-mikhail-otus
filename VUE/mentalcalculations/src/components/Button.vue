@@ -1,5 +1,5 @@
 <template>
-    <div :style="styleOuter" class="outer" @click="onClick">
+    <div :style="styleOuter" class="outer" @click="$emit('click', caption)">
         <div :style="styleButton" class="inner">
             <p>{{ caption }}</p>
         </div>
@@ -15,11 +15,6 @@
             left: Number,
             color: String,
             onButton: Function
-        },
-        methods: {
-            onClick() {
-                this.onButton(this.caption);
-            }
         },
         computed: {
             styleOuter() {

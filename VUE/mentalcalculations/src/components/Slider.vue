@@ -29,7 +29,7 @@
                 };
             },
             sliderStatus() {
-                return (this.caption + ' ' + this.value + ' ' + this.units);
+                return `${this.caption} ${this.value} ${this.units}`;
             }
         }
     }
