@@ -1,0 +1,8 @@
+.main {
+    margin-top: 0px;
+}
+select {
+    display: inline-block;
+    width: 200px;
+    margin-left: 0px;
+}
