@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-recently-added',
+  selector: 'recently-added',
   templateUrl: './recently-added.component.html',
   styleUrls: ['./recently-added.component.css']
 })

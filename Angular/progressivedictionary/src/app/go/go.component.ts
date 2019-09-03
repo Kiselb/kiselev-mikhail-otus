@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-go',
+  selector: 'go',
   templateUrl: './go.component.html',
   styleUrls: ['./go.component.css']
 })

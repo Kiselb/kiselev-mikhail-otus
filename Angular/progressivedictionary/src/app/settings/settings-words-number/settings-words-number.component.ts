@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-settings-words-number',
+  selector: 'settings-words-number',
   templateUrl: './settings-words-number.component.html',
   styleUrls: ['./settings-words-number.component.css']
 })
