@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SettingsComponent } from './settings.component';
-
 import { AppRoutingModule } from '../app-routing.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RecentlyAddedComponent } from '../recently-added/recently-added.component';
@@ -21,7 +20,6 @@ describe('SettingsComponent', () => {
       declarations: [
         AppComponent,
         SettingsComponent,
-
         RecentlyAddedComponent,
         GoComponent,
         GoTaskWordComponent,
