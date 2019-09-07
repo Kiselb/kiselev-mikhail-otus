@@ -1,6 +1,6 @@
 import { ActionReducerMap, ActionReducer, MetaReducer, createReducer, on } from '@ngrx/store';
 import { actionTypes, expandDictionary, clearDictionary, changeSettings } from './actions';
-import { IAppState, IDictionaryState, ISettingsState, dictionaryInitialState, settingsInitialState} from './state'
+import { LOCAL_STORAGE_ITEM_KEY, IAppState, IDictionaryState, ISettingsState, dictionaryInitialState, settingsInitialState} from './state'
 
 // export const vocabularyReducer = createReducer(initialState,
 //     on (expandVocabulary, (state, { fragment }) => {
@@ -48,11 +48,11 @@ export function metaLocalStorage(reducer: ActionReducer<any>): ActionReducer<any
                 nextState.dictionary.content = [];
                 break;
             case actionTypes.atChangeSettings:
-                nextState.settings = { ...state.settings };
+                nextState.settings = { language: action["language"], wordsNumber: action["wordsNumber"] };
                 break;
         }
         serializedState = JSON.stringify(nextState);
-        window.localStorage.setItem('progressivedictionary', serializedState);
+        window.localStorage.setItem(LOCAL_STORAGE_ITEM_KEY, serializedState);
         return reducer(state, action);
     };
 }
