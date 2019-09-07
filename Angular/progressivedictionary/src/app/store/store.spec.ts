@@ -5,8 +5,8 @@ import { Store, select } from '@ngrx/store';
 import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { IAppState } from './state'
 import { reducers, metaReducers } from './reducers';
-import { actionTypes, expandDictionary, clearDictionary } from './actions';
-import { dictionary } from './selectors';
+import { actionTypes, expandDictionary, clearDictionary, changeSettings } from './actions';
+import { dictionary, settingsLanguage, settingsWordsNumber } from './selectors';
 
 describe('Store', () => {
   beforeEach(() => TestBed.configureTestingModule({ imports: [StoreModule.forRoot(reducers, { metaReducers })], providers: [] }));
@@ -23,20 +23,17 @@ describe('Store', () => {
     
     vocabulary$.subscribe(
       result => {
-        console.log("Result:");
-        console.log(result);
-        expect(result.content.length).toBe(0);
+        expect(result.length).toBe(0);
         done();
       }
     );
   });
 
-  //return;
-
   it('add fragment', (done) => {
     
     let store: Store<IAppState>;
     let dictionary$: Observable<any>;
+    const localStogarePattern = '{"dictionary":{"content":[{"timestamp":"20190906","words":[{"origin":"school","translate":"школа"}]},{"timestamp":"20190907","words":[{"origin":"education","translate":"образование"}]}]},"settings":{"language":"en","wordsNumber":10}}';
 
     store = TestBed.get<Store<IAppState>>(Store);
     dictionary$ = store.pipe(select(dictionary));
@@ -50,14 +47,56 @@ describe('Store', () => {
             ]
         }
     }));
+    store.dispatch(expandDictionary({
+        fragment: {
+            timestamp: "20190907",
+            words: [
+                { origin: "education", translate: "образование" }
+            ]
+        }
+    }));
     
     dictionary$.subscribe(
-      result => {
-        console.log("Result:");
-        console.log(result);
-        expect(result.content.length).toBe(1);
-        done();
-      }
-    );
-  });
+        result => {
+            expect(result.length).toBe(2);
+            expect(result[0].timestamp).toBe("20190906");
+            expect(result[1].timestamp).toBe("20190907");
+            expect(result[0].words[0].origin).toBe("school");
+            expect(result[0].words[0].translate).toBe("школа");
+            expect(result[1].words[0].origin).toBe("education");
+            expect(result[1].words[0].translate).toBe("образование");
+            expect(window.localStorage.getItem('progressivedictionary')).toBe(localStogarePattern);
+            done();
+        });
+    });
+    it('change settings language', (done) => {
+        let store: Store<IAppState>;
+        let settingsLanguage$: Observable<any>;
+
+        store = TestBed.get<Store<IAppState>>(Store);
+        settingsLanguage$ = store.pipe(select(settingsLanguage));
+
+        store.dispatch(changeSettings({ language: 'ru', wordsNumber: 100 }));
+        settingsLanguage$.subscribe(
+            result => {
+                expect(result).toBe('ru');
+                done();
+            }
+        );
+    });
+    it('change settings words number', (done) => {
+        let store: Store<IAppState>;
+        let settingsWordsNumber$: Observable<any>;
+
+        store = TestBed.get<Store<IAppState>>(Store);
+        settingsWordsNumber$ = store.pipe(select(settingsWordsNumber));
+
+        store.dispatch(changeSettings({ language: 'ru', wordsNumber: 100 }));
+        settingsWordsNumber$.subscribe(
+            result => {
+                expect(result).toBe(100);
+                done();
+            }
+        );
+    });
 });

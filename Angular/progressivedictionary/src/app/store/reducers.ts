@@ -34,31 +34,25 @@ export function metaLocalStorage(reducer: ActionReducer<any>): ActionReducer<any
     return function(state, action) {
         let nextState = null;
         let serializedState: string = '';
+
+        nextState = { ...state };
+
         switch(action.type) {
             case actionTypes.atExpandDictionary:
                 const fragment = action["fragment"];
-                console.log("state atExpandVocabulary:");
-                console.dir(state);
-                nextState = { ...state };
-                nextState.dictionary.content.push(fragment);
-                console.log("next state atExpandVocabulary:");
-                console.dir(nextState);
-                serializedState = JSON.stringify(nextState);
-                window.localStorage.setItem('progressivedictionary', serializedState);
+                nextState.dictionary = { ...state.dictionary};
+                nextState.dictionary.content = state.dictionary.content.concat(fragment);
                 break;
             case actionTypes.atClearDictionary:
-                console.log("state atClearVocabulary:");
-                console.dir(state);
-                nextState = { ...state };
+                nextState.dictionary = { ...state.dictionary };
                 nextState.dictionary.content = [];
-                console.log("next state atClearVocabulary:");
-                console.dir(nextState);
-                serializedState = JSON.stringify(nextState);
-                window.localStorage.setItem('progressivedictionary', serializedState);
                 break;
             case actionTypes.atChangeSettings:
+                nextState.settings = { ...state.settings };
                 break;
         }
+        serializedState = JSON.stringify(nextState);
+        window.localStorage.setItem('progressivedictionary', serializedState);
         return reducer(state, action);
     };
 }
