@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-
+import { Store } from '@ngrx/store';
+import { IAppState } from './store/state'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,4 +9,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class AppComponent {
   title = 'progressivedictionary';
+
+  constructor(private appStore: Store<IAppState>) {}
+
 }
