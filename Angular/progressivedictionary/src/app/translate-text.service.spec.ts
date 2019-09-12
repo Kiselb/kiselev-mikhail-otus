@@ -13,13 +13,12 @@ describe('TranslateTextService', () => {
 
   it('test translation', (done) => {
     const service: TranslateTextService = TestBed.get(TranslateTextService);
-    const wordsSet: String[] = ("Hello World").split(" ");
-    const resultWordsSet: String[] = ["Привет", "Мир"];
+    const text: string = "Hello World";
+    const resultWordsSet: string[] = ["Привет", "Мир"];
     let eventCounter: number = -1;
-    service.translateText(wordsSet).subscribe(
+    service.translateText(text).subscribe(
       result => {
-        expect(result.code).toBe(200);
-        expect(result.text[0]).toBe(resultWordsSet[++eventCounter]);
+        expect(result.translate).toBe(resultWordsSet[++eventCounter]);
         done();
       }
     );

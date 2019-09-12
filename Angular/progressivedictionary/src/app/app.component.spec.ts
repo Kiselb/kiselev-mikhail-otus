@@ -4,6 +4,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Store, select } from '@ngrx/store';
 import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { reducers, metaReducers } from './store/reducers';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateTextService } from './translate-text.service'
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { AppComponent } from './app.component';
 
@@ -23,6 +26,9 @@ describe('AppComponent', () => {
         RouterTestingModule,
         MatTabsModule,
         BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
         StoreModule.forRoot(reducers, { metaReducers })
       ],
       declarations: [
@@ -35,6 +41,7 @@ describe('AppComponent', () => {
         SettingsWordsNumberComponent,
         RecentlyAddedListComponent
       ],
+      providers: [TranslateTextService]
     }).compileComponents();
   }));
 

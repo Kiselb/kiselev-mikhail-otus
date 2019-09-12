@@ -1,3 +1,33 @@
-p {
-    padding: 10px;
+.main {
+    margin-top: 10px;
+}
+.dictionary {
+    width: 600px;
+    height: 180px;
+    overflow-y: scroll;
+}
+.section-date {
+    color: lightgray;
+}
+.section-word {
+    font-size: 13px;
+    color: black;
+}
+textarea {
+    background-color: beige;
+    width: 580px;
+    height: 180px;
+}
+button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 0, 0, 0, 0;
+    background-color: lightseagreen;
+    color: white;
+    width: 200px;
+    height: 25px;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    vertical-align: center;
 }

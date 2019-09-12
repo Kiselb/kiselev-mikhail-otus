@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RecentlyAddedComponent } from './recently-added.component';
 import { SettingsComponent } from '../settings/settings.component';
@@ -27,7 +28,7 @@ describe('RecentlyAddedComponent', () => {
         SettingsWordsNumberComponent,
         RecentlyAddedListComponent
       ],
-      imports: [MatTabsModule, AppRoutingModule]
+      imports: [MatTabsModule, AppRoutingModule, FormsModule, ReactiveFormsModule]
     })
     .compileComponents();
   }));

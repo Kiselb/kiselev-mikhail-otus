@@ -1,7 +1,5 @@
 <div class="main">
-    <div class="go-task-word">
-        <go-task-word></go-task-word>
-    </div>
-    <input type="text"/>
-    <button>Next</button>
+    <p>{{testMessage}}</p>
+    <input type="text" [formControl]="answer"/>
+    <input type="submit" (click)="onCommand()" value="{{(testMode)?'Next':'Start'}}">
 </div>

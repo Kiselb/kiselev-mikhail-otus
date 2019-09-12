@@ -1,16 +1,24 @@
-<div>
-    <div>
-        <label>Language:</label>
-        <div class="settings-language">
-            <settings-language></settings-language>
+<div class="main">
+    <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()" #settings>
+        <div class="language">
+            <label>Language:</label>
+            <select formControlName="ctrlLanguage" #language>
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+                <option value="de">Deutch</option>
+                <option value="fr">Francais</option>
+            </select>
         </div>
-    </div>
-    <div>
-        <label>Nb. of words:</label>
-        <div class="settings-words-number">
-            <settings-words-number></settings-words-number>
+        <div class="words-number">
+            <label>Nb. of words:</label>
+            <select formControlName="ctrlWordsNumber" #wordsNumber>
+                <option value="10">10 words</option>
+                <option value="20">20 words</option>
+                <option value="40">40 words</option>
+                <option value="80">80 words</option>
+            </select>
         </div>
-    </div>
-    <button>Back</button>
-    <button>Save</button>
+        <button (click)="restoreSettings()">Back</button>
+        <button type="submit">Save</button>
+    </form>
 </div>
