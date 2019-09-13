@@ -15,10 +15,11 @@ describe('TranslateTextService', () => {
     const service: TranslateTextService = TestBed.get(TranslateTextService);
     const text: string = "Hello World";
     const resultWordsSet: string[] = ["Привет", "Мир"];
-    let eventCounter: number = -1;
+    let eventCounter: number = 0;
     service.translateText(text).subscribe(
       result => {
-        expect(result.translate).toBe(resultWordsSet[++eventCounter]);
+        expect(result[eventCounter].translate).toBe(resultWordsSet[eventCounter]);
+        eventCounter++;
         done();
       }
     );

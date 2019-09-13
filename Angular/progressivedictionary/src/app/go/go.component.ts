@@ -33,11 +33,12 @@ export class GoComponent implements OnInit {
 
   onCommand() {
     if (this.testMode) {
-      this.testMessage = this.words[this.wordsCounter].origin;
-      this.wordsCounter++;
       if (this.wordsCounter === this.words.length) {
         this.testMode = false;
         this.testMessage = "Test terminated"
+      } else {
+        this.testMessage = this.words[this.wordsCounter].origin;
+        this.wordsCounter++;
       }
     } else {
       this.startTest.emit(true);

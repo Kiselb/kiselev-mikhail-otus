@@ -1,9 +1,9 @@
 <div class="container">
   <h1 class="logo">Welcome to {{title}}!</h1>
   <mat-tab-group animationDuration="0ms" mat-stretch-tabs>
-      <mat-tab label="Recently Added" class="app-tabs"><recently-added [dictionary]="dictionary" (fragmentAdded)="onFragmentAdded($event)"></recently-added></mat-tab>
-      <mat-tab label="Go" class="app-tabs"><go [testWords]="testWords" (startTest)="onStartTest($event)"></go></mat-tab>
-      <mat-tab label="Settings" class="app-tabs"><settings [language]="language" [wordsNumber]="wordsNumber" (settingChanged)="onSettingChanged($event)"></settings></mat-tab>
+      <mat-tab label="Recently Added" class="app-tabs"><recently-added [dictionary]="dictionary$ | async" (fragmentAdded)="onFragmentAdded($event)"></recently-added></mat-tab>
+      <mat-tab label="Go" class="app-tabs"><go [testWords]="testWords$ | async" (startTest)="onStartTest($event)"></go></mat-tab>
+      <mat-tab label="Settings" class="app-tabs"><settings [language]="settingsLanguage$ | async" [wordsNumber]="settingsWordsNumber$ | async" (settingChanged)="onSettingChanged($event)"></settings></mat-tab>
   </mat-tab-group>
 </div>
 

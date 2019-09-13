@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateWordService } from './translate-word.service';
 import { Observable, from, of } from 'rxjs'
-import { map, concatMap, reduce, toArray } from 'rxjs/operators';
+import { map, concatMap, reduce, toArray, mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

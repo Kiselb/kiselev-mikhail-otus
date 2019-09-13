@@ -19,12 +19,10 @@ export class RecentlyAddedComponent implements OnInit {
   toogleMode() {
     this.mode = !this.mode;
     if  (this.mode) {
-      console.log(this.fragment.value);
       this.fragmentAdded.emit(this.fragment.value);
       this.fragment.setValue('');
     }
   }
   ngOnInit() {
-
   }
 }

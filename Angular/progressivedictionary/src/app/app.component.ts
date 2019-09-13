@@ -1,10 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, range, of, from } from 'rxjs';
+import { map, concatMap, reduce, toArray, mergeMap, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 
 import { IAppState } from './store/state'
 import { actionTypes, expandDictionary, clearDictionary, changeSettings } from './store/actions';
-import { dictionary, settingsLanguage, settingsWordsNumber } from './store/selectors';
+import { dictionary, settingsLanguage, settingsWordsNumber, getRandomWord } from './store/selectors';
 import { TranslateTextService } from './translate-text.service'
 
 @Component({
@@ -15,16 +16,15 @@ import { TranslateTextService } from './translate-text.service'
 })
 export class AppComponent {
   title = 'progressivedictionary';
-  language = null;
-  wordsNumber = null;
-  dictionary: any[];
-  testWords: any[];
-
-  settingsLanguage$: Observable<any> = this.appStore.pipe(select(settingsLanguage));
-  settingsWordsNumber$: Observable<any> = this.appStore.pipe(select(settingsWordsNumber));
+  
+  settingsLanguage$: Observable<string> = this.appStore.pipe(select(settingsLanguage));
+  settingsWordsNumber$: Observable<number> = this.appStore.pipe(select(settingsWordsNumber));
   dictionary$: Observable<any> = this.appStore.pipe(select(dictionary));
+  randomWord$: Observable<string> = this.appStore.pipe(select(getRandomWord));
+  testWords$: Observable<any> = null;
 
-  constructor(private appStore: Store<IAppState>, private translateService: TranslateTextService) {}
+  constructor(private appStore: Store<IAppState>, private translateService: TranslateTextService) {
+  }
 
   onFragmentAdded(fragment: string) {
     this.translateService.translateText(fragment).subscribe(
@@ -34,12 +34,6 @@ export class AppComponent {
           words: result
         }
         this.appStore.dispatch(expandDictionary({ fragment: fragment }));
-        this.dictionary$.subscribe(
-          result => {
-            console.log(result);
-            this.dictionary = result;
-          }
-        );
       }
     );
   }
@@ -47,30 +41,12 @@ export class AppComponent {
     this.appStore.dispatch(changeSettings({ language: settings.language, wordsNumber: parseInt(settings.wordsNumber) }));
   }
   onStartTest(flag: boolean) {
-    let testWords = [];
-    testWords.push({ origin: "education", translate: "образование" });
-    testWords.push({ origin: "school", translate: "школа" });
-    testWords.push({ origin: "teacher", translate: "учитель" });
-    testWords.push({ origin: "sdudent", translate: "студент" });
-    this.testWords = testWords;
+    (this.settingsWordsNumber$).subscribe(
+       value => this.testWords$ = range(0, value).pipe(
+         mergeMap(() => { getRandomWord.release(); return this.randomWord$.pipe(take(1)) })
+       ).pipe(toArray())
+    );
   }
   ngOnInit() {
-    this.dictionary$.subscribe(
-      result => {
-        this.dictionary = result;
-      }
-    );
-    this.settingsLanguage$.subscribe(
-      result => {
-        this.language = result || 'ru';
-        return(this.language);
-      }
-    );
-    this.settingsWordsNumber$.subscribe(
-      result => {
-          this.wordsNumber = result || '20';
-          return this.wordsNumber;
-      }
-    );
   }
 }
