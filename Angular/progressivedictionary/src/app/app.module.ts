@@ -1,15 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-//import { FormControl, FormGroup } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
-
-//import { TranslateWordService } from './translate-word.service';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { RecentlyAddedComponent } from './recently-added/recently-added.component';
@@ -40,12 +37,9 @@ import { reducers, metaReducers } from './store/reducers';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    //FormControl, FormGroup,
-    //TranslateWordService
     StoreModule.forRoot(reducers, { metaReducers })
   ],
   providers: [HttpClientModule, HttpClient],
-  //providers: [HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

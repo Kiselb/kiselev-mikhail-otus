@@ -2,16 +2,6 @@ import { ActionReducerMap, ActionReducer, MetaReducer, createReducer, on } from 
 import { actionTypes, expandDictionary, clearDictionary, changeSettings } from './actions';
 import { LOCAL_STORAGE_ITEM_KEY, IAppState, IDictionaryState, ISettingsState, dictionaryInitialState, settingsInitialState} from './state'
 
-// export const vocabularyReducer = createReducer(initialState,
-//     on (expandVocabulary, (state, { fragment }) => {
-//         const nextState = { ...state, vocabulary: state.vocabulary.concat(fragment) };
-//         return nextState;
-//     }),
-//     on (clearVocabulary, () => {
-//         const nextState = { vocabulary: [] };
-//         return nextState;
-//     }),
-// )
 export function dictionaryReducer(state = dictionaryInitialState, action): IDictionaryState {
     switch (action.type) {
       case actionTypes.atExpandDictionary:

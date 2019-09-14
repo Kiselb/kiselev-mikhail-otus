@@ -16,7 +16,7 @@ describe('TranslateTextService', () => {
     const text: string = "Hello World";
     const resultWordsSet: string[] = ["Привет", "Мир"];
     let eventCounter: number = 0;
-    service.translateText(text).subscribe(
+    service.translateText(text, false).subscribe(
       result => {
         expect(result[eventCounter].translate).toBe(resultWordsSet[eventCounter]);
         eventCounter++;
