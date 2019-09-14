@@ -64,6 +64,7 @@ export class GoComponent implements OnInit {
       case TEST_STATES.STATE_TEST:
         this.testMessage = this.words[this.wordsCounter].origin;
         this.buttonCaption = "Next";
+        this.answer.setValue('');
         break;
       case TEST_STATES.STATE_FAILED:
         this.testMessage = this.words[this.wordsCounter].origin + ": correct: " + this.words[this.wordsCounter].translate;
