@@ -1,6 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { Observable, range } from 'rxjs';
-import {toArray, mergeMap, take } from 'rxjs/operators';
+import { Component, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { Observable, range, from } from 'rxjs';
+import { toArray, mergeMap, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 
 import { IAppState } from './store/state'
@@ -22,6 +22,8 @@ export class AppComponent {
   dictionary$: Observable<any> = this.appStore.pipe(select(dictionary));
   testWords$: Observable<any> = null;
 
+  testFragmentAddition = new EventEmitter<any>();
+
   constructor(private appStore: Store<IAppState>, private translateService: TranslateTextService) {
   }
 
@@ -33,6 +35,7 @@ export class AppComponent {
           words: result
         }
         this.appStore.dispatch(expandDictionary({ fragment: fragment }));
+        this.testFragmentAddition.emit({ fragment: fragment });
       }
     );
   }
@@ -41,10 +44,10 @@ export class AppComponent {
   }
   onStartTest(flag: boolean) {
     (this.settingsWordsNumber$).subscribe(
-       value => this.testWords$ = range(0, value).pipe(
+       value =>  { this.testWords$ = range(0, value).pipe(
          mergeMap(() => { getRandomWord.release(); return this.appStore.pipe(select(getRandomWord)).pipe(take(1)) })
-       ).pipe(toArray())
-    );
+       ).pipe(toArray());
+    });
   }
   ngOnInit() {
   }

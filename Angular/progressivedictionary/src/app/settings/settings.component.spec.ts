@@ -71,4 +71,15 @@ describe('SettingsComponent', () => {
     expect(component.settingChanged.emit).toHaveBeenCalledWith({ language: 'ru', wordsNumber: '80' })
     done();
   });
+  it('should restore values', (done) => {
+    const language = component.settingsForm.controls['ctrlLanguage'].value;
+    const wordsNumber = component.settingsForm.controls['ctrlWordsNumber'].value;
+    component.settingsForm.controls['ctrlLanguage'].setValue('en');
+    component.settingsForm.controls['ctrlWordsNumber'].setValue('1000');
+    component.restoreSettings();
+    fixture.detectChanges();
+    expect(component.savedLanguage).toEqual(language);
+    expect(component.savedWordsNumber).toEqual(wordsNumber);
+    done();
+  });
 });

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-const TEST_STATES = {
+export const TEST_STATES = {
   STATE_START:  0,
   STATE_TEST:   1,
   STATE_FAILED: 2,
@@ -40,9 +40,9 @@ export class GoComponent implements OnInit {
         if (this.words.length === 0) return TEST_STATES.STATE_START;
         return TEST_STATES.STATE_TEST;
       case TEST_STATES.STATE_TEST:
-        if (this.wordsCounter === this.words.length) return TEST_STATES.STATE_FINISH;
         if ((this.answer.value).toUpperCase() !== this.words[this.wordsCounter].translate.toUpperCase()) return TEST_STATES.STATE_FAILED;
         this.wordsCounter++;
+        if (this.wordsCounter === this.words.length) return TEST_STATES.STATE_FINISH;
         return TEST_STATES.STATE_TEST;
       case TEST_STATES.STATE_FAILED:
         this.wordsCounter++;
@@ -71,7 +71,7 @@ export class GoComponent implements OnInit {
         this.buttonCaption = "Next";
         break;
       case TEST_STATES.STATE_FINISH:
-        this.testMessage = "Test terminated"
+        this.testMessage = "Test terminated";
         this.buttonCaption = "Start";
         break;
     }

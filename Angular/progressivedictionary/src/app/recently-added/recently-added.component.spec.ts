@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule, By } from '@angular/platform-browser'
 
 import { RecentlyAddedComponent } from './recently-added.component';
 import { SettingsComponent } from '../settings/settings.component';
@@ -41,5 +42,39 @@ describe('RecentlyAddedComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should change button text', () => {
+    let button = fixture.debugElement.query(By.css('button'));
+
+    button.nativeElement.click();
+    fixture.detectChanges();
+
+    if (component.mode) {
+      expect(button.nativeElement.textContent).toContain('Add');
+    } else {
+      expect(button.nativeElement.textContent).toContain('Save');
+    }
+    console.log(button.nativeElement.textContent)
+
+    button.nativeElement.click();
+    fixture.detectChanges();
+
+    button = fixture.debugElement.query(By.css('button'));
+    console.log(button.nativeElement.textContent)
+
+    if (component.mode) {
+      expect(button.nativeElement.textContent).toContain('Add');
+    } else {
+      expect(button.nativeElement.textContent).toContain('Save');
+    }
+  });
+  it('should emit event of fragment acceptance', (done) => {
+    component.fragmentAdded.subscribe(result => {
+      expect(result).toEqual('education');
+      done();
+    });
+    component.mode = false;
+    component.fragment.setValue('education');
+    component.toogleMode();
   });
 });
