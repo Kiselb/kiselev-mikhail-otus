@@ -14,14 +14,14 @@ export const TEST_STATES = {
   styleUrls: ['./go.component.css']
 })
 export class GoComponent implements OnInit {
-  @Input() set testWords(testWords: any[]) {
-    if (testWords) {
-      this.words = testWords;
+  @Input() set testWords(set: any[]) {
+    if (set) {
+      this.words = set;
       this.wordsCounter = 0;
       this.onCommand();
     }
   }
-  @Output() startTest = new EventEmitter<any>();
+  @Output() startTest = new EventEmitter<any>(true);
   @Output() testResult = new EventEmitter<any>();
 
   words: any[] = [];

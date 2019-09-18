@@ -47,21 +47,67 @@ describe('GoComponent', () => {
     expect(component.buttonCaption).toBe("Start");
     expect(component.testMessage.length).toBe(0);    
   });
-  it('should pass correct state sequense', () => {
+  it('should pass correct state sequense 1', (done) => {
     expect(component.testState).toBe(TEST_STATES.STATE_FINISH);
-    component.testState = TEST_STATES.STATE_START;
-    component.testWords = [{ origin: 'education', translate: 'образование' }, { origin: 'school', translate: 'школа' }];
-    expect(component.words.length).toBe(2);
-    expect(component.testState).toBe(TEST_STATES.STATE_TEST);
-    component.answer.setValue('?');
+    component.startTest.subscribe(() => {
+      expect(component.testState).toBe(TEST_STATES.STATE_START);
+      component.testWords = [{ origin: 'education', translate: 'образование' }, { origin: 'school', translate: 'школа' }];
+      expect(component.words.length).toBe(2);
+      expect(component.testState).toBe(TEST_STATES.STATE_TEST);
+      component.answer.setValue('?');
+      component.onCommand();
+      expect(component.testState).toBe(TEST_STATES.STATE_FAILED);
+      component.onCommand();
+      expect(component.testState).toBe(TEST_STATES.STATE_TEST);
+      component.answer.setValue('школа');
+      component.onCommand();
+      expect(component.testState).toBe(TEST_STATES.STATE_FINISH);
+      done();
+    });
     component.onCommand();
-    expect(component.testState).toBe(TEST_STATES.STATE_FAILED);
-    component.onCommand();
-    expect(component.testState).toBe(TEST_STATES.STATE_TEST);
-    component.answer.setValue('школа');
-    component.onCommand();
+  });
+  it('should pass correct state sequense 2', (done) => {
     expect(component.testState).toBe(TEST_STATES.STATE_FINISH);
-    component.onCommand()
+    component.startTest.subscribe(() => {
+      expect(component.testState).toBe(TEST_STATES.STATE_START);
+      component.testWords = [{ origin: 'education', translate: 'образование' }, { origin: 'school', translate: 'школа' }];
+      expect(component.words.length).toBe(2);
+      expect(component.testState).toBe(TEST_STATES.STATE_TEST);
+      component.answer.setValue('образование');
+      component.onCommand();
+      expect(component.testState).toBe(TEST_STATES.STATE_TEST);
+      component.answer.setValue('школа');
+      component.onCommand();
+      expect(component.testState).toBe(TEST_STATES.STATE_FINISH);
+      done();
+    });
+    component.onCommand();
+  });
+  it('should pass correct state sequense 3', (done) => {
+    expect(component.testState).toBe(TEST_STATES.STATE_FINISH);
+    component.startTest.subscribe(() => {
+      expect(component.testState).toBe(TEST_STATES.STATE_START);
+      component.testWords = [{ origin: 'education', translate: 'образование' }, { origin: 'school', translate: 'школа' }];
+      expect(component.words.length).toBe(2);
+      expect(component.testState).toBe(TEST_STATES.STATE_TEST);
+      component.answer.setValue('образование');
+      component.onCommand();
+      expect(component.testState).toBe(TEST_STATES.STATE_TEST);
+      component.answer.setValue('?');
+      component.onCommand();
+      expect(component.testState).toBe(TEST_STATES.STATE_FAILED);
+      component.onCommand();
+      expect(component.testState).toBe(TEST_STATES.STATE_FINISH);
+      done();
+    });
+    component.onCommand();
+  });
+  it('should pass correct state sequense 4', () => {
+    expect(component.testState).toBe(TEST_STATES.STATE_FINISH);
+    component.testWords = [];
+    expect(component.words.length).toBe(0);
+    expect(component.testState).toBe(TEST_STATES.STATE_START);
+    component.onCommand();
     expect(component.testState).toBe(TEST_STATES.STATE_START);
   });
 });

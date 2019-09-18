@@ -54,13 +54,11 @@ describe('RecentlyAddedComponent', () => {
     } else {
       expect(button.nativeElement.textContent).toContain('Save');
     }
-    console.log(button.nativeElement.textContent)
 
     button.nativeElement.click();
     fixture.detectChanges();
 
     button = fixture.debugElement.query(By.css('button'));
-    console.log(button.nativeElement.textContent)
 
     if (component.mode) {
       expect(button.nativeElement.textContent).toContain('Add');

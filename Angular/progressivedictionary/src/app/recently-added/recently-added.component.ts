@@ -17,7 +17,6 @@ export class RecentlyAddedComponent implements OnInit {
   constructor() {}
 
   toogleMode() {
-    console.log('toogle')
     this.mode = !this.mode;
     if (this.mode) {
       this.buttonText = "Add"
