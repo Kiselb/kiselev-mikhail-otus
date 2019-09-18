@@ -11,18 +11,18 @@ export interface ISettingsState {
     language: string;
     wordsNumber: number;
 }
-export const dictionaryInitialState: IDictionaryState = {
-   content: []
-}
+//export const dictionaryInitialState: IDictionaryState = {
+//   content: []
+//}
 export const settingsInitialState: ISettingsState = {
     language: "en",
     wordsNumber: 10
 }
-// export const dictionaryInitialState = (function(): IDictionaryState {
-//     const state = window.localStorage.getItem(LOCAL_STORAGE_ITEM_KEY);
-//     if (state === null) return { content: null };
-//     return { content: JSON.parse(state).dictionary.content };
-// })();
+ export const dictionaryInitialState = (function(): IDictionaryState {
+     const state = window.localStorage.getItem(LOCAL_STORAGE_ITEM_KEY);
+     if (state === null) return { content: [] };
+     return { content: JSON.parse(state).dictionary.content };
+ })();
 // export const settingsInitialState = (function(): ISettingsState {
 //    const state = window.localStorage.getItem(LOCAL_STORAGE_ITEM_KEY);
 //    if (state === null) return { language: "en", wordsNumber: 10 };
