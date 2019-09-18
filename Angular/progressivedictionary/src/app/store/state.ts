@@ -11,20 +11,19 @@ export interface ISettingsState {
     language: string;
     wordsNumber: number;
 }
-//export const dictionaryInitialState: IDictionaryState = {
-//   content: []
-//}
-export const settingsInitialState: ISettingsState = {
-    language: "en",
-    wordsNumber: 10
+export const fnDictionaryInitialState = function(): IDictionaryState {
+    const state = window.localStorage.getItem(LOCAL_STORAGE_ITEM_KEY);
+    if (state === null || state === "{}") return { content: [] };
+    return { content: JSON.parse(state).dictionary.content };
 }
- export const dictionaryInitialState = (function(): IDictionaryState {
-     const state = window.localStorage.getItem(LOCAL_STORAGE_ITEM_KEY);
-     if (state === null) return { content: [] };
-     return { content: JSON.parse(state).dictionary.content };
+export const fnSettingsInitialState = function(): ISettingsState {
+    const state = window.localStorage.getItem(LOCAL_STORAGE_ITEM_KEY);
+    if (state === null || state === "{}") return { language: "en", wordsNumber: 10 };
+    return JSON.parse(state).settings;
+ };
+export const dictionaryInitialState = (function(): IDictionaryState {
+    return fnDictionaryInitialState();
  })();
-// export const settingsInitialState = (function(): ISettingsState {
-//    const state = window.localStorage.getItem(LOCAL_STORAGE_ITEM_KEY);
-//    if (state === null) return { language: "en", wordsNumber: 10 };
-//    return JSON.parse(state).settings;
-// })();
+export const settingsInitialState = (function(): ISettingsState {
+    return fnSettingsInitialState();
+ })();
