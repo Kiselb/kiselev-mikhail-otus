@@ -1,0 +1,65 @@
+:host {
+    display: grid;
+    grid-template-areas: 
+        "commands"
+        "order-load-status"
+        "errors-report-link";
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+    grid-gap: 0px;
+    height: 100%;
+}
+.command-panel {
+    grid-area: commands;
+    justify-self: start;
+    align-self: start;
+    padding-top: 4vh;
+    padding-left: 4vw;
+    padding-bottom: 4vh;
+}
+.command {
+    font-size: 2em; /*24px; context 12px*/
+    color: #000;
+    cursor: pointer;
+}
+.command-place {
+    display: inline-block;
+    padding-right: 4vw;
+}
+.order-load-status {
+    grid-area: order-load-status;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+.file-load-status {
+    margin: 0 4vw 0 3vw;
+    padding: 1vh 0 1vh 1vw;
+}
+.file-load-status:nth-child(odd) {
+    background-color:#ECECEC;
+}
+.file-load-status__ico {
+    font-size: 2em;
+}
+.file-load-status__ico-place {
+    display: inline-block;
+    margin-right: 1vw;
+}
+.file-load-status__file-path {
+    font-size: 1.5em;
+}
+.file-load-status__file-path-place {
+    display: inline-block;
+}
+.file-load-status__file-path-active {
+    font-weight: normal;
+}
+.file_errors-report {
+    grid-area: errors-report-link;
+    font-size: 1.5em; /*24px; context 12px*/
+    padding-top: 4vh;
+    padding-left: 4vw;
+    padding-bottom: 4vh;
+    cursor: pointer;
+}

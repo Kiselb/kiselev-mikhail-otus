@@ -1,0 +1,11 @@
+<div class="prompt">
+    Регистрация
+</div>        
+<form class="register" [formGroup]="registerForm" #register>
+    <input type="text" class="register__input register__input-place" placeholder="Имя" formControlName="ctrlName" #registerName>
+    <input type="text" class="register__input register__input-place" placeholder="e-mail" formControlName="ctrlEMail" #registerEMail>
+    <input type="password" class="register__input register__input-place" placeholder="Пароль" formControlName="ctrlPassword" #registerPassword>
+    <input type="password" class="register__input register__input-place" placeholder="Пароль повторно" formControlName="ctrlPasswordConfirm" #registerPasswordConfirm>
+    <input type="button" class="register__button register__button-place" (click)="register()" value="Зарегистрироваться">
+</form>
+    

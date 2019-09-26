@@ -1,0 +1,6 @@
+<form class="login" [formGroup]="loginForm" #login>
+    <input type="text" class="login__input login__input-place" placeholder="<Введите имя>" formControlName="ctrlName" #loginName>
+    <input type="password" class="login__input login__input-place" placeholder="<Введите пароль>" formControlName="ctrlPassword" #loginPassword>
+    <input type="button" class="login__button login__button-place" (click)="tryLogin()" value="ВОЙТИ">
+    <a href="#" class="login__restore login__restore-place">ЗАБЫЛИ&nbsp;ПАРОЛЬ?</a>
+</form>

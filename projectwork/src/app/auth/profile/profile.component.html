@@ -1,0 +1,17 @@
+<div class="username">
+{{userName}}
+</div>
+<form class="profile" [formGroup]="profileForm" #profile>
+    <input type="text" class="profile__input profile__input-place" placeholder="Фамилия" formControlName="ctrlSurName" #profileSurName>
+    <input type="text" class="profile__input profile__input-place" placeholder="Имя" formControlName="ctrlFirstName" #profileFirstName>
+    <input type="text" class="profile__input profile__input-place" placeholder="Отчество" formControlName="ctrlMiddleName" #profileMiddleName>
+    <input type="text" class="profile__input profile__input-place" placeholder="Должность" formControlName="ctrlPosition" #profilePosition>
+    <input type="text" class="profile__input profile__input-place" placeholder="Телефон" formControlName="ctrlPhone" #profilePhone>
+    <input type="text" class="profile__input profile__input-place" placeholder="e-mail" formControlName="ctrlEMail" #profileEMail>
+    <input type="button" class="profile__button profile__button-place" (click)="saveProfile()" value="Сохранить">
+</form>
+<form class="password" [formGroup]="passwordForm" #password>
+    <input type="text" class="profile__input profile__input-place" placeholder="Пароль" formControlName="ctrlPassword" #profilePassword>
+    <input type="text" class="profile__input profile__input-place" placeholder="Подтверждение" formControlName="ctrlPasswordConfirm" #profilePasswordConfirm>
+    <input type="button" class="profile__button profile__button-place" (click)="savePassword()" value="Сохранить">
+</form>
