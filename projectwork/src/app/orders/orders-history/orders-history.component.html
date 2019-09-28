@@ -1,24 +1,31 @@
 <!--<p class="section-name">История заказов</p>-->
 <div class="orders-history__commands">
-    <input class="orders-history__input orders-history__input-place" placeholder="Образец поиска" [formControl]="search">
-    <button class="orders-history__button orders-history__button-place" (click)="serachOrders()">Найти</button>
+    <input class="orders-history__input orders-history__input-place" placeholder="Образец поиска" [formControl]="ctrlSearch">
+    <button class="orders-history__button orders-history__button-place" (click)="viewSelectedOrders()">Найти</button>
     <button class="orders-history__button orders-history__button-place" (click)="viewAllOrders()">Сбросить</button>
 </div>
 <div class="orders-history__list">
     <div *ngFor="let element of taxonomy" class="orders-history__list-year">
-        <span class="orders-history__list-year-header">{{element.year}}</span>
+        <span class="orders-history__list-year-header">{{element.year}} год</span>
         <div *ngFor="let week of element.weeks" class="orders-history__list-week">
-            <span class="orders-history__list-week-header">{{week}}</span>
+            <span class="orders-history__list-week-header">{{week}}-я неделя</span>
             <div *ngFor="let order of getWeekYearOrders(element.year, week)" class="orders-history__list-order">
-                {{order.orderId}}
+                <span class="orders-history__list-order-header">{{order.orderId}}</span>
             </div>
         </div>
     </div>
 </div>
-<div class="orders-history__search-result-text">
+<!--<div class="orders-history__search-result-text">
 
 </div>
 <div class="orders-history__search-result-number">
 
+</div>-->
+<div class="order-history__options">
+    <label class="order-history__options-open-mode order-history__options-open-mode-place checkbox-custom__container">
+        <input type="checkbox" class="checkbox-custom__input" [formControl]="ctrlSeparateMode">
+        <span class="checkbox-custom__checkmark"></span>
+        Открывать заказ в отдельном окне
+    </label>
 </div>
     

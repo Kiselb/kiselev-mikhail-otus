@@ -119,8 +119,10 @@ export class OrdersHistoryComponent implements OnInit {
       },
     },
   ];
-  search = new FormControl('');
 
+  ctrlSearch = new FormControl('');
+  ctrlSeparateMode = new FormControl('');
+  
   constructor() { }
 
   buildTaxonomy(data: any[]): any[] {
@@ -156,7 +158,19 @@ export class OrdersHistoryComponent implements OnInit {
     });
   }
 
-  serachOrders() {}
+  viewSelectedOrders(): any[] {
+    let pattern: string = this.ctrlSearch.value;
+    pattern = pattern.trim();
+    if (pattern.length > 0) {
+      if (!/\D/.test(pattern)) { // Select orders for which the number is accordance to the pattern
+
+      } else { // Select orders for which pattern is matched for any text order attributes, include articles text attributes
+
+      }
+    }
+    return [];
+  }
+  viewAllOrders() {}
 
   ngOnInit() {
     this.taxonomy = this.buildTaxonomy(this.mockData);

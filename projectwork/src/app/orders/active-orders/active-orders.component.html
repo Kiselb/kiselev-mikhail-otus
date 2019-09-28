@@ -1,1 +1,20 @@
-<p>active-orders works!</p>
+<div class="command-panel">
+    <a class="command command-place">Главная</a>
+    <a class="command command-place">Редактировать</a>
+    <a class="command command-place">О заказе</a>
+</div>
+<div class="orders-list">
+    <div class="orders-list__order" *ngFor="let order of getMockFiles()" (click)="setCurrentOrderId(order.orderId)" [attr.orderId]="order.orderId" [ngClass]="{'orders-list__order-current': order.orderId == getCurrentOrderId()}">
+        <p class="orders-list__order-id orders-list__order-id-place orders-list__order-id-active">{{order.orderId}}</p>
+        <p class="orders-list__order-attr orders-list__order-attr-place">{{order.sumValue}}</p>
+        <p class="orders-list__order-attr orders-list__order-attr-place">{{order.sumCurrency}}</p>
+    </div>
+</div>
+<div class="orders__options">
+    <label class="orders__options-open-mode orders__options-open-mode-place checkbox-custom__container">
+        <input type="checkbox" class="checkbox-custom__input" [formControl]="ctrlSeparateMode">
+        <span class="checkbox-custom__checkmark"></span>
+        Открывать заказ в отдельном окне
+    </label>
+</div>
+        

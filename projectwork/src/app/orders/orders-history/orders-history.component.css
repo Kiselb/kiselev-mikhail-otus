@@ -2,8 +2,9 @@
     display: grid;
     grid-template-areas: 
         "commands"
-        "orders";
-    grid-template-rows: auto 1fr;
+        "orders"
+        "options";
+    grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr;
     grid-gap: 0px;
     height: 100%;
@@ -58,34 +59,87 @@
     overflow-x: hidden;
     overflow-y: auto;
     white-space: nowrap;
-    background-color: red;
 }
 .orders-history__list-year {
     font-size: 1.5em;
-    margin: 2vh 2vw 0 2vw;
     background-color: #FAFAFA;;
-    background-color:lightgreen;
 }
 .orders-history__list-year-header {
     display: inline-block;
-    font-size: 1em;
+    font-size: 2em;
+    padding: 2vh 0 2vh 3vw;
 }
 .orders-history__list-week {
-    font-size: 1em;
-    padding: 1vh 0 0 2vw;
+    padding: 0 0 0 2vw;
 }
 .orders-history__list-week-header {
     display: inline-block;
-    font-size: 1em;
+    background-color:#E2E2E2;
+    width: 100%;
+    padding: 1vh 0 1vh 1vw;
 }
 .orders-history__list-order {
-    font-size: 1em;
     padding: 1vh 0 1vh 1vw;
-    background-color: lightblue;
 }
 .orders-history__list-order-header {
-
+    display: inline-block;
+    cursor: pointer;
 }
 .orders-history__list-order:nth-child(odd) {
-    background-color:#ECECEC;
+    background-color:#F2F2F2;
+}
+.order-history__options {
+    grid-area: options;
+    padding: 4vh 0 4vh 4vw;
+}
+.order-history__options-open-mode {
+    font-size: 1.5em; /*24px; context 12px*/
+}
+/*
+    Custom CheckBox
+    https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
+*/
+.checkbox-custom__container {
+    position: relative;
+    padding-left: 2vw;
+    user-select: none;
+}
+.checkbox-custom__input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;    
+}
+.checkbox-custom__checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    margin-right: 1vw;
+    background-color: #eee;
+}
+.checkbox-custom__container:hover input ~ .checkbox-custom__checkmark {
+    background-color: #ccc;
+}
+.checkbox-custom__input:checked ~ .checkbox-custom__checkmark {
+    background-color: #2196F3 !important;
+} 
+.checkbox-custom__checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.checkbox-custom__input:checked ~ .checkbox-custom__checkmark:after {
+    display: block;
+} 
+.checkbox-custom__checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
 }
