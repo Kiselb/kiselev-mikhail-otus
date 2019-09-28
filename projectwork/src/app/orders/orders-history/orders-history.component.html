@@ -1,3 +1,24 @@
 <!--<p class="section-name">История заказов</p>-->
-<input class="orders-history__input orders-history__input-place" placeholder="Образец поиска" [formControl]="search">
-<button class="orders-history__button orders-history__button-place" (click)="serachOrders()">Найти</button>
+<div class="orders-history__commands">
+    <input class="orders-history__input orders-history__input-place" placeholder="Образец поиска" [formControl]="search">
+    <button class="orders-history__button orders-history__button-place" (click)="serachOrders()">Найти</button>
+    <button class="orders-history__button orders-history__button-place" (click)="viewAllOrders()">Сбросить</button>
+</div>
+<div class="orders-history__list">
+    <div *ngFor="let element of taxonomy" class="orders-history__list-year">
+        <span class="orders-history__list-year-header">{{element.year}}</span>
+        <div *ngFor="let week of element.weeks" class="orders-history__list-week">
+            <span class="orders-history__list-week-header">{{week}}</span>
+            <div *ngFor="let order of getWeekYearOrders(element.year, week)" class="orders-history__list-order">
+                {{order.orderId}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="orders-history__search-result-text">
+
+</div>
+<div class="orders-history__search-result-number">
+
+</div>
+    

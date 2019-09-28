@@ -11,6 +11,7 @@ export class CreateOrderComponent implements OnInit {
   mockFiles = [
     {
       key: 1,
+      state: true,
       path: "C:\\Orders\\Legion\\2019\\09\\Konica_Minolta\\Order_201909_1.xlsx", // Loaded full file name
       sheets: [
         {
@@ -103,6 +104,7 @@ export class CreateOrderComponent implements OnInit {
     }, // File
     {
       key: 2,
+      state: true,
       path: "C:\\Orders\\Legion\\2019\\09\\Konica_Minolta\\Order_201909_2.xlsx", // Loaded full file name
       sheets: [
         {
@@ -195,6 +197,7 @@ export class CreateOrderComponent implements OnInit {
     }, // File
     {
       key: 3,
+      state: true,
       path: "C:\\Orders\\Legion\\2019\\09\\Konica_Minolta\\Order_201909_1.xlsx", // Loaded full file name
       sheets: [
         {
@@ -223,6 +226,7 @@ export class CreateOrderComponent implements OnInit {
     }, // File
     {
       key: 4,
+      state: true,
       path: "C:\\Orders\\Legion\\2019\\09\\Konica_Minolta\\Order_201909_2.xlsx", // Loaded full file name
       sheets: [
         {
@@ -251,6 +255,7 @@ export class CreateOrderComponent implements OnInit {
     }, // File
     {
       key: 5,
+      state: false,
       path: "C:\\Orders\\Legion\\2019\\09\\Konica_Minolta\\Order_201909_4.xlsx", // Loaded full file name
       sheets: [
         {
@@ -269,6 +274,9 @@ export class CreateOrderComponent implements OnInit {
   ];
   getMockFiles() {
     return this.mockFiles.filter((file) => (this.getFileErrorStatus(file) || (!this.getFileErrorStatus(file) && !this.getViewMode())));
+  }
+  getFileImportStatus(file) {
+    return file.state;
   }
   getFileErrorStatus(file) {
     return file.sheets.reduce((accumulator, sheet) => accumulator && (sheet.errors.length === 0) , true);

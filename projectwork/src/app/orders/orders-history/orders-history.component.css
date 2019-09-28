@@ -1,13 +1,19 @@
+:host {
+    display: grid;
+    grid-template-areas: 
+        "commands"
+        "orders";
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+    grid-gap: 0px;
+    height: 100%;
+}
 ::placeholder {
     color: #BBB;
     opacity: 1;
 }
-.section-name {
-    margin-top: 2vh;
-    margin-left: 2vh;
-    font-family: inherit;
-    font-size: 1.5em;
-    text-align: left;
+.orders-history__commands {
+    grid-area: commands;
 }
 .orders-history__input {
     width: 25em;
@@ -38,7 +44,7 @@
 }
 .orders-history__button-place {
     display: inline-block;
-    margin: 0 auto 0.7142857142857143em auto; /*10px*/;
+    margin: 0 1vw 0 0.15vw;
 }
 .orders-history__button-place:hover {
     color: #000 !important;
@@ -46,4 +52,40 @@
 .orders-history__button-place:active:hover {
     color: #FFF !important;
     background-color:#000 !important;
+}
+.orders-history__list {
+    grid-area: orders;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: nowrap;
+    background-color: red;
+}
+.orders-history__list-year {
+    font-size: 1.5em;
+    margin: 2vh 2vw 0 2vw;
+    background-color: #FAFAFA;;
+    background-color:lightgreen;
+}
+.orders-history__list-year-header {
+    display: inline-block;
+    font-size: 1em;
+}
+.orders-history__list-week {
+    font-size: 1em;
+    padding: 1vh 0 0 2vw;
+}
+.orders-history__list-week-header {
+    display: inline-block;
+    font-size: 1em;
+}
+.orders-history__list-order {
+    font-size: 1em;
+    padding: 1vh 0 1vh 1vw;
+    background-color: lightblue;
+}
+.orders-history__list-order-header {
+
+}
+.orders-history__list-order:nth-child(odd) {
+    background-color:#ECECEC;
 }

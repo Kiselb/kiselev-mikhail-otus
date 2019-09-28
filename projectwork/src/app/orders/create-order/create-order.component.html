@@ -4,8 +4,9 @@
 </div>
 <div class="order-load-status">
     <div class="file-load-status" *ngFor="let file of getMockFiles()" (click)="setCurrentFile(file.key)" [attr.key]="file.key" [ngClass]="{'file-load-status-current': file.key == getCurrentFile()}">
-        <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-ok" *ngIf="getFileErrorStatus(file)">&#10004;</p>
-        <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-failed" *ngIf="!getFileErrorStatus(file)">&#9888;</p>
+        <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-ok" *ngIf="getFileErrorStatus(file) && getFileImportStatus(file)">&#10004;</p>
+        <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-failed" *ngIf="!getFileErrorStatus(file) && getFileImportStatus(file)">&#9888;</p>
+        <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-ok" *ngIf="!getFileImportStatus(file)">&#10042;</p>
         <p class="file-load-status__file-path file-load-status__file-path-place file-load-status__file-path-active">{{file.path}}</p>
         <p class="file-load-status__file-sheets file-load-status__file-sheets-place file-load-status__file-sheets-active">{{getFileSheetsInfo(file)}}</p>
     </div>
