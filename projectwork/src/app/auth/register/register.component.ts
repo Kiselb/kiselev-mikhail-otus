@@ -15,9 +15,13 @@ export class RegisterComponent implements OnInit {
     ctrlPasswordConfirm: new FormControl(),
   });
 
-  constructor() { }
+  constructor() {
+    
+  }
 
-  register() { }
+  register() {
+
+  }
 
   ngOnInit() {
   }
