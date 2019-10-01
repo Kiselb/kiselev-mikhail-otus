@@ -1,0 +1,99 @@
+:host {
+    display: grid;
+    grid-template-areas: 
+        "commands"
+        "settings"
+        "actions"
+        "messages";
+    grid-template-rows: auto 1fr auto auto;
+    grid-template-columns: 1fr;
+    grid-gap: 0px;
+    height: 100%;
+}
+.command-panel {
+    grid-area: commands;
+    justify-self: start;
+    align-self: start;
+    padding-top: 4vh;
+    padding-left: 4vw;
+}
+.command {
+    font-size: 2em; /*24px; context 12px*/
+    color: #000;
+    cursor: pointer;
+}
+.command-place {
+    display: inline-block;
+    padding-right: 4vw;
+}
+.settings-panel {
+    grid-area: settings;
+    margin: 4vh 0 0 4vw;
+    color: #000;
+}
+.settings-panel__header {
+    font-size: 2em;
+}
+.settings-panel__header-mode {
+    display: block;
+    font-size: 1.5em;
+    padding: 1em 0 0 2em;
+}
+.settings-panel__header__manual {
+    font-size: 1.3em;
+    display: grid;
+    grid-template-areas: 
+        "rowstartheader rowstartvalue"
+        "rowstopheader rowstopvalue"
+        "columnarticleheader columnarticlevalue"
+        "columnquantityheader columnquantityvalue";
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 15em 5em;
+    grid-gap: 0px;
+}
+.settings-panel__header__manual-sheet {
+    font-size: 1em;
+    grid-area: sheet;
+}
+.settings-panel__header__manual-sheet-select {
+    font: inherit;
+    font-size: inherit;    
+}
+.settings-panel__header__manual-param-header-1 {
+    font-size: 1em;
+    grid-area: rowstartheader;
+}
+.settings-panel__header__manual-param-value-1 {
+    font-size: 1em;
+    grid-area: rowstartvalue;
+}
+.settings-panel__header__manual-param-header-2 {
+    font-size: 1em;
+    grid-area: rowstopheader;
+}
+.settings-panel__header__manual-param-value-2 {
+    font-size: 1em;
+    grid-area: rowstopvalue;
+}
+.settings-panel__header__manual-param-header-3 {
+    font-size: 1em;
+    grid-area: columnarticleheader;
+}
+.settings-panel__header__manual-param-value-3 {
+    font-size: 1em;
+    grid-area: columnarticlevalue;
+}
+.settings-panel__header__manual-param-header-4 {
+    font-size: 1em;
+    grid-area: columnquantityheader;
+}
+.settings-panel__header__manual-param-value-4 {
+    font-size: 1em;
+    grid-area: columnquantityvalue;
+}
+.actions-panel {
+    grid-area: actions;
+}
+.messages-panel {
+    grid-area: messages;
+}

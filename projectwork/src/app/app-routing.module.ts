@@ -8,6 +8,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { CreateOrderComponent } from './orders/create-order/create-order.component';
 import { ActiveOrdersComponent } from './orders/active-orders/active-orders.component';
 import { OrdersHistoryComponent } from './orders/orders-history/orders-history.component';
+import { ImportOrderComponent } from './orders/import-order/import-order.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'create', component: CreateOrderComponent},
   {path: 'active', component: ActiveOrdersComponent},
   {path: 'history', component: OrdersHistoryComponent},
+  {path: 'import', component: ImportOrderComponent},
 ];
 
 @NgModule({

@@ -14,6 +14,7 @@ import { OrdersHistoryComponent } from './orders/orders-history/orders-history.c
 import { ActiveOrdersComponent } from './orders/active-orders/active-orders.component';
 import { EditOrderComponent } from './orders/edit-order/edit-order.component';
 import { PlaceOrderComponent } from './orders/place-order/place-order.component';
+import { ImportOrderComponent } from './orders/import-order/import-order.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { PlaceOrderComponent } from './orders/place-order/place-order.component'
     OrdersHistoryComponent,
     ActiveOrdersComponent,
     EditOrderComponent,
-    PlaceOrderComponent
+    PlaceOrderComponent,
+    ImportOrderComponent
   ],
   imports: [
     BrowserModule,
