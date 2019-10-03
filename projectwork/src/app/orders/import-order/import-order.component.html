@@ -1,19 +1,19 @@
 <div class="command-panel">
-        <a class="command command-place">Назад</a>
-        <div class="command command-place">Файл</div>
-        <div class="command command-place"></div>
+    <a class="command command-place">Назад</a>
+    <a class="command command-place" (click)="uploadFile()">Загрузить</a>
+    <div class="command command-place" (click)="openFileDialog()">Файл
+        <form class="command__file" [formGroup]="selectFile">
+            <input type="file" formControlName="ctrlFileName" (change)="onChangeFile($event)" name="file" #selectfilesinput>
+        </form>
+    </div>
+    <div class="command command-place"></div>
 </div>
 <form class="settings-panel">
     <p class="settings-panel__header">Настройки загрузки</p>
     <label class="settings-panel__header-mode"><input type="radio" name="mode" value="auto">Авто</label>
     <label class="settings-panel__header-mode"><input type="radio" name="mode" value="manual">Ручные</label>
     <div class="settings-panel__header__manual">
-        <!--<label class="settings-panel__header__manual-sheet">Лист:<select class="settings-panel__header__manual-sheet-select" size="1" name="sheet">
-            <option>Лист1</option>
-            <option>Лист2</option>
-            <option>Лист3</option>
-            <option>Лист4</option>
-        </select></label>-->
+        <label class="settings-panel__header__manual-param-header-0">Лист:</label><input class="settings-panel__header__manual-param-value-0" type="text">
         <label class="settings-panel__header__manual-param-header-1">Начальная строка данных:</label><input class="settings-panel__header__manual-param-value-1" type="number">
         <label class="settings-panel__header__manual-param-header-2">Конечная строка данных:</label><input class="settings-panel__header__manual-param-value-2" type="number">
         <label class="settings-panel__header__manual-param-header-3">Столбец Артикула:</label><input class="settings-panel__header__manual-param-value-3" type="number">
@@ -25,4 +25,19 @@
 </div>
 <div class="messages-panel">
 
+</div>
+<div class="process-indicator">
+    <div class="process-indicator__empty1">test</div>
+    <div class="process-indicator__empty2">test</div>
+    <div class="process-indicator__empty3">test</div>
+    <div class="process-indicator__mark">
+        <div class="process-indicator__mark-circle process-indicator__mark-circle-1"></div>
+        <div class="process-indicator__mark-circle process-indicator__mark-circle-2"></div>
+        <div class="process-indicator__mark-circle process-indicator__mark-circle-3"></div>
+        <div class="process-indicator__mark-circle process-indicator__mark-circle-4"></div>
+        <div class="process-indicator__mark-circle process-indicator__mark-circle-5"></div>
+        <div class="process-indicator__mark-circle process-indicator__mark-circle-6"></div>
+        <div class="process-indicator__mark-circle process-indicator__mark-circle-7"></div>
+        <div class="process-indicator__mark-circle process-indicator__mark-circle-8"></div>
+    </div>
 </div>
