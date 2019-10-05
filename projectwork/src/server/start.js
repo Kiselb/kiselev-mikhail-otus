@@ -1,9 +1,31 @@
 const express = require('express')
 const path = require('path')
 const fileUpload = require('express-fileupload');
+const ExcelJS = require('exceljs');
+
+const mssql = require('mssql');
+const mssql_config = { //'mssql://webuser:wup@ssw0rd@nacer/aspb'
+    server: "nacer",
+    authentication: { options: { userName: "webuser", password: "wup@ssw0rd" }},
+    options: { database: "aspb", useUTC: false } 
+};
 const app = express()
 const port = 3000; //80
 
+async function loadSheet(xml) {
+    try {
+        const pool = await new mssql.ConnectionPool(mssql_config).connect();
+        const request = await new mssql.Request(pool);
+
+        request.input('xml', mssql.Xml, xml);
+        const result = await request.execute('B2BX_OrderRegisterXML');
+
+        return result.recordset;
+    }
+    catch(error) {
+        console.log('Error: ' + error);
+    }
+}
 app.use(express.static(path.join(__dirname + '/b2bx')))
 app.use(fileUpload());
 
@@ -18,12 +40,43 @@ app.post('/upload', function(req, res) {
         return res.status(400).send('No files were uploaded');
     }
     let file = req.files.file;
-
-    file.mv('I:\\USR\\MDB\\Misc\\' + file.name, function(err) {
-        if (err) {
-            return res.status(500).send(err);
+    //console.dir(req);
+    file.mv('I:\\USR\\MDB\\Misc\\TEST\\' + file.name, function(error) {
+        if (error) {
+            return res.status(500).send(`{ "error": ${error} }`);
         }
-        res.status(200).send('{ "Status": "OK" }');
+        console.log("Load workbook");
+        var workbook = new ExcelJS.Workbook();
+        var xml = "<order>\n<header>\n<orderid>100000</orderid>\n</<header>\n<details>";
+        workbook.xlsx.readFile('I:\\USR\\MDB\\Misc\\TEST\\' + file.name)
+            .then(function() {
+                const worksheet = workbook.getWorksheet('Лист1');
+                if (worksheet) {
+                    worksheet.eachRow(function(row, rowNumber) {
+                        let xml_row = `<rownumber>${rowNumber}</rownumber>`;
+                        row.eachCell({includeEmpty: true}, function(cell, colNumber) {
+                            if (colNumber === +req.body.columnarticle) {
+                                xml_row = xml_row + `<partid>${cell.value}</partid>`;
+                            }
+                            if (colNumber === +req.body.columnquantity) {
+                                xml_row = xml_row + `<quantity>${cell.value}</quantity>`;
+                            }
+                        })
+                        // Library bug compensation. Method row.eachCell is not called for last in row empty cell. Option includeEmpty is set
+                        if (xml_row.indexOf("<partid>") < 0) { xml_row = xml_row + "<partid>null</partid>";  }
+                        if (xml_row.indexOf("<quantity>") < 0) { xml_row = xml_row + "<quantity>null</quantity>";  }
+                        xml = xml + "<row>" + xml_row + "</row>\n";
+                    });
+                } else {
+                    return res.status(400).send(`{ "error": "Указанный лист отсутствует в файле" }`);
+                }
+                xml = xml + "</details>\n</order>"
+                console.log(xml);
+                res.status(200).send('{ "status": "OK" }');
+            },
+            function(error) {
+                return res.status(500).send(`{ "error": ${error} }`);
+            })
     });
 });
 

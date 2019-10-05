@@ -22,10 +22,23 @@
     font-size: 2em; /*24px; context 12px*/
     color: #000;
     cursor: pointer;
+    text-decoration: none;
+}
+.command:hover {
+    color: #FCAC45;
+}
+.command:active:hover {
+    color: #000;
 }
 .command-place {
     display: inline-block;
     padding-right: 4vw;
+}
+.command-faded {
+    color: #ACACAC;
+}
+.command-disabled {
+    color: #ACACAC !important;
 }
 .command__file {
     display: none;
@@ -55,46 +68,61 @@
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-template-columns: 15em 5em;
     grid-gap: 0px;
+    margin: 1.5vh 0 0 8vw;
 }
-.settings-panel__header__manual-param-header-0 {
-    font-size: 1em;
+.manual-param-header {
+    font-size: 0.8974358974358974em;
+}
+.manual-param-value {
+    font-size: 0.8974358974358974em;
+    border: 1px solid #CECECE;
+    border-radius: 2px;
+    text-align: right;
+}
+.manual-param-header-0-place {
     grid-area: sheet-header;
+    align-self: center;
+    justify-self: start;
 }
-.settings-panel__header__manual-param-value-0 {
-    font-size: 1em;
+.manual-param-value-0-place {
     grid-area: sheet-value;
+    margin: 0.25em 0 0.25em 0;
 }
-.settings-panel__header__manual-param-header-1 {
-    font-size: 1em;
+.manual-param-header-1-place {
     grid-area: row-start-header;
+    align-self: center;
+    justify-self: start;
 }
-.settings-panel__header__manual-param-value-1 {
-    font-size: 1em;
+.manual-param-value-1-place {
     grid-area: row-start-value;
+    margin: 0.25em 0 0.25em 0;
 }
-.settings-panel__header__manual-param-header-2 {
-    font-size: 1em;
+.manual-param-header-2-place {
     grid-area: row-stop-header;
+    align-self: center;
+    justify-self: start;
 }
-.settings-panel__header__manual-param-value-2 {
-    font-size: 1em;
+.manual-param-value-2-place {
     grid-area: row-stop-value;
+    margin: 0.25em 0 0.25em 0;
 }
-.settings-panel__header__manual-param-header-3 {
-    font-size: 1em;
+.manual-param-header-3-place {
     grid-area: column-article-header;
+    align-self: center;
+    justify-self: start;
 }
-.settings-panel__header__manual-param-value-3 {
-    font-size: 1em;
+.manual-param-value-3-place {
     grid-area: column-article-value;
+    margin: 0.25em 0 0.25em 0;
 }
-.settings-panel__header__manual-param-header-4 {
-    font-size: 1em;
+.manual-param-header-4-place {
     grid-area: column-quantity-header;
+    align-self: center;
+    justify-self: start;
 }
-.settings-panel__header__manual-param-value-4 {
-    font-size: 1em;
+.manual-param-value-4-place {
     grid-area: column-quantity-value;
+    margin: 0.25em 0 0.25em 0;
 }
 .actions-panel {
     grid-area: actions;
@@ -107,7 +135,7 @@
     grid-template-areas: 
         "empty1 empty2 empty3"
         "empty4 indicator empty5"
-        "empty6 empty7 empty8";
+        "empty6 message empty8";
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 2fr 1fr 2fr;
     grid-gap: 0px;
@@ -118,82 +146,92 @@
     width: 100%;
     background-color: rgba(255,255,255,0.75);
 }
-
-.process-indicator__empty1 {
-    grid-area: empty1;
-    background-color: rgba(255,255,255,0.1);
+.process-indicator-ok {
+    grid-area: message;
+    align-self: start;
+    justify-self: center;
+    display: block;
+    text-align: center;
+    font-size: 1.5em;
 }
-.process-indicator__empty2 {
-    grid-area: empty2;
-    background-color: rgba(255,255,255,0.1);
+.process-indicator-failed {
+    grid-area: message;
+    align-self: start;
+    justify-self: center;
+    display: block;
+    text-align: center;
+    font-size: 1.5em;
 }
-.process-indicator__empty3 {
-    grid-area: empty3;
-    background-color: rgba(255,255,255,0.1);
+.process-indicator-button {
+    font-size: 1em;
+    margin: 1vh 0 0 0;
+    padding: 0.5vh 1vw 0.5vh 1vw;
 }
 /*
     Spin indicator
+
+    https://icons8.com/cssload/en/spinners
 */
 .process-indicator__mark {
     grid-area: indicator;
-	position:relative;
-	width:10.41666666666667em; /*125px;*/
-	height:10.41666666666667em; /*125px;*/
-	margin:auto;
-	transform:scale(0.6);
+	position: relative;
+	width: 10.41666666666667em; /*125px;*/
+	height: 10.41666666666667em; /*125px;*/
+	margin: auto;
+	transform: scale(0.6);
 }
 .process-indicator__mark-circle {
-	position:absolute;
-	background-color:rgb(255,255,255);
-	height:1.833333333333333em; /*22px;*/
-	width:1.833333333333333em; /*22px;*/
-	border-radius:1em; /*12px;*/
-	animation-name:f_fadeG;
-	animation-duration:1.2s;
-	animation-iteration-count:infinite;
-	animation-direction:normal;
+	position: absolute;
+	background-color: rgb(255,255,255);
+	height: 1.833333333333333em; /*22px;*/
+	width: 1.833333333333333em; /*22px;*/
+	border-radius: 1em; /*12px;*/
+	animation-name: fade-point;
+	animation-duration: 1.2s;
+	animation-iteration-count: infinite;
+	animation-direction: normal;
 }
 .process-indicator__mark-circle-1{
-	left:0;
-	top:4.25em; /*51px;*/
-	animation-delay:0.45s;
+	left: 0;
+	top: 4.25em; /*51px;*/
+	animation-delay: 0.45s;
 }
 .process-indicator__mark-circle-2{
-	left:1.25em; /*15px;*/
-	top:1.25em; /*15px;*/
-	animation-delay:0.6s;
+	left: 1.25em; /*15px;*/
+	top: 1.25em; /*15px;*/
+	animation-delay: 0.6s;
 }
 .process-indicator__mark-circle-3{
-	left:4.25em; /*51px;*/
-	top:0;
-	animation-delay:0.75s;
+	left: 4.25em; /*51px;*/
+	top: 0;
+	animation-delay: 0.75s;
 }
 .process-indicator__mark-circle-4{
-	right:1.25em; /*15px;*/
-	top:1.25em; /*15px;*/
-	animation-delay:0.9s;
+	right: 1.25em; /*15px;*/
+	top: 1.25em; /*15px;*/
+	animation-delay: 0.9s;
 }
 .process-indicator__mark-circle-5{
-	right:0;
-	top:4.25em; /*51px;*/
-	animation-delay:1.05s;
+	right: 0;
+	top: 4.25em; /*51px;*/
+	animation-delay: 1.05s;
 }
 .process-indicator__mark-circle-6{
-	right:1.25em; /*15px;*/
-	bottom:1.25em; /*15px;*/
-	animation-delay:1.2s;
+	right: 1.25em; /*15px;*/
+	bottom: 1.25em; /*15px;*/
+	animation-delay: 1.2s;
 }
 .process-indicator__mark-circle-7{
-	left:4.25em; /*51px;*/
-	bottom:0;
-	animation-delay:1.35s;
+	left: 4.25em; /*51px;*/
+	bottom: 0;
+	animation-delay: 1.35s;
 }
 .process-indicator__mark-circle-8{
-	left:1.25em; /*15px;*/
-	bottom:1.25em; /*15px;*/
-	animation-delay:1.5s;
+	left: 1.25em; /*15px;*/
+	bottom: 1.25em; /*15px;*/
+	animation-delay: 1.5s;
 }
-@keyframes f_fadeG {
-	0%  { background-color:rgb(0,0,0); }
-	100%{ background-color:rgb(255,255,255); }
+@keyframes fade-point {
+	0%  { background-color: rgb(0,0,0); }
+	100%{ background-color: rgb(255,255,255); }
 }

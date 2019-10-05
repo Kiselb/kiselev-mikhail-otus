@@ -1,23 +1,23 @@
 <div class="command-panel">
-    <a class="command command-place">Назад</a>
-    <a class="command command-place" (click)="uploadFile()">Загрузить</a>
+    <a [routerLink]="['/create']" class="command command-place">Назад</a>
+    <a class="command command-place" (click)="uploadFile()" [class.command-disabled]="fgImportParameters.invalid || fgSelectFile.invalid">Загрузить</a>
     <div class="command command-place" (click)="openFileDialog()">Файл
-        <form class="command__file" [formGroup]="selectFile">
-            <input type="file" formControlName="ctrlFileName" (change)="onChangeFile($event)" name="file" #selectfilesinput>
+        <form class="command__file" [formGroup]="fgSelectFile">
+            <input type="file" formControlName="ctrlFileName" (change)="onChangeFile($event)" name="file" #selectfilesinput required>
         </form>
     </div>
-    <div class="command command-place"></div>
+    <div class="command command-place command-faded">{{(formDataSendFile)?(formDataSendFile.get('file').name):("")}}</div>
 </div>
-<form class="settings-panel">
+<form class="settings-panel" [formGroup]="fgImportParameters">
     <p class="settings-panel__header">Настройки загрузки</p>
     <label class="settings-panel__header-mode"><input type="radio" name="mode" value="auto">Авто</label>
-    <label class="settings-panel__header-mode"><input type="radio" name="mode" value="manual">Ручные</label>
+    <label class="settings-panel__header-mode"><input type="radio" name="mode" value="manual" checked>Ручные</label>
     <div class="settings-panel__header__manual">
-        <label class="settings-panel__header__manual-param-header-0">Лист:</label><input class="settings-panel__header__manual-param-value-0" type="text">
-        <label class="settings-panel__header__manual-param-header-1">Начальная строка данных:</label><input class="settings-panel__header__manual-param-value-1" type="number">
-        <label class="settings-panel__header__manual-param-header-2">Конечная строка данных:</label><input class="settings-panel__header__manual-param-value-2" type="number">
-        <label class="settings-panel__header__manual-param-header-3">Столбец Артикула:</label><input class="settings-panel__header__manual-param-value-3" type="number">
-        <label class="settings-panel__header__manual-param-header-4">Столбец Количеств:</label><input class="settings-panel__header__manual-param-value-4" type="number">
+        <label class="manual-param-header manual-param-header-0-place">Лист:</label><input class="manual-param-value manual-param-value-0-place" type="text" formControlName="ctrlSheetName">
+        <label class="manual-param-header manual-param-header-1-place">Начальная строка данных:</label><input class="manual-param-value manual-param-value-1-place" type="number" formControlName="ctrlFirstRow">
+        <label class="manual-param-header manual-param-header-2-place">Конечная строка данных:</label><input class="manual-param-value manual-param-value-2-place" type="number" formControlName="ctrlLastRow">
+        <label class="manual-param-header manual-param-header-3-place">Столбец Артикула:</label><input class="manual-param-value manual-param-value-3-place" type="number" formControlName="ctrlColumnArticle">
+        <label class="manual-param-header manual-param-header-4-place">Столбец Количеств:</label><input class="manual-param-value manual-param-value-4-place" type="number" formControlName="ctrlColumnQuantity">
     </div>
 </form>
 <div class="actions-panel">
@@ -26,11 +26,8 @@
 <div class="messages-panel">
 
 </div>
-<div class="process-indicator">
-    <div class="process-indicator__empty1">test</div>
-    <div class="process-indicator__empty2">test</div>
-    <div class="process-indicator__empty3">test</div>
-    <div class="process-indicator__mark">
+<div *ngIf="state === LOADING_FILE_STATE.INPROCESS || state === LOADING_FILE_STATE.OK || state === LOADING_FILE_STATE.FAILED" class="process-indicator">
+    <div *ngIf="state === LOADING_FILE_STATE.INPROCESS" class="process-indicator__mark">
         <div class="process-indicator__mark-circle process-indicator__mark-circle-1"></div>
         <div class="process-indicator__mark-circle process-indicator__mark-circle-2"></div>
         <div class="process-indicator__mark-circle process-indicator__mark-circle-3"></div>
@@ -39,5 +36,13 @@
         <div class="process-indicator__mark-circle process-indicator__mark-circle-6"></div>
         <div class="process-indicator__mark-circle process-indicator__mark-circle-7"></div>
         <div class="process-indicator__mark-circle process-indicator__mark-circle-8"></div>
+    </div>
+    <div *ngIf="state === LOADING_FILE_STATE.OK" class="process-indicator-ok">
+        Файл загружен
+        <button class="process-indicator-button" (click)="continueAfterOK()">Продолжить</button>
+    </div>
+    <div *ngIf="state === LOADING_FILE_STATE.FAILED" class="process-indicator-failed">
+        <p>{{errorMessage}}</p>
+        <button class="process-indicator-button" (click)="continueAfterFAILED()">Продолжить</button>
     </div>
 </div>
