@@ -1,9 +1,9 @@
 const express = require('express')
 const path = require('path')
-const fileUpload = require('express-fileupload');
-const ExcelJS = require('exceljs');
+const fileUpload = require('express-fileupload'); //npm install --save express-fileupload
+const ExcelJS = require('exceljs'); //npm install exceljs
 
-const mssql = require('mssql');
+const mssql = require('mssql'); //npm install mssql
 const mssql_config = { //'mssql://webuser:wup@ssw0rd@nacer/aspb'
     server: "nacer",
     authentication: { options: { userName: "webuser", password: "wup@ssw0rd" }},
@@ -18,8 +18,9 @@ async function loadSheet(xml) {
         const request = await new mssql.Request(pool);
 
         request.input('xml', mssql.Xml, xml);
-        const result = await request.execute('B2BX_OrderRegisterXML');
-
+        request.output('fileid', mssql.Int, 0);
+        const result = await request.execute('B2BX_FileRegister');
+console.dir(result);
         return result.recordset;
     }
     catch(error) {
@@ -47,7 +48,19 @@ app.post('/upload', function(req, res) {
         }
         console.log("Load workbook");
         var workbook = new ExcelJS.Workbook();
-        var xml = "<order>\n<header>\n<orderid>100000</orderid>\n</<header>\n<details>";
+        var xml =`<?xml version="1.0" encoding="utf-16"?>
+            <order>
+                <header>
+                    <orderid>0</orderid>
+                    <userid>1</userid>
+                    <filename>${file.name}</filename>
+                    <sheetname>${req.body.sheetname}</sheetname>
+                    <firstrow>${req.body.firstrow}</firstrow>
+                    <lastrow>${req.body.lastrow}</lastrow>
+                    <articlecolumn>${req.body.columnarticle}</articlecolumn>
+                    <quantitycolumn>${req.body.columnquantity}</quantitycolumn>
+                </header>
+                <details>\n`;
         workbook.xlsx.readFile('I:\\USR\\MDB\\Misc\\TEST\\' + file.name)
             .then(function() {
                 const worksheet = workbook.getWorksheet('Лист1');
@@ -63,7 +76,7 @@ app.post('/upload', function(req, res) {
                             }
                         })
                         // Library bug compensation. Method row.eachCell is not called for last in row empty cell. Option includeEmpty is set
-                        if (xml_row.indexOf("<partid>") < 0) { xml_row = xml_row + "<partid>null</partid>";  }
+                        if (xml_row.indexOf("<partid>") < 0) { xml_row = "<partid>null</partid>" + xml_row;  }
                         if (xml_row.indexOf("<quantity>") < 0) { xml_row = xml_row + "<quantity>null</quantity>";  }
                         xml = xml + "<row>" + xml_row + "</row>\n";
                     });
@@ -72,6 +85,7 @@ app.post('/upload', function(req, res) {
                 }
                 xml = xml + "</details>\n</order>"
                 console.log(xml);
+                loadSheet(xml);
                 res.status(200).send('{ "status": "OK" }');
             },
             function(error) {
