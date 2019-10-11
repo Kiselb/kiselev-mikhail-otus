@@ -26,8 +26,8 @@
 <div class="messages-panel">
 
 </div>
-<div *ngIf="state === LOADING_FILE_STATE.INPROCESS || state === LOADING_FILE_STATE.OK || state === LOADING_FILE_STATE.FAILED" class="process-indicator">
-    <div *ngIf="state === LOADING_FILE_STATE.INPROCESS" class="process-indicator__mark">
+<div *ngIf="(loadingFileState$ | async) === LOADING_FILE_STATE.INPROCESS || (loadingFileState$ | async) === LOADING_FILE_STATE.OK || (loadingFileState$ | async) === LOADING_FILE_STATE.FAILED" class="process-indicator">
+    <div *ngIf="(loadingFileState$ | async) === LOADING_FILE_STATE.INPROCESS" class="process-indicator__mark">
         <div class="process-indicator__mark-circle process-indicator__mark-circle-1"></div>
         <div class="process-indicator__mark-circle process-indicator__mark-circle-2"></div>
         <div class="process-indicator__mark-circle process-indicator__mark-circle-3"></div>
@@ -37,12 +37,12 @@
         <div class="process-indicator__mark-circle process-indicator__mark-circle-7"></div>
         <div class="process-indicator__mark-circle process-indicator__mark-circle-8"></div>
     </div>
-    <div *ngIf="state === LOADING_FILE_STATE.OK" class="process-indicator-ok">
+    <div *ngIf="(loadingFileState$ | async) === LOADING_FILE_STATE.OK" class="process-indicator-ok">
         Файл загружен
         <button class="process-indicator-button" (click)="continueAfterOK()">Продолжить</button>
     </div>
-    <div *ngIf="state === LOADING_FILE_STATE.FAILED" class="process-indicator-failed">
-        <p>{{errorMessage}}</p>
+    <div *ngIf="(loadingFileState$ | async) === LOADING_FILE_STATE.FAILED" class="process-indicator-failed">
+        <p>{{loadingFileError$ | async}}</p>
         <button class="process-indicator-button" (click)="continueAfterFAILED()">Продолжить</button>
     </div>
 </div>

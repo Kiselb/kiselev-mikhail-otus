@@ -120,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "projectwork"
+    }
+  },
+  "defaultProject": "projectwork",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

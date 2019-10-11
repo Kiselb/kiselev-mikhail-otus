@@ -1,7 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse, HttpErrorResponse } from  '@angular/common/http';
-import { UploadFileService } from '../upload-file.service'
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { LOADING_FILE_STATE, IAppState } from '../../store/state';
+import { uploadFile, uploadFileInProgress, uploadFileResume } from '../../store/actions';
+import { UploadFileService } from '../upload-file.service';
+import { loadingFileState, loadingFileError, currentOrderId } from '../../store/selectors';
 
 @Component({
   selector: 'app-import-order',
@@ -10,23 +15,22 @@ import { UploadFileService } from '../upload-file.service'
 })
 export class ImportOrderComponent implements OnInit {
   
-  LOADING_FILE_STATE = {
-    IDLE      : 0,
-    INPROCESS : 1,
-    OK        : 2,
-    FAILED    : 3,
-  }
-  state: number = this.LOADING_FILE_STATE.IDLE;
-  
+  LOADING_FILE_STATE = LOADING_FILE_STATE;
+
   @ViewChild('selectfilesinput', { static: true })
   filesInput: ElementRef;
 
   fgSelectFile: FormGroup = null;
   fgImportParameters: FormGroup = null;
   formDataSendFile: FormData = null;
-  errorMessage: string = "";
 
-  constructor(private uploadFileService: UploadFileService) {
+  loadingFileState$: Observable<LOADING_FILE_STATE> = this.appStore.pipe(select(loadingFileState));
+  loadingFileError$: Observable<string> = this.appStore.pipe(select(loadingFileError));
+  currentOrderId$: Observable<number> = this.appStore.pipe(select(currentOrderId));
+
+  orderId: number = 0;
+
+  constructor(private appStore: Store<IAppState>) {
   }
   openFileDialog() {
     this.filesInput.nativeElement.click();
@@ -40,42 +44,22 @@ export class ImportOrderComponent implements OnInit {
   uploadFile() {
     if (this.fgImportParameters.valid) {
       if (this.formDataSendFile) {
-        this.formDataSendFile.append("sheetname", this.fgImportParameters.get("ctrlSheetName").value)
-        this.formDataSendFile.append("firstrow", this.fgImportParameters.get("ctrlFirstRow").value)
-        this.formDataSendFile.append("lastrow", this.fgImportParameters.get("ctrlLastRow").value)
-        this.formDataSendFile.append("columnarticle", this.fgImportParameters.get("ctrlColumnArticle").value)
-        this.formDataSendFile.append("columnquantity", this.fgImportParameters.get("ctrlColumnQuantity").value)
-        this.state = this.LOADING_FILE_STATE.INPROCESS;
-        this.uploadFileService.upload(this.formDataSendFile)
-          .subscribe(
-            (response: HttpResponse<any>) => {
-              setTimeout(() => this.state = this.LOADING_FILE_STATE.OK, 5000); // For demonstration purpose
-            },
-            (error: HttpErrorResponse) => {
-              if (error.error instanceof ErrorEvent) {
-                this.errorMessage = error.error.message;
-              } else {
-                if (error.status === 400) {
-                  this.errorMessage = `Ошибка входных данных: ${error.error.error}`;
-                } else if (error.status === 500) {
-                  this.errorMessage = `Ошибка обработки файла на стороне сервера: ${error.error.error}`;
-                } else {
-                  this.errorMessage = `Сервер вернул ошибку: ${error.status} : ${error.error}`;
-                }
-              }
-              this.state = this.LOADING_FILE_STATE.FAILED;
-            }
-          );
-        this.formDataSendFile = null;
-        this.fgSelectFile.patchValue({ "ctrlFileName": "" });
+        this.appStore.dispatch(uploadFileInProgress());
+        this.formDataSendFile.append("orderid", this.orderId.toString());
+        this.formDataSendFile.append("sheetname", this.fgImportParameters.get("ctrlSheetName").value);
+        this.formDataSendFile.append("firstrow", this.fgImportParameters.get("ctrlFirstRow").value);
+        this.formDataSendFile.append("lastrow", this.fgImportParameters.get("ctrlLastRow").value);
+        this.formDataSendFile.append("columnarticle", this.fgImportParameters.get("ctrlColumnArticle").value);
+        this.formDataSendFile.append("columnquantity", this.fgImportParameters.get("ctrlColumnQuantity").value);
+        setTimeout(() => this.appStore.dispatch(uploadFile({ formData: this.formDataSendFile })), 5000); // Delay for demonstration purpose only
       }
     }
   }
   continueAfterOK() {
-    this.state = this.LOADING_FILE_STATE.IDLE;
+    this.appStore.dispatch(uploadFileResume());
   }
   continueAfterFAILED() {
-    this.state = this.LOADING_FILE_STATE.IDLE;
+    this.appStore.dispatch(uploadFileResume());
   }
   ngOnInit() {
     this.fgSelectFile = new FormGroup({
@@ -87,6 +71,15 @@ export class ImportOrderComponent implements OnInit {
       ctrlLastRow: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(2048)]),
       ctrlColumnArticle: new FormControl(2, [Validators.required, Validators.min(1), Validators.max(255)]),
       ctrlColumnQuantity: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)]),
+    });
+    this.loadingFileState$.subscribe(state => {
+      if (state === LOADING_FILE_STATE.OK || state === LOADING_FILE_STATE.FAILED) {
+        this.formDataSendFile = null;
+        this.fgSelectFile.patchValue({ "ctrlFileName": "" });            
+      }
+    });
+    this.currentOrderId$.subscribe(id => {
+      this.orderId = id;
     });
   }
 }

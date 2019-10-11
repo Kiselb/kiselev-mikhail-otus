@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +18,8 @@ import { ActiveOrdersComponent } from './orders/active-orders/active-orders.comp
 import { EditOrderComponent } from './orders/edit-order/edit-order.component';
 import { PlaceOrderComponent } from './orders/place-order/place-order.component';
 import { ImportOrderComponent } from './orders/import-order/import-order.component';
+import { appReducers } from './store/reducers';
+import { UploadOrderFileEffects } from './store/effects/upload-order-file.effects';
 
 @NgModule({
   declarations: [
@@ -38,6 +42,8 @@ import { ImportOrderComponent } from './orders/import-order/import-order.compone
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([UploadOrderFileEffects]),
   ],
   providers: [HttpClientModule, HttpClient],
   bootstrap: [AppComponent]
