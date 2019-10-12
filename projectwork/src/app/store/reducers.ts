@@ -1,18 +1,16 @@
 import { ActionReducerMap, ActionReducer, MetaReducer, createReducer, on } from '@ngrx/store';
 import { uploadFile, actionTypes } from './actions';
 import { LOADING_FILE_STATE, IAppState, ICurrency, currencyInitialState, settingsInitialState, ISettings} from './state'
+import { OrdersHistoryComponent } from '../orders/orders-history/orders-history.component';
 
 export const currencyReducer = (state = currencyInitialState, action): ICurrency => {
     switch(action.type) {
         case actionTypes.atUploadFileSuccess:
-            console.dir(action);
-            console.log(state);
             const newstate = {
                 ...state,
                 file: { ...state.file, id: action.fileId, error: false, report: [], state: LOADING_FILE_STATE.OK},
                 order: { ...state.order, id: action.orderId, error: false, errortext: "", details: []}
             };
-            console.log(newstate);
             return(newstate);
             //     return {
             //     ...state,
@@ -34,6 +32,11 @@ export const currencyReducer = (state = currencyInitialState, action): ICurrency
             return {
                 ...state,
                 file: { ...state.file, state: LOADING_FILE_STATE.IDLE}
+            };
+        case actionTypes.atUpdateOrderFilesListSuccess:
+            return {
+                ...state,
+                order: { ...state.order, files: action.data.filter(() => true)}
             };
         default:
             return state;

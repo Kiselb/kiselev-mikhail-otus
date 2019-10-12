@@ -2,13 +2,11 @@
     <a [routerLink]="['/import']" class="command command-place">Загрузить из файла</a>
     <a class="command command-place">Редактировать</a>
 </div>
-<div class="order-load-status">
-    <div class="file-load-status" *ngFor="let file of getMockFiles()" (click)="setCurrentFile(file.key)" [attr.key]="file.key" [ngClass]="{'file-load-status-current': file.key == getCurrentFile()}">
-        <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-ok" *ngIf="getFileErrorStatus(file) && getFileImportStatus(file)">&#10004;</p>
-        <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-failed" *ngIf="!getFileErrorStatus(file) && getFileImportStatus(file)">&#9888;</p>
-        <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-ok" *ngIf="!getFileImportStatus(file)">&#10042;</p>
-        <p class="file-load-status__file-path file-load-status__file-path-place file-load-status__file-path-active">{{file.path}}</p>
-        <p class="file-load-status__file-sheets file-load-status__file-sheets-place file-load-status__file-sheets-active">{{getFileSheetsInfo(file)}}</p>
+<div class="order-files">
+    <div class="file-load-status" *ngFor="let file of orderFiles$ | async; let key = index" (click)="setCurrentFile(key)" [attr.key]="key" [ngClass]="{'file-load-status-current': key == getCurrentFile()}">
+        <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-ok" *ngIf="!file.ErrorStatus">&#10004;</p>
+        <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-failed" *ngIf="file.ErrorStatus">&#9888;</p>
+        <p class="file-load-status__file-path file-load-status__file-path-place file-load-status__file-path-active">{{file.FileName}}</p>
     </div>
 </div>
 <div class="errors-report">
@@ -16,6 +14,6 @@
     <label class="hide-failed-files hide-failed-files-place checkbox-custom__container">
         <input type="checkbox" class="checkbox-custom__input" [formControl]="hideFailed">
         <span class="checkbox-custom__checkmark"></span>
-        Скрыть файлы с ошибками
+        <span class="checkbox-custom__label">Скрыть файлы с ошибками</span>
     </label>
 </div>

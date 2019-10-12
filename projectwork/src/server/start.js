@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const fileUpload = require('express-fileupload'); //npm install --save express-fileupload
+const store = require('./store.mssql');
 const xlsx = require('./import.xlsx');
 const config = require('./config.json');
 
@@ -10,6 +11,13 @@ const port = 3000; //80
 app.use(express.static(path.join(__dirname + '/b2bx')))
 app.use(fileUpload());
 
+app.get('/orders/:orderId/files', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+    store.orderFiles(req.params.orderid)
+    .then(result => { res.status(200).send(`${JSON.stringify(result.recordset)}`);})
+    .catch(error => { res.status(500).send(`{"error": ${error}}`); });
+});
 app.post('/upload', function(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');

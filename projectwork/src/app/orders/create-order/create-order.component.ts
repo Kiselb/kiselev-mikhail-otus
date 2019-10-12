@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { IAppState } from '../../store/state';
+import { currentOrderFiles } from '../../store/selectors';
+import { updateOrderFilesList } from '../../store/actions';
 
 @Component({
   selector: 'app-create-order',
@@ -8,287 +13,12 @@ import { FormControl } from '@angular/forms';
 })
 export class CreateOrderComponent implements OnInit {
 
-  mockFiles = [
-    {
-      key: 1,
-      state: true,
-      path: "C:\\Orders\\Legion\\2019\\09\\Konica_Minolta\\Order_201909_1.xlsx", // Loaded full file name
-      sheets: [
-        {
-          name: "Лист1",
-          rowFirst: 1,
-          rowLast: 100,
-          columnArticle: 1,
-          columnQuanity: 2,
-          article: 0, // Product article type: 0 - Manufacturer 1 - Legion
-          mode: 0, // Sheet structure definition mode: 0 - auto 1 - manual
-          errors: [
-            {
-              row: 10,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 20,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 21,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 22,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 23,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 24,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 25,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 26,
-              description: "Недопустимое значение в столбце количеств"
-            },
-          ],
-        }, // Sheet
-        {
-          name: "Лист2",
-          rowFirst: 1,
-          rowLast: 100,
-          columnArticle: 1,
-          columnQuanity: 2,
-          article: 0, // Product article type: 0 - Manufacturer 1 - Legion
-          mode: 0, // Sheet structure definition mode: 0 - auto 1 - manual
-          errors: [
-            {
-              row: 10,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 20,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 21,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 22,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 23,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 24,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 25,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 26,
-              description: "Недопустимое значение в столбце количеств"
-            },
-          ],
-        }, // Sheet
-      ], // File sheets
-    }, // File
-    {
-      key: 2,
-      state: true,
-      path: "C:\\Orders\\Legion\\2019\\09\\Konica_Minolta\\Order_201909_2.xlsx", // Loaded full file name
-      sheets: [
-        {
-          name: "Лист1",
-          rowFirst: 1,
-          rowLast: 100,
-          columnArticle: 1,
-          columnQuanity: 2,
-          article: 0, // Product article type: 0 - Manufacturer 1 - Legion
-          mode: 0, // Sheet structure definition mode: 0 - auto 1 - manual
-          errors: [
-            {
-              row: 10,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 20,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 21,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 22,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 23,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 24,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 25,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 26,
-              description: "Недопустимое значение в столбце количеств"
-            },
-          ],
-        }, // Sheet
-        {
-          name: "Лист2",
-          rowFirst: 1,
-          rowLast: 100,
-          columnArticle: 1,
-          columnQuanity: 2,
-          article: 0, // Product article type: 0 - Manufacturer 1 - Legion
-          mode: 0, // Sheet structure definition mode: 0 - auto 1 - manual
-          errors: [
-            {
-              row: 10,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 20,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 21,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 22,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 23,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 24,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 25,
-              description: "Недопустимое значение в столбце количеств"
-            },
-            {
-              row: 26,
-              description: "Недопустимое значение в столбце количеств"
-            },
-          ],
-        }, // Sheet
-      ], // File sheets
-    }, // File
-    {
-      key: 3,
-      state: true,
-      path: "C:\\Orders\\Legion\\2019\\09\\Konica_Minolta\\Order_201909_1.xlsx", // Loaded full file name
-      sheets: [
-        {
-          name: "Лист1",
-          rowFirst: 1,
-          rowLast: 100,
-          columnArticle: 1,
-          columnQuanity: 2,
-          article: 0, // Product article type: 0 - Manufacturer 1 - Legion
-          mode: 0, // Sheet structure definition mode: 0 - auto 1 - manual
-          errors: [
-          ],
-        }, // Sheet
-        {
-          name: "Лист2",
-          rowFirst: 1,
-          rowLast: 100,
-          columnArticle: 1,
-          columnQuanity: 2,
-          article: 0, // Product article type: 0 - Manufacturer 1 - Legion
-          mode: 0, // Sheet structure definition mode: 0 - auto 1 - manual
-          errors: [
-          ],
-        }, // Sheet
-      ], // File sheets
-    }, // File
-    {
-      key: 4,
-      state: true,
-      path: "C:\\Orders\\Legion\\2019\\09\\Konica_Minolta\\Order_201909_2.xlsx", // Loaded full file name
-      sheets: [
-        {
-          name: "Лист1",
-          rowFirst: 1,
-          rowLast: 100,
-          columnArticle: 1,
-          columnQuanity: 2,
-          article: 0, // Product article type: 0 - Manufacturer 1 - Legion
-          mode: 0, // Sheet structure definition mode: 0 - auto 1 - manual
-          errors: [
-          ],
-        }, // Sheet
-        {
-          name: "Лист2",
-          rowFirst: 1,
-          rowLast: 100,
-          columnArticle: 1,
-          columnQuanity: 2,
-          article: 0, // Product article type: 0 - Manufacturer 1 - Legion
-          mode: 0, // Sheet structure definition mode: 0 - auto 1 - manual
-          errors: [
-          ],
-        }, // Sheet
-      ], // File sheets
-    }, // File
-    {
-      key: 5,
-      state: false,
-      path: "C:\\Orders\\Legion\\2019\\09\\Konica_Minolta\\Order_201909_4.xlsx", // Loaded full file name
-      sheets: [
-        {
-          name: "Лист1",
-          rowFirst: 1,
-          rowLast: 100,
-          columnArticle: 1,
-          columnQuanity: 2,
-          article: 0, // Product article type: 0 - Manufacturer 1 - Legion
-          mode: 0, // Sheet structure definition mode: 0 - auto 1 - manual
-          errors: [
-          ],
-        }, // Sheet
-      ], // File sheets
-    }, // File
-  ];
-  getMockFiles() {
-    return this.mockFiles.filter((file) => (this.getFileErrorStatus(file) || (!this.getFileErrorStatus(file) && !this.getViewMode())));
-  }
-  getFileImportStatus(file) {
-    return file.state;
-  }
-  getFileErrorStatus(file) {
-    return file.sheets.reduce((accumulator, sheet) => accumulator && (sheet.errors.length === 0) , true);
-  }
-  getFileSheetsInfo(file) {
-    return file.sheets.reduce((accumulator, sheet, index, array) => { const delimiter = (index === (array.length - 1))?(''):(', '); return (accumulator + sheet.name + delimiter); }, '');
-  }
-
-  key: number; // Current file key
+  key: number;
+  orderFiles$: Observable<any> = this.appStore.pipe(select(currentOrderFiles));
+  orderFilesTest$: Observable<any> = this.appStore.pipe(select(currentOrderFiles));
   
   getCurrentFile() { return this.key; }
-  setCurrentFile(key) { this.key = key; }
+  setCurrentFile(key: number) { this.key = key; }
 
   hideFailed = new FormControl('');
 
@@ -296,8 +26,15 @@ export class CreateOrderComponent implements OnInit {
     return this.hideFailed.value;
   }
 
-  constructor() { }
+  constructor(private appStore: Store<IAppState>) { }
 
   ngOnInit() {
+    this.appStore.dispatch(updateOrderFilesList({orderId: 0}));
+    this.orderFilesTest$.subscribe(
+      (result) => {
+        console.log("files list changed");
+        console.dir(result);
+     }
+    )
   }
 }

@@ -30,9 +30,17 @@ export interface IFile {
     report: IReportItem[];
     state: LOADING_FILE_STATE;
 }
+export interface IOrderFile {
+    FileID: number,
+    FileName: string,
+    CreateDate: string,
+    ErrorStatus: boolean,
+    UserID: number,
+    UserName: string
+}
 export interface IOrder {
     id: number;
-    files: IFile[];
+    files: IOrderFile[];
     error: boolean;
     details: any[];
 }

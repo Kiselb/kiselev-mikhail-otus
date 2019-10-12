@@ -1,8 +1,11 @@
+:host {
+    grid-area: content;
+}
 .about {
-    font-size: 1.25em;
+    font-size: 1.15em;
     margin: 10%;
     text-align: justify;
-    line-height: 1.25em;
+    line-height: 1.15em;
 }
 .about-link {
     color: blue;

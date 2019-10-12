@@ -1,5 +1,14 @@
+:host {
+    grid-area: content;
+}
+.prompt {
+    font-family: inherit;
+    font-size: 1.3125em;
+    margin: 10vh auto 0 auto;
+    text-align: center;
+}
 .login {
-    margin-top: 20vh;
+    margin-top: 2vh;
 }
 ::placeholder {
     color: #BBB;
@@ -7,24 +16,24 @@
 }
 .login__input {
     display: block;
-    width: 15.71428571428571em; /*220px;*/
-    height: 2.428571428571429em; /*34px;*/
+    width: 13.75em; /*220px; context 16px*/
+    height: 2.125em; /*34px; context 16px*/
     font-family: inherit;
-    font-size: 1.166666666666667em; /*14px*/;
-    padding: 0.4285714285714286em 0.2857142857142857em 0.4285714285714286em 0.2857142857142857em; /*6px 4px 6px 4px;*/
+    font-size: 0.875em; /*14px; context 16px*/;
+    padding: 0.375em 0.25em 0.375em 0.25em; /*6px 4px 6px 4px; context 16px*/
     box-sizing: border-box;
     border: 1px solid #DFDFDF;
     text-align: center;
 }
 .login__input-place {
     display: block;
-    margin: 0 auto 0.7857142857142857em auto; /*11px*/;
+    margin: 0 auto 0.6875em auto; /*11px; context 16px*/;
 }
 .login__button {
-    width: 15.71428571428571em; /*220px;*/
-    height: 2.428571428571429em; /*34px;*/
+    width: 13.75em; /*220px; context 16px*/
+    height: 2.125em; /*34px; context 16px*/
     font-family: inherit;
-    font-size: 1.166666666666667em; /*14px*/;
+    font-size: 0.875em; /*14px; context 16px*/;
     background-color: #EAEAEA;
     color: #888;
     border: 1px solid #DFDFDF;
@@ -32,7 +41,7 @@
 }
 .login__button-place {
     display: block;
-    margin: 0 auto 0.7142857142857143em auto; /*10px*/;
+    margin: 0 auto 0.625em auto; /*10px; context 16px*/;
 }
 .login__button-place:hover {
     color: #000 !important;
@@ -42,7 +51,7 @@
     background-color:#000 !important;
 }
 .login__restore {
-    font-size: 1.166666666666667em; /*14px;*/
+    font-size: 0.875em; /*14px; context 16px*/
     color: #BFBFBF;
     text-align: center;
     text-decoration: none;
@@ -50,7 +59,7 @@
 }
 .login__restore-place {
     display: block;
-    margin-top: 1.714285714285714em; /*24px;*/
+    margin-top:1.5em; /*24px; context 16px*/
 }
 .login__restore-place:hover {
     color: #000 !important;

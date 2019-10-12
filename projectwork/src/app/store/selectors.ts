@@ -15,3 +15,7 @@ export const currentOrderId = createSelector(
     selectCurrency,
     (state: ICurrency) => state.order.id
 );
+export const currentOrderFiles = createSelector(
+    selectCurrency,
+    (state: ICurrency) => state.order.files
+);

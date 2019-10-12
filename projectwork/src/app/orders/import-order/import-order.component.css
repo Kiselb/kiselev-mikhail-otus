@@ -1,4 +1,5 @@
 :host {
+    grid-area: content;
     display: grid;
     grid-template-areas: 
         "commands"
@@ -19,7 +20,7 @@
     padding-left: 4vw;
 }
 .command {
-    font-size: 2em; /*24px; context 12px*/
+    font-size: 1.5em; /*24px; context 16px*/
     color: #000;
     cursor: pointer;
     text-decoration: none;
@@ -49,15 +50,15 @@
     color: #000;
 }
 .settings-panel__header {
-    font-size: 2em;
+    font-size: 1.5em;
 }
 .settings-panel__header-mode {
     display: block;
-    font-size: 1.5em;
+    font-size: 1.125em;
     padding: 1em 0 0 2em;
 }
 .settings-panel__header__manual {
-    font-size: 1.3em;
+    font-size: 1em;
     display: grid;
     grid-template-areas: 
         "sheet-header sheet-value"
@@ -71,10 +72,10 @@
     margin: 1.5vh 0 0 8vw;
 }
 .manual-param-header {
-    font-size: 0.8974358974358974em;
+    font-size: 0.975em;
 }
 .manual-param-value {
-    font-size: 0.8974358974358974em;
+    font-size: 0.975em;
     border: 1px solid #CECECE;
     border-radius: 2px;
     text-align: right;
@@ -152,7 +153,7 @@
     justify-self: center;
     display: block;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.125em;
 }
 .process-indicator-failed {
     grid-area: message;
@@ -160,10 +161,10 @@
     justify-self: center;
     display: block;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.125em;
 }
 .process-indicator-button {
-    font-size: 1em;
+    font-size: 0.75em;
     margin: 1vh 0 0 0;
     padding: 0.5vh 1vw 0.5vh 1vw;
 }
@@ -175,16 +176,16 @@
 .process-indicator__mark {
     grid-area: indicator;
 	position: relative;
-	width: 10.41666666666667em; /*125px;*/
-	height: 10.41666666666667em; /*125px;*/
+	width: 7.8125em; /*125px; context 16px*/
+	height: 7.8125em; /*125px;*/
 	margin: auto;
 	transform: scale(0.6);
 }
 .process-indicator__mark-circle {
 	position: absolute;
 	background-color: rgb(255,255,255);
-	height: 1.833333333333333em; /*22px;*/
-	width: 1.833333333333333em; /*22px;*/
+	height: 1.375em; /*22px;*/
+	width: 1.375em; /*22px;*/
 	border-radius: 1em; /*12px;*/
 	animation-name: fade-point;
 	animation-duration: 1.2s;
@@ -193,42 +194,42 @@
 }
 .process-indicator__mark-circle-1{
 	left: 0;
-	top: 4.25em; /*51px;*/
+	top: 3.1875em; /*51px;*/
 	animation-delay: 0.45s;
 }
 .process-indicator__mark-circle-2{
-	left: 1.25em; /*15px;*/
-	top: 1.25em; /*15px;*/
+	left: 0.9375em; /*15px;*/
+	top: 0.9375em; /*15px;*/
 	animation-delay: 0.6s;
 }
 .process-indicator__mark-circle-3{
-	left: 4.25em; /*51px;*/
+	left: 3.1875em; /*51px;*/
 	top: 0;
 	animation-delay: 0.75s;
 }
 .process-indicator__mark-circle-4{
-	right: 1.25em; /*15px;*/
-	top: 1.25em; /*15px;*/
+	right: 0.9375em; /*15px;*/
+	top: 0.9375em; /*15px;*/
 	animation-delay: 0.9s;
 }
 .process-indicator__mark-circle-5{
 	right: 0;
-	top: 4.25em; /*51px;*/
+	top: 3.1875em; /*51px;*/
 	animation-delay: 1.05s;
 }
 .process-indicator__mark-circle-6{
-	right: 1.25em; /*15px;*/
-	bottom: 1.25em; /*15px;*/
+	right: 0.9375em; /*15px;*/
+	bottom: 0.9375em; /*15px;*/
 	animation-delay: 1.2s;
 }
 .process-indicator__mark-circle-7{
-	left: 4.25em; /*51px;*/
+	left: 3.1875em; /*51px;*/
 	bottom: 0;
 	animation-delay: 1.35s;
 }
 .process-indicator__mark-circle-8{
-	left: 1.25em; /*15px;*/
-	bottom: 1.25em; /*15px;*/
+	left: 0.9375em; /*15px;*/
+	bottom: 0.9375em; /*15px;*/
 	animation-delay: 1.5s;
 }
 @keyframes fade-point {

@@ -20,6 +20,7 @@ import { PlaceOrderComponent } from './orders/place-order/place-order.component'
 import { ImportOrderComponent } from './orders/import-order/import-order.component';
 import { appReducers } from './store/reducers';
 import { UploadOrderFileEffects } from './store/effects/upload-order-file.effects';
+import { GetOrderFilesEffects } from './store/effects/get-order-files.effects';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { UploadOrderFileEffects } from './store/effects/upload-order-file.effect
     ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([UploadOrderFileEffects]),
+    EffectsModule.forRoot([UploadOrderFileEffects, GetOrderFilesEffects]),
   ],
   providers: [HttpClientModule, HttpClient],
   bootstrap: [AppComponent]

@@ -7,7 +7,7 @@
         "icon logo navpanel"
         "content content content"
         "footer footer footer";
-    grid-template-rows: 4.6875em 1.875em 1fr 2.1875em; /*75px 30px 1fr 35px;*/
+    grid-template-rows: 4.6875em 1.875em calc(100vh - 4.6875em - 1.875em - 2.1875em) 2.1875em; /*4.6875em 1.875em 1fr 2.1875em;*/ /*75px 30px 1fr 35px;*/
     grid-template-columns: 4.6875em 5.5em 1fr; /*75px 88px 1fr;*/
     grid-gap: 0px;
     font-family: 'Open Sans', sans-serif;
