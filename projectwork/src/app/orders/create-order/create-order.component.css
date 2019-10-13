@@ -62,8 +62,9 @@
 .file-load-status__file-path-place {
     display: inline-block;
 }
-.file-load-status__file-path-active {
-    font-weight: normal;
+.file-load-status__file-path-active:hover {
+    font-weight: bold;
+    cursor: pointer;
 }
 .file-load-status__file-sheets {
     font-size: 0.9375em;
@@ -74,6 +75,13 @@
 }
 .file-load-status__file-sheets-active {
     font-weight: normal;
+}
+.file-load-status__attr {
+    font-size: 0.85em;
+    padding-left: 1vw;
+}
+.file-load-status__attr-place {
+    display: inline-block;
 }
 .errors-report{
     grid-area: errors-report;

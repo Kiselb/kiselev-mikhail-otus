@@ -36,7 +36,8 @@ export interface IOrderFile {
     CreateDate: string,
     ErrorStatus: boolean,
     UserID: number,
-    UserName: string
+    UserName: string,
+    FileSheetsInfo: string
 }
 export interface IOrder {
     id: number;
@@ -44,10 +45,25 @@ export interface IOrder {
     error: boolean;
     details: any[];
 }
+export interface IOrderInfo {
+    id: number;
+    userId: number;
+    userName: string;
+    created: string;
+    refno: string;
+    comments: string;
+    blocked: boolean;
+    placed: boolean;
+    week: number;
+    year: number;
+    sumValue: number;
+    sumCurrency: string;
+}
 export interface ICurrency {
     user: number;
     file: IFile;
     order: IOrder;
+    history: IOrderInfo[];
 
 }
 export interface IAppState {
@@ -73,5 +89,6 @@ export const currencyInitialState: ICurrency = {
         files: [],
         error: false,
         details: []
-    }
+    },
+    history: []
 }

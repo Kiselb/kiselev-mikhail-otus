@@ -1,5 +1,6 @@
-import { createSelector } from '@ngrx/store'
+import { createSelector, State } from '@ngrx/store'
 import { IAppState, ICurrency, IFile } from './state'
+import { SelectorContext } from '@angular/compiler';
 
 const selectCurrency = (state: IAppState) => state.currency;
 
@@ -18,4 +19,8 @@ export const currentOrderId = createSelector(
 export const currentOrderFiles = createSelector(
     selectCurrency,
     (state: ICurrency) => state.order.files
+);
+export const currentUserId = createSelector(
+    selectCurrency,
+    (state: ICurrency) => state.user
 );

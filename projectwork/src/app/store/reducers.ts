@@ -38,6 +38,11 @@ export const currencyReducer = (state = currencyInitialState, action): ICurrency
                 ...state,
                 order: { ...state.order, files: action.data.filter(() => true)}
             };
+        case actionTypes.atOrdersHistorySuccess:
+            return {
+                ...state,
+                history: action.data.filter(() => true)
+            };
         default:
             return state;
     }

@@ -21,6 +21,7 @@ import { ImportOrderComponent } from './orders/import-order/import-order.compone
 import { appReducers } from './store/reducers';
 import { UploadOrderFileEffects } from './store/effects/upload-order-file.effects';
 import { GetOrderFilesEffects } from './store/effects/get-order-files.effects';
+import { OrdersHistoryCommunicationService } from './services/orders-history.communication.service';
 
 @NgModule({
   declarations: [

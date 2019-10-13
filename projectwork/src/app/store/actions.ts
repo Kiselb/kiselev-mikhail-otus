@@ -24,6 +24,9 @@ export enum actionTypes {
     atUpdateUserProfileSuccess = '[User] Profile Update Success',
     atRegisterUser = '[User] Register',
 
+    atOrdersHistory = '[Orders] History',
+    atOrdersHistorySuccess = '[Orders] History Success',
+
     atApplicationError = '[Application] Error'
 }
 
@@ -43,4 +46,6 @@ export const blockOrderSuccess = createAction(actionTypes.atBlockOrderSuccess);
 export const placeOrder = createAction(actionTypes.atPlaceOrder, props<{orderId: number, duedate: string, address: string, contacts: string}>());
 export const placeOrderSuccess = createAction(actionTypes.atPlaceOrderSuccess, props<{orderId: number, duedate: string, address: string, contacts: string}>());
 
-export const applicationError = createAction(actionTypes.atApplicationError, props<{error: string}>())
+export const ordersHistory = createAction(actionTypes.atOrdersHistory, props<{userid: number, ctiteria: string}>());
+export const ordersHistorySuccess = createAction(actionTypes.atOrdersHistorySuccess);
+export const applicationError = createAction(actionTypes.atApplicationError, props<{error: string}>());

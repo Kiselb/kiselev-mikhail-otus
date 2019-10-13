@@ -6,11 +6,11 @@
 </div>
 <div class="orders-history__list">
     <div *ngFor="let element of taxonomy" class="orders-history__list-year">
-        <span class="orders-history__list-year-header">{{element.year}} год</span>
-        <div *ngFor="let week of element.weeks" class="orders-history__list-week">
+        <span class="orders-history__list-year-header">{{element.TaxonomyYear}} год</span>
+        <div *ngFor="let week of element.TaxonomyWeek" class="orders-history__list-week">
             <span class="orders-history__list-week-header">{{week}}-я неделя</span>
-            <div *ngFor="let order of getWeekYearOrders(element.year, week)" class="orders-history__list-order">
-                <span class="orders-history__list-order-header">{{order.orderId}}</span>
+            <div *ngFor="let order of getWeekYearOrders(element.TaxonomyYear, week)" class="orders-history__list-order">
+                <span class="orders-history__list-order-header">{{order.OrderID}}</span>
             </div>
         </div>
     </div>

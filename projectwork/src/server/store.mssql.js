@@ -24,11 +24,30 @@ exports.orderFiles = function(orderId) {
             const pool = await new mssql.ConnectionPool(config.development.mssql_config).connect();
             const request = await new mssql.Request(pool);
 
-            request.input('orderid', mssql.Int, orderId);
+            request.input('OrderID', mssql.Int, orderId);
             const result = await request.execute('B2BX_OrderFiles');
             resolve(result);
         }
         catch(error) {
+            reject(error);
+        }
+    });
+}
+exports.ordersHistory = function(userId, criteria) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const pool = await new mssql.ConnectionPool(config.development.mssql_config).connect();
+            const request = await new mssql.Request(pool);
+
+            request.input('UserID', mssql.Int, userId);
+            if (criteria) {
+                request.input('Criteria', mssql.NChar, criteria);
+            }
+            const result = await request.execute('B2BX_OrdersHistory');
+            resolve(result);
+        }
+        catch(error) {
+            console.log(error);
             reject(error);
         }
     });

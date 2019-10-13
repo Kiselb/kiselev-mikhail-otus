@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { IOrderInfo } from '../../store/state';
+import { OrdersHistoryCommunicationService } from '../../services/orders-history.communication.service';
 
 @Component({
   selector: 'app-orders-history',
@@ -9,151 +11,59 @@ import { FormControl } from '@angular/forms';
 export class OrdersHistoryComponent implements OnInit {
 
   historyMode: number = 0; // View history mode: 0 - All (limited by 1 year), 1 - Search result by text, 2 - Search result by number (part of order number)
-  searchPattern: string = "";
+  criteria: string = "";
 
-  taxonomy: {}
+  historyData: any[];
+  taxonomy: any[];
 
-  mockData = [
-    {
-      orderId: 713123456,
-      created: "01-01-2019",
-      user: "Ivanov I.I.",
-      sumValue: "1'000 000.00",
-      sumCurrency: "RUB",
-      refNo: "12345-00",
-      comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-      taxonomy: {
-        week: "1", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
-        year: "2019"
-      },
-    },
-    {
-      orderId: 713123457,
-      created: "01-01-2019",
-      user: "Ivanov I.I.",
-      sumValue: "1'000 000.00",
-      sumCurrency: "RUB",
-      refNo: "12345-00",
-      comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-      taxonomy: {
-        week: "1", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
-        year: "2019"
-      },
-    },
-    {
-      orderId: 713123458,
-      created: "01-01-2019",
-      user: "Ivanov I.I.",
-      sumValue: "1'000 000.00",
-      sumCurrency: "RUB",
-      refNo: "12345-00",
-      comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-      taxonomy: {
-        week: "1", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
-        year: "2019"
-      },
-    },
-    {
-      orderId: 713123459,
-      created: "01-01-2019",
-      user: "Ivanov I.I.",
-      sumValue: "1'000 000.00",
-      sumCurrency: "RUB",
-      refNo: "12345-00",
-      comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-      taxonomy: {
-        week: "1", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
-        year: "2019"
-      },
-    },
-    {
-      orderId: 713123456,
-      created: "01-01-2019",
-      user: "Ivanov I.I.",
-      sumValue: "1'000 000.00",
-      sumCurrency: "RUB",
-      refNo: "12345-00",
-      comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-      taxonomy: {
-        week: "1", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
-        year: "2019"
-      },
-    },
-    {
-      orderId: 713123457,
-      created: "01-08-2019",
-      user: "Ivanov I.I.",
-      sumValue: "1'000 000.00",
-      sumCurrency: "RUB",
-      refNo: "12345-00",
-      comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-      taxonomy: {
-        week: "2", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
-        year: "2019"
-      },
-    },
-    {
-      orderId: 713123458,
-      created: "01-08-2019",
-      user: "Ivanov I.I.",
-      sumValue: "1'000 000.00",
-      sumCurrency: "RUB",
-      refNo: "12345-00",
-      comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-      taxonomy: {
-        week: "2", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
-        year: "2019"
-      },
-    },
-    {
-      orderId: 713123456,
-      created: "01-08-2019",
-      user: "Ivanov I.I.",
-      sumValue: "1'000 000.00",
-      sumCurrency: "RUB",
-      refNo: "12345-00",
-      comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-      taxonomy: {
-        week: "2", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
-        year: "2019"
-      },
-    },
-  ];
+  // Data Example
+  //
+  // {
+  //   orderId: 713123456,
+  //   created: "01-08-2019",
+  //   user: "Ivanov I.I.",
+  //   sumValue: "1'000 000.00",
+  //   sumCurrency: "RUB",
+  //   refNo: "12345-00",
+  //   comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+  //   week: "2", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
+  //   year: "2019"
+  // },
 
   ctrlSearch = new FormControl('');
   ctrlSeparateMode = new FormControl('');
   
-  constructor() { }
+  constructor(private ordersHistoryCommunicationService: OrdersHistoryCommunicationService) { }
 
-  buildTaxonomy(data: any[]): any[] {
+  buildTaxonomy(data: any[]): any[] { //IOrderInfo[]
     return ((data.reduce((accumulator, value) => {
-      const index = accumulator.findIndex((element) => element.year === value.taxonomy.year);
+      const index = accumulator.findIndex((element) => element.TaxonomyYear === value.TaxonomyYear);
       if (index < 0) {
-        accumulator.push({ year: value.taxonomy.year, weeks: []});
+        accumulator.push({ TaxonomyYear: value.TaxonomyYear, TaxonomyWeek: []});
       } else {
-        if (accumulator[index].weeks.indexOf(value.taxonomy.week) < 0) {
-          accumulator[index].weeks.push(value.taxonomy.week);
+        if (accumulator[index].TaxonomyWeek.indexOf(value.TaxonomyWeek) < 0) {
+          accumulator[index].TaxonomyWeek.push(value.TaxonomyWeek);
         }
       }
       return accumulator;
     }, [])).map((element) => {
-      element.weeks.sort((element1, element2) => {
+      element.TaxonomyWeek.sort((element1, element2) => {
         if (element1 < element2) return 1;
         if (element1 > element2) return -1;
         return 0;
       });
       return element;
     })).sort((element1, element2) => {
-      if (element1.year < element2.year) return 1;
-      if (element1.year > element2.year) return -1;
+      if (element1.TaxonomyYear < element2.TaxonomyYear) return 1;
+      if (element1.TaxonomyYear > element2.TaxonomyYear) return -1;
       return 0;
     });  
   }
 
   getWeekYearOrders(year, week) {
-    return (this.mockData.filter((element) => element.taxonomy.year === year && element.taxonomy.week === week)).sort((element1, element2) => {
-      if (element1.orderId < element2.orderId) return 1;
-      if (element1.orderId > element2.orderId) return -1;
+    return (this.historyData.filter((element) => element.TaxonomyYear === year && element.TaxonomyWeek === week)).sort((element1, element2) => {
+      if (element1.OrderID < element2.OrderID) return 1;
+      if (element1.OrderID > element2.OrderID) return -1;
       return 0;
     });
   }
@@ -170,11 +80,13 @@ export class OrdersHistoryComponent implements OnInit {
     }
     return [];
   }
-  viewAllOrders() {}
+  viewAllOrders() {
+    this.ordersHistoryCommunicationService.request(this.criteria);
+  }
 
   ngOnInit() {
-    this.taxonomy = this.buildTaxonomy(this.mockData);
-    console.log(this.taxonomy);
+    this.ordersHistoryCommunicationService.historyResponse.subscribe(data => { console.log(data); this.historyData = data; this.taxonomy = this.buildTaxonomy(data); 
+    console.log(this.taxonomy); })
   }
 
 }

@@ -7,6 +7,9 @@
         <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-ok" *ngIf="!file.ErrorStatus">&#10004;</p>
         <p class="file-load-status__ico file-load-status__ico-place file-load-status__ico-active file-load-status__ico-failed" *ngIf="file.ErrorStatus">&#9888;</p>
         <p class="file-load-status__file-path file-load-status__file-path-place file-load-status__file-path-active">{{file.FileName}}</p>
+        <p class="file-load-status__attr file-load-status__attr-place">{{file.CreateDate | date:"dd-MMM-yy HH:mm"}}</p>
+        <p class="file-load-status__attr file-load-status__attr-place">{{file.UserName}}</p>
+        <p class="file-load-status__attr file-load-status__attr-place">{{file.FileSheetsInfo}}</p>
     </div>
 </div>
 <div class="errors-report">
