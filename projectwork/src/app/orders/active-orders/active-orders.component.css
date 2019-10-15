@@ -23,6 +23,7 @@
     font-size: 2em; /*24px; context 12px*/
     color: #000;
     cursor: pointer;
+    text-decoration: none;
 }
 .command-place {
     display: inline-block;

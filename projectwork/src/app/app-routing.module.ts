@@ -10,7 +10,7 @@ import { CreateOrderComponent } from './orders/create-order/create-order.compone
 import { ActiveOrdersComponent } from './orders/active-orders/active-orders.component';
 import { OrdersHistoryComponent } from './orders/orders-history/orders-history.component';
 import { ImportOrderComponent } from './orders/import-order/import-order.component';
-
+import { EditOrderComponent } from './orders/edit-order/edit-order.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -22,6 +22,7 @@ const routes: Routes = [
   {path: 'active', component: ActiveOrdersComponent},
   {path: 'history', component: OrdersHistoryComponent},
   {path: 'import', component: ImportOrderComponent},
+  {path: 'EditOrder', component: EditOrderComponent}
 ];
 
 @NgModule({

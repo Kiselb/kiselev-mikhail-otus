@@ -1,6 +1,6 @@
 <div class="command-panel">
     <a class="command command-place">Главная</a>
-    <a class="command command-place" (click)="openOrder()">Редактировать</a>
+    <a [routerLink]="['/EditOrder']" class="command command-place">Редактировать</a>
     <a class="command command-place">О заказе</a>
 </div>
 <div class="orders-list">
@@ -11,7 +11,7 @@
         <span class="orders-list__order-attr orders-list__order-attr-place">{{order.UserName}}</span>
         <span class="orders-list__order-attr orders-list__order-attr-place">{{order.CustomerRefNo}}</span>
         <span class="orders-list__order-attr orders-list__order-attr-place">{{order.CustomerComments}}</span>
-</div>
+    </div>
 </div>
 <div class="orders__options">
     <label class="orders__options-open-mode orders__options-open-mode-place checkbox-custom__container">

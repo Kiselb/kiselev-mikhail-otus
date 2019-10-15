@@ -2,6 +2,81 @@
     <a class="command command-place">Главная</a>
     <a class="command command-place">Активные</a>
     <a class="command command-place">Блокировать</a>
-    <a class="command command-place">Добавить</a>
+    <a class="command command-place" (click)="toogleAddNewDialog()">Добавить</a>
     <a class="command command-place">Загрузить из файла</a>
+</div>
+<span class="order__number">Заказ {{(getCurrentOrderId$ | async) | orderNumber}}</span>
+<div class="order__header">
+    <span class="order-attr">Блокирован. Заявка на отгрузку 01.01.2019 Самовывоз. Принят в обработку отделом логистики</span>
+    <span class="order-attr">Санкт-Петербург Большой Сампсониевский пр., д.1 корпус 1 Литера А</span>
+    <input class="order-attr__input order-attr__input-refno" placeholder="Ваш исх. номер" [value]="getCurrentOrderRefNo$ | async">
+    <input class="order-attr__input order-attr__input-comments" placeholder="Ваш комментарий" [value]="getCurrentOrderComments$ | async">
+</div>
+<div class="order__details">
+    <div class="order__details__header">
+        <span class="order__details__row-attr order__details__row-attr-place attr-action attr-header">...</span>
+        <span class="order__details__row-attr order__details__row-attr-place attr-source attr-header">...</span>
+        <span class="order__details__row-attr order__details__row-attr-place attr-quantity attr-header">Кол</span>
+        <span class="order__details__row-attr order__details__row-attr-place attr-price attr-header">Цена</span>
+        <span class="order__details__row-attr order__details__row-attr-place attr-weight attr-header">W,kg</span>
+        <span class="order__details__row-attr order__details__row-attr-place attr-volume attr-header">V,m<span style="vertical-align: super; font-size: 0.75em;">3</span></span>
+        <span class="order__details__row-attr order__details__row-attr-place attr-article attr-header">Артикул</span>
+        <span class="order__details__row-attr order__details__row-attr-place attr-name attr-header attr-header-name">Наименование</span>
+    </div>
+    <div class="order__details__rows">
+        <!--<div class="orders-list__order" *ngFor="let order of (ordersActiveCommunicationService.ordersResponse | async)" (click)="setCurrentOrderId(order.OrderID)" [attr.orderId]="order.OrderID" [ngClass]="{'orders-list__order-current': order.OrderID == (getCurrentOrderId$ | async)}">-->
+        <div class="order__details__rows-row">
+            <span class="order__details__row-attr order__details__row-attr-place attr-action">1</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-source">2</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-quantity">9'999</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-price">9'999'999.00</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-weight">9'999.9</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-volume">99.99</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-article">KMC-PROG-IC302-GAPREMIUM-UPGRADE</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-name">Upgrade набора программ Garphic Art Premium Edition для IC-302</span>
+        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <!--</div>-->
+        <div class="order__details__rows-row">
+            <span class="order__details__row-attr order__details__row-attr-place attr-action">1</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-source">2</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-quantity">9'999</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-price">9'999'999.00</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-weight">9'999.9</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-volume">99.99</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-article">KMC-PROG-IC302-GAPREMIUM-UPGRADE</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-name">Upgrade набора программ Garphic Art Premium Edition для IC-302</span>
+        </div>
+        <div class="order__details__rows-row">
+            <span class="order__details__row-attr order__details__row-attr-place attr-action">1</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-source">2</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-quantity">9'999</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-price">9'999'999.00</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-weight">9'999.9</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-volume">99.99</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-article">KMC-PROG-IC302-GAPREMIUM-UPGRADE</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-name">Upgrade набора программ Garphic Art Premium Edition для IC-302</span>
+        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <!--</div>-->
+        <div class="order__details__rows-row">
+            <span class="order__details__row-attr order__details__row-attr-place attr-action">1</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-source">2</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-quantity">9'999</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-price">9'999'999.00</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-weight">9'999.9</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-volume">99.99</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-article">KMC-PROG-IC302-GAPREMIUM-UPGRADE</span>
+            <span class="order__details__row-attr order__details__row-attr-place attr-name">Upgrade набора программ Garphic Art Premium Edition для IC-302</span>
+        </div>
+    </div>
+    <div class="order__details__footer">
+        <span class="order__details__row-attr order__details__row-attr-place attr-action attr-footer">1</span>
+    </div>
+</div>
+<div class="order__options">
+    <label class="order__options-deleted-mode orders__options-deleted-mode-place checkbox-custom__container">
+        <input type="checkbox" class="checkbox-custom__input" [formControl]="ctrlDeletedMode">
+        <span class="checkbox-custom__checkmark"></span>
+        Отображать удалённые строки
+    </label>
+</div>
+<div class="dialog-add" [ngClass]="{'dialog-add-active': dialogAddNewActive}">
+
 </div>

@@ -16,6 +16,14 @@ export const currentOrderId = createSelector(
     selectCurrency,
     (state: ICurrency) => state.order.id
 );
+export const currentOrderRefNo = createSelector(
+    selectCurrency,
+    (state: ICurrency) => state.order.refNo
+);
+export const currentOrderComments = createSelector(
+    selectCurrency,
+    (state: ICurrency) => state.order.comments
+);
 export const currentOrderFiles = createSelector(
     selectCurrency,
     (state: ICurrency) => state.order.files

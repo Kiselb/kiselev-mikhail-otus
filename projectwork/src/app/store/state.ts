@@ -41,6 +41,8 @@ export interface IOrderFile {
 }
 export interface IOrder {
     id: number;
+    refNo: string;
+    comments: string;
     files: IOrderFile[];
     error: boolean;
     details: any[];
@@ -86,6 +88,8 @@ export const currencyInitialState: ICurrency = {
     },
     order: {
         id: 0,
+        refNo: "",
+        comments: "",
         files: [],
         error: false,
         details: []
