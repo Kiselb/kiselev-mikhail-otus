@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpErrorResponse, HttpEventType, HttpHeaders, HttpResponse } from  '@angular/common/http';
+import { HttpClient } from  '@angular/common/http';
 import { Observable } from 'rxjs';
 
 const SERVER_URL: string = "http://localhost:3000";

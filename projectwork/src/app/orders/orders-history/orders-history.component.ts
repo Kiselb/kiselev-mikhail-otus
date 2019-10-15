@@ -19,15 +19,15 @@ export class OrdersHistoryComponent implements OnInit {
   // Data Example
   //
   // {
-  //   orderId: 713123456,
-  //   created: "01-08-2019",
-  //   user: "Ivanov I.I.",
-  //   sumValue: "1'000 000.00",
-  //   sumCurrency: "RUB",
-  //   refNo: "12345-00",
-  //   comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-  //   week: "2", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
-  //   year: "2019"
+  //   OrderID: 713123456,
+  //   CreateDate: "01-08-2019",
+  //   UserName: "Ivanov I.I.",
+  //   SumValue: "1'000 000.00",
+  //   SumCurrency: "RUB",
+  //   CustomerRefNo: "12345-00",
+  //   CustomerComments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+  //   TaxonomyWeek: "2", // Важно! Таксономию можно вычислить по [created], но номер недели определяется бизнес-правилами на стороне backend
+  //   TaxonomyYear: "2019"
   // },
 
   ctrlSearch = new FormControl('');
@@ -72,21 +72,28 @@ export class OrdersHistoryComponent implements OnInit {
     let pattern: string = this.ctrlSearch.value;
     pattern = pattern.trim();
     if (pattern.length > 0) {
-      if (!/\D/.test(pattern)) { // Select orders for which the number is accordance to the pattern
-
-      } else { // Select orders for which pattern is matched for any text order attributes, include articles text attributes
-
-      }
+      // ToDo
+      // if (!/\D/.test(pattern)) { // Select orders for which the number is accordance to the pattern
+      //
+      // } else { // Select orders for which pattern is matched for any text order attributes, include articles text attributes
+      //
+      // }
+      this.criteria = pattern;
+      this.ordersHistoryCommunicationService.request(this.criteria);
     }
     return [];
   }
   viewAllOrders() {
+    this.criteria = "";
+    this.ctrlSearch.setValue("");
     this.ordersHistoryCommunicationService.request(this.criteria);
   }
 
   ngOnInit() {
-    this.ordersHistoryCommunicationService.historyResponse.subscribe(data => { console.log(data); this.historyData = data; this.taxonomy = this.buildTaxonomy(data); 
-    console.log(this.taxonomy); })
+    this.ordersHistoryCommunicationService.historyResponse.subscribe(data => {
+      this.historyData = data;
+      this.taxonomy = this.buildTaxonomy(data); 
+    });
+    this.ordersHistoryCommunicationService.request(this.criteria);
   }
-
 }

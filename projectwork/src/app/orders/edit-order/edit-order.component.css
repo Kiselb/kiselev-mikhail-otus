@@ -1,0 +1,30 @@
+:host {
+    grid-area: content;
+    display: grid;
+    grid-template-areas: 
+        "commands"
+        "orders"
+        "options";
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+    grid-gap: 0px;
+    height: 100%;
+    font-size: 12px; /* Context */
+}
+.command-panel {
+    grid-area: commands;
+    justify-self: start;
+    align-self: start;
+    padding-top: 4vh;
+    padding-left: 4vw;
+    padding-bottom: 4vh;
+}
+.command {
+    font-size: 2em; /*24px; context 12px*/
+    color: #000;
+    cursor: pointer;
+}
+.command-place {
+    display: inline-block;
+    padding-right: 4vw;
+}

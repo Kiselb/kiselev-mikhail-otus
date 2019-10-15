@@ -13,6 +13,7 @@ export enum actionTypes {
     atUpdateOrderFilesList = '[Order Files] List Update',
     atUpdateOrderFilesListSuccess = '[Order Files] List Update Success',
 
+    atSetCurrentOrderId = '[Order] Current Set',
     atUpdateOrderHeader = '[Order] Header Update',
     atUpdateOrderHeaderSuccess = '[Order] Header Update Success',
     atBlockOrder = '[Order] Block',
@@ -39,6 +40,7 @@ export const uploadFileResume = createAction(actionTypes.atUploadFileResume);
 export const updateOrderFilesList = createAction(actionTypes.atUpdateOrderFilesList, props<{orderId: number}>());
 export const updateOrderFilesListSuccess = createAction(actionTypes.atUpdateOrderFilesListSuccess, props<{data: IOrderFile[]}>());
 
+export const setCurrentOrderId = createAction(actionTypes.atSetCurrentOrderId, props<{orderId: number}>())
 export const updateOrderHeader = createAction(actionTypes.atUpdateOrderHeader, props<{orderId: number, refNo: string, comments: string}>());
 export const updateOrderHeaderSuccess = createAction(actionTypes.atUpdateOrderHeader, props<{orderId: number, refNo: string, comments: string}>());
 export const blockOrder = createAction(actionTypes.atBlockOrder);

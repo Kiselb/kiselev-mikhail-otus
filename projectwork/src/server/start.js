@@ -11,6 +11,13 @@ const port = 3000; //80
 app.use(express.static(path.join(__dirname + '/b2bx')))
 app.use(fileUpload());
 
+app.get('/orders/active/:userId', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+    store.ordersActive(req.params.userId)
+    .then(result => { res.status(200).send(`${JSON.stringify(result.recordset)}`);})
+    .catch(error => { res.status(500).send(`{"error": ${error}}`); });
+});
 app.get('/orders/history/:userId', function(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');

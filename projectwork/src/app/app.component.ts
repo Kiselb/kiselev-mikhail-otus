@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { OrdersHistoryService } from './orders/orders-history/orders-history.service'
+import { OrdersHistoryService } from './orders/orders-history/orders-history.service';
+import { OrdersActiveService } from './orders/active-orders/orders-active.service';
 import { OrdersHistoryCommunicationService } from './services/orders-history.communication.service';
+import { OrdersActiveCommunicationService } from './services/orders-active.communication.service';
 import { Observable, from, pipe } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { IAppState } from './store/state';
@@ -17,13 +19,16 @@ export class AppComponent implements OnInit {
   title = 'projectwork';
 
   private currentUserId$: Observable<number> = this.appStore.pipe(select(currentUserId));
-  private historyData$: Observable<any>;
+  private historyOrdersData$: Observable<any>;
+  private activeOrdersData$: Observable<any>;
   private criteria: string;
 
   constructor(
     private appStore: Store<IAppState>,
     private ordersHistoryService: OrdersHistoryService,
-    private ordersHistoryCommunicationService: OrdersHistoryCommunicationService) {
+    private ordersActiveService: OrdersActiveService,
+    private ordersHistoryCommunicationService: OrdersHistoryCommunicationService,
+    private ordersActiveCommunicationService: OrdersActiveCommunicationService) {
 
   }
 
@@ -32,9 +37,16 @@ export class AppComponent implements OnInit {
       this.criteria = criteria;
       this.currentUserId$.subscribe(
         userId => {
-          this.historyData$ = this.ordersHistoryService.get(userId, this.criteria);
-          this.historyData$.subscribe(response => this.ordersHistoryCommunicationService.response(response.body));
+          this.historyOrdersData$ = this.ordersHistoryService.get(userId, this.criteria);
+          this.historyOrdersData$.subscribe(response => this.ordersHistoryCommunicationService.response(response.body));
         });
-    })
+    });
+    this.ordersActiveCommunicationService.ordersRequest.subscribe(() => {
+      this.currentUserId$.subscribe(
+        userId => {
+          this.activeOrdersData$ = this.ordersActiveService.get(userId);
+          this.activeOrdersData$.subscribe(response => this.ordersActiveCommunicationService.response(response.body));
+        });
+    });
   }
 }

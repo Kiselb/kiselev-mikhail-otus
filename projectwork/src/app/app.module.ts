@@ -22,6 +22,7 @@ import { appReducers } from './store/reducers';
 import { UploadOrderFileEffects } from './store/effects/upload-order-file.effects';
 import { GetOrderFilesEffects } from './store/effects/get-order-files.effects';
 import { OrdersHistoryCommunicationService } from './services/orders-history.communication.service';
+import { OrderNumberPipe } from './pipes/order-number.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { OrdersHistoryCommunicationService } from './services/orders-history.com
     ActiveOrdersComponent,
     EditOrderComponent,
     PlaceOrderComponent,
-    ImportOrderComponent
+    ImportOrderComponent,
+    OrderNumberPipe
   ],
   imports: [
     BrowserModule,

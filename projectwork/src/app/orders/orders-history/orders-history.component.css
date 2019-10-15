@@ -17,6 +17,7 @@
 }
 .orders-history__commands {
     grid-area: commands;
+    margin-bottom: 2vh;
 }
 .orders-history__input {
     width: 25em;
@@ -86,6 +87,13 @@
 .orders-history__list-order-header {
     display: inline-block;
     cursor: pointer;
+}
+.orders-history__list-order-attr {
+    font-size: 0.85em;
+    padding-left: 1vw;
+}
+.orders-history__list-order-attr-place {
+    display: inline-block;
 }
 .orders-history__list-order:nth-child(odd) {
     background-color:#F2F2F2;

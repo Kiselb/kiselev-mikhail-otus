@@ -47,7 +47,21 @@ exports.ordersHistory = function(userId, criteria) {
             resolve(result);
         }
         catch(error) {
-            console.log(error);
+            reject(error);
+        }
+    });
+}
+exports.ordersActive = function(userId) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const pool = await new mssql.ConnectionPool(config.development.mssql_config).connect();
+            const request = await new mssql.Request(pool);
+
+            request.input('UserID', mssql.Int, userId);
+            const result = await request.execute('B2BX_OrdersActive');
+            resolve(result);
+        }
+        catch(error) {
             reject(error);
         }
     });

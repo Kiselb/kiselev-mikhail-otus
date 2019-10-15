@@ -1,4 +1,5 @@
 :host {
+    grid-area: content;
     display: grid;
     grid-template-areas: 
         "commands"
@@ -8,6 +9,7 @@
     grid-template-columns: 1fr;
     grid-gap: 0px;
     height: 100%;
+    font-size: 12px; /* Context */
 }
 .command-panel {
     grid-area: commands;
@@ -33,8 +35,9 @@
     white-space: nowrap;
 }
 .orders-list__order {
-    margin: 0 4vw 0 3vw;
+    margin: 0 2vw 0 3vw;
     padding: 1vh 0 1vh 1vw;
+    overflow: hidden;
 }
 .orders-list__order:nth-child(odd) {
     background-color:#ECECEC;
@@ -56,13 +59,12 @@
     color: black;
 }
 .orders-list__order-attr {
-    font-size: 1.5em;
+    font-size: 1.25em;
 }
 .orders-list__order-attr-place {
     display: inline-block;
     margin-left: 1vw;
 }
-
 .orders__options {
     grid-area: options;
     padding: 4vh 0 4vh 4vw;

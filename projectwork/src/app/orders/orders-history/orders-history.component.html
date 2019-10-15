@@ -10,7 +10,13 @@
         <div *ngFor="let week of element.TaxonomyWeek" class="orders-history__list-week">
             <span class="orders-history__list-week-header">{{week}}-я неделя</span>
             <div *ngFor="let order of getWeekYearOrders(element.TaxonomyYear, week)" class="orders-history__list-order">
-                <span class="orders-history__list-order-header">{{order.OrderID}}</span>
+                <span class="orders-history__list-order-header">{{order.OrderID | orderNumber}}</span>
+                <span class="orders-history__list-order-attr orders-history__list-order-attr-place">{{order.CreateDate | date:"dd-MMM-yy HH:mm"}}</span>
+                <span class="orders-history__list-order-attr orders-history__list-order-attr-place">{{order.SumValue | number: "1.2-2"}}</span>
+                <span class="orders-history__list-order-attr orders-history__list-order-attr-place">{{order.SumCurrency}}</span>
+                <span class="orders-history__list-order-attr orders-history__list-order-attr-place">{{order.UserName}}</span>
+                <span class="orders-history__list-order-attr orders-history__list-order-attr-place">{{order.CustomerRefNo}}</span>
+                <span class="orders-history__list-order-attr orders-history__list-order-attr-place">{{order.CustomerComments}}</span>
             </div>
         </div>
     </div>
