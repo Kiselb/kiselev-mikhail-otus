@@ -1,6 +1,6 @@
 <div class="command-panel">
     <a [routerLink]="['/import']" class="command command-place">Загрузить из файла</a>
-    <a class="command command-place">Редактировать</a>
+    <a [routerLink]="['/EditOrder']" class="command command-place">Редактировать</a>
 </div>
 <div class="order-files">
     <div class="file-load-status" *ngFor="let file of orderFiles$ | async; let key = index" (click)="setCurrentFile(key)" [attr.key]="key" [ngClass]="{'file-load-status-current': key == getCurrentFile()}">

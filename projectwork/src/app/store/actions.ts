@@ -1,8 +1,6 @@
 import { createAction, props } from '@ngrx/store'; // npm install @ngrx/store --save
 import { IOrderFile } from './state'
 
-import { from } from 'rxjs';
-
 export enum actionTypes {
     atUploadFile = '[File] Upload',
     atUploadFileInProgress = '[File] Upload InProgess',
@@ -12,6 +10,8 @@ export enum actionTypes {
 
     atUpdateOrderFilesList = '[Order Files] List Update',
     atUpdateOrderFilesListSuccess = '[Order Files] List Update Success',
+    atUpdateOrderDetails = '[Order Details] Update',
+    atUpdateOrderDetailsSuccess = '[Order Details] Update Success',
 
     atSetCurrentOrderId = '[Order] Current Set',
     atUpdateOrderHeader = '[Order] Header Update',
@@ -39,6 +39,8 @@ export const uploadFileResume = createAction(actionTypes.atUploadFileResume);
 
 export const updateOrderFilesList = createAction(actionTypes.atUpdateOrderFilesList, props<{orderId: number}>());
 export const updateOrderFilesListSuccess = createAction(actionTypes.atUpdateOrderFilesListSuccess, props<{data: IOrderFile[]}>());
+export const updateOrderDetails = createAction(actionTypes.atUpdateOrderDetails, props<{orderId: number}>());
+export const updateOrderDetailsSuccess = createAction(actionTypes.atUpdateOrderDetailsSuccess, props<{data: any}>());
 
 export const setCurrentOrderId = createAction(actionTypes.atSetCurrentOrderId, props<{orderId: number}>())
 export const updateOrderHeader = createAction(actionTypes.atUpdateOrderHeader, props<{orderId: number, refNo: string, comments: string}>());

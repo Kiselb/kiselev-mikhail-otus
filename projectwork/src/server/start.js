@@ -5,8 +5,8 @@ const store = require('./store.mssql');
 const xlsx = require('./import.xlsx');
 const config = require('./config.json');
 
-const app = express()
-const port = 3000; //80
+const app = express();
+const port = 3000; //80; //
 
 app.use(express.static(path.join(__dirname + '/b2bx')))
 app.use(fileUpload());
@@ -25,10 +25,24 @@ app.get('/orders/history/:userId', function(req, res) {
     .then(result => { res.status(200).send(`${JSON.stringify(result.recordset)}`);})
     .catch(error => { res.status(500).send(`{"error": ${error}}`); });
 });
+app.get('/orders/:orderId/details', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+    store.orderDetails(req.params.orderId)
+    .then(result => { res.status(200).send(`${JSON.stringify(result.recordset)}`);})
+    .catch(error => { res.status(500).send(`{"error": ${error}}`); });
+});
 app.get('/orders/:orderId/files', function(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
     store.orderFiles(req.params.orderid)
+    .then(result => { res.status(200).send(`${JSON.stringify(result.recordset)}`);})
+    .catch(error => { res.status(500).send(`{"error": ${error}}`); });
+});
+app.get('/articles/search/', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+    store.articlesSearch(req.query.userid, req.query.criteria)
     .then(result => { res.status(200).send(`${JSON.stringify(result.recordset)}`);})
     .catch(error => { res.status(500).send(`{"error": ${error}}`); });
 });

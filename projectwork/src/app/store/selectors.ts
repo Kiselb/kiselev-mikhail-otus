@@ -28,6 +28,10 @@ export const currentOrderFiles = createSelector(
     selectCurrency,
     (state: ICurrency) => state.order.files
 );
+export const currentOrderDetails = createSelector(
+    selectCurrency,
+    (state: ICurrency) => state.order.details
+);
 export const currentUserId = createSelector(
     selectCurrency,
     (state: ICurrency) => state.user

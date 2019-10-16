@@ -27,6 +27,12 @@
     cursor: pointer;
     text-decoration: none;
 }
+.command:hover {
+    color: #FCAC45;
+}
+.command:hover:active {
+    color: #000;
+}
 .command-place {
     display: inline-block;
     padding-right: 4vw;
@@ -125,24 +131,48 @@
     margin-left: 1em;
 }
 .attr-action {
-    width: 2em;
+    width: 1.25em;
+    color: #BCBCBC;
+    font-size: 1.25em;
+    text-align: center;
+    cursor: pointer;
+}
+.attr-action:hover {
+    color: #FCAC45;
+}
+.attr-action:hover:active {
+    color: #000;
 }
 .attr-source {
-    width: 2em;
+    width: 1.25em;
+    color: #BCBCBC;
+    font-size: 1.25em;
+    text-align: center;
+    cursor: pointer;
+}
+.attr-source:hover {
+    color: #FCAC45;
+}
+.attr-source:hover:active {
+    color: #000;
 }
 .attr-quantity {
     width: 2em;
+    text-align: center;
 }
 .attr-price {
     width: 5.25em;
+    text-align: center;
 }
 .attr-weight {
     width: 2.75em;
     color: #888;
+    text-align: center;
 }
 .attr-volume {
     width: 2.5em;
     color: #888;
+    text-align: center;
 }
 .attr-article {
     width: 20em;
@@ -165,7 +195,15 @@
     background-color: #BCBCBC;
 }
 .dialog-add {
-    display: none;
+    visibility: hidden;
+    display: grid;
+    grid-template-areas: 
+        "search"
+        "results"
+        "options";
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+    grid-gap: 0px;
     position: absolute;
     top: 10vh;
     bottom: 10vh;
@@ -174,9 +212,58 @@
     background-color: #FEFEFE;
     border: 1px solid #BCBCBC;
     border-radius: 2px;
+    padding: 2vh 2vw 1vh 2vw;
 }
 .dialog-add-active {
-    display: block;
+    visibility: visible;
+}
+.dialog-add__search {
+    grid-area: search;
+}
+.dialog-add__results {
+    grid-area: results;
+}
+.dialog-add__options {
+    grid-area: options;
+}
+.dialog-add__search__input {
+    font: inherit;
+    font-size: 1.25em;
+    color: #000;
+    padding: 0.25em;
+    border: 1px solid #DFDFDF;
+}
+.dialog-add__search__button {
+    display: inline-block;
+    font-size: 1.25em;
+    padding: 0.25em;
+    width: 5.75em;
+    margin-left: 1vw;
+    background-color: #EAEAEA;
+    color: #888;
+    border: 1px solid #DFDFDF;
+}
+.dialog-add__search__button:hover {
+    color: #000 !important;
+}
+.dialog-add__search__button:active:hover {
+    color: #FFF !important;
+    background-color:#000 !important;
+}
+.dialog-block {
+    display: grid;
+    visibility: hidden;
+    position: absolute;
+    top: 20vh;
+    bottom: 20vh;
+    left: 20vw;
+    right: 20vw;
+    background-color: #FEFEFE;
+    border: 1px solid #BCBCBC;
+    border-radius: 2px;
+}
+.dialog-block-active {
+    visibility: visible;
 }
 .order__options {
     grid-area: options;

@@ -1,7 +1,6 @@
 import { ActionReducerMap, ActionReducer, MetaReducer, createReducer, on } from '@ngrx/store';
-import { uploadFile, actionTypes } from './actions';
+import { actionTypes } from './actions';
 import { LOADING_FILE_STATE, IAppState, ICurrency, currencyInitialState, settingsInitialState, ISettings} from './state'
-import { OrdersHistoryComponent } from '../orders/orders-history/orders-history.component';
 
 export const currencyReducer = (state = currencyInitialState, action): ICurrency => {
     switch(action.type) {
@@ -37,6 +36,11 @@ export const currencyReducer = (state = currencyInitialState, action): ICurrency
             return {
                 ...state,
                 order: { ...state.order, files: action.data.filter(() => true)}
+            };
+        case actionTypes.atUpdateOrderDetailsSuccess:
+            return {
+                ...state,
+                order: { ...state.order, details: action.data.filter(() => true)}
             };
         case actionTypes.atOrdersHistorySuccess:
             return {

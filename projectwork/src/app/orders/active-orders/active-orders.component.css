@@ -25,6 +25,12 @@
     cursor: pointer;
     text-decoration: none;
 }
+.command:hover {
+    color: #FCAC45;
+}
+.command:hover:active {
+    color: #000;
+}
 .command-place {
     display: inline-block;
     padding-right: 4vw;

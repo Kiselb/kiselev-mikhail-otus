@@ -33,6 +33,22 @@ exports.orderFiles = function(orderId) {
         }
     });
 }
+exports.orderDetails = function(orderId) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const pool = await new mssql.ConnectionPool(config.development.mssql_config).connect();
+            const request = await new mssql.Request(pool);
+
+            request.input('UserID', mssql.Int, 1);
+            request.input('OrderID', mssql.Int, orderId);
+            const result = await request.execute('B2BX_OrderDetails');
+            resolve(result);
+        }
+        catch(error) {
+            reject(error);
+        }
+    });
+}
 exports.ordersHistory = function(userId, criteria) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -59,6 +75,22 @@ exports.ordersActive = function(userId) {
 
             request.input('UserID', mssql.Int, userId);
             const result = await request.execute('B2BX_OrdersActive');
+            resolve(result);
+        }
+        catch(error) {
+            reject(error);
+        }
+    });
+}
+exports.articlesSearch = function(userId, criteria) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const pool = await new mssql.ConnectionPool(config.development.mssql_config).connect();
+            const request = await new mssql.Request(pool);
+
+            request.input('UserID', mssql.Int, userId);
+            request.input('Criteria', mssql.NChar, criteria);
+            const result = await request.execute('B2BX_ArticlesSearch');
             resolve(result);
         }
         catch(error) {

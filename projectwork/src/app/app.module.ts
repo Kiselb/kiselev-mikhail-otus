@@ -21,6 +21,7 @@ import { ImportOrderComponent } from './orders/import-order/import-order.compone
 import { appReducers } from './store/reducers';
 import { UploadOrderFileEffects } from './store/effects/upload-order-file.effects';
 import { GetOrderFilesEffects } from './store/effects/get-order-files.effects';
+import { GetOrderDetailsEffects } from './store/effects/get-order-details.effects';
 import { OrdersHistoryCommunicationService } from './services/orders-history.communication.service';
 import { OrderNumberPipe } from './pipes/order-number.pipe';
 
@@ -47,7 +48,7 @@ import { OrderNumberPipe } from './pipes/order-number.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([UploadOrderFileEffects, GetOrderFilesEffects]),
+    EffectsModule.forRoot([UploadOrderFileEffects, GetOrderFilesEffects, GetOrderDetailsEffects]),
   ],
   providers: [HttpClientModule, HttpClient],
   bootstrap: [AppComponent]
