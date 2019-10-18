@@ -15,6 +15,8 @@ export enum actionTypes {
 
     atSetCurrentOrderDetailsId = '[Order Details] Set Current',
     atAddNewOrderDetails = '[Order Details] AddNew',
+    atSetDeletedOrderDetails = '[Order Details] Set Deleted',
+    atRestoreOrderDetails = '[Order Details] Restore',
 
     atSetCurrentOrderId = '[Order] Current Set',
     atUpdateOrderHeader = '[Order] Header Update',
@@ -45,12 +47,14 @@ export const uploadFileResume = createAction(actionTypes.atUploadFileResume);
 
 export const updateOrderFilesList = createAction(actionTypes.atUpdateOrderFilesList, props<{orderId: number}>());
 export const updateOrderFilesListSuccess = createAction(actionTypes.atUpdateOrderFilesListSuccess, props<{data: IOrderFile[]}>());
-export const updateOrderDetails = createAction(actionTypes.atUpdateOrderDetails, props<{orderId: number}>());
+export const updateOrderDetails = createAction(actionTypes.atUpdateOrderDetails, props<{orderId: number, mode: number}>());
 export const updateOrderDetailsSuccess = createAction(actionTypes.atUpdateOrderDetailsSuccess, props<{data: any}>());
 export const setCurrentOrderDetailsId = createAction(actionTypes.atSetCurrentOrderDetailsId, props<{orderDetailsId: number}>());
-export const addNewOrderDetails = createAction(actionTypes.atAddNewOrderDetails, props<{orderId: number, materialId: number, quantity: number}>())
+export const addNewOrderDetails = createAction(actionTypes.atAddNewOrderDetails, props<{orderId: number, materialId: number, quantity: number}>());
+export const setDeletedOrderDetails = createAction(actionTypes.atSetDeletedOrderDetails, props<{detailsId: number}>());
+export const restoreOrderDetails = createAction(actionTypes.atRestoreOrderDetails, props<{detailsId: number}>());
 
-export const setCurrentOrderId = createAction(actionTypes.atSetCurrentOrderId, props<{orderId: number}>())
+export const setCurrentOrderId = createAction(actionTypes.atSetCurrentOrderId, props<{orderId: number}>());
 export const updateOrderHeader = createAction(actionTypes.atUpdateOrderHeader, props<{orderId: number, refNo: string, comments: string}>());
 export const updateOrderHeaderSuccess = createAction(actionTypes.atUpdateOrderHeader, props<{orderId: number, refNo: string, comments: string}>());
 export const blockOrder = createAction(actionTypes.atBlockOrder);

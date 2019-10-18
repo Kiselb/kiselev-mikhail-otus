@@ -1,7 +1,7 @@
 <div class="cards">
     <div class="card card-place">
         <a [routerLink]="['/create']"><span class="card-icon card-icon-place"></span></a>
-        <a [routerLink]="['/create']" class="card-item card-item-place">Создать&nbsp;заказ</a>
+        <a [routerLink]="['/create']" class="card-item card-item-place" (click)="resetState()">Создать&nbsp;заказ</a>
         <p class="card-text card-text-place">
             Создание заказа. Загрузка из файлов Microsoft&copy;&nbsp;Excel&trade;. Формирование
             заказов в ручном режиме. Блокирование заказов

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, range, from } from 'rxjs';
 import { map } from 'rxjs/operators'
@@ -67,11 +67,16 @@ export class EditOrderComponent implements OnInit {
       });
     }  
   }
+  viewDeletedDetails(event) {
+    const mode = (event.target.checked)?(0):(1);
+    this.getCurrentOrderId$.subscribe(orderId => {this.appStore.dispatch(updateOrderDetails({orderId: orderId, mode: mode}))});
+  }
 
   constructor(private appStore: Store<IAppState>) { }
 
   ngOnInit() {
-    this.getCurrentOrderId$.subscribe(orderId => {this.appStore.dispatch(updateOrderDetails({orderId: orderId}))});
+    const mode: number = 1;
+    this.getCurrentOrderId$.subscribe(orderId => {this.appStore.dispatch(updateOrderDetails({orderId: orderId, mode: mode}))});
   }
 
 }

@@ -24,7 +24,8 @@ import { GetOrderFilesEffects } from './store/effects/get-order-files.effects';
 import { GetOrderDetailsEffects } from './store/effects/get-order-details.effects';
 import { SearchArticlesEffects } from './store/effects/search-articles.effects';
 import { OrderDetailsAddNewEffects } from './store/effects/order-details-add-new.effects';
-import { OrdersHistoryCommunicationService } from './services/orders-history.communication.service';
+import { OrderDetailsSetDeletedEffects } from './store/effects/order-details-set-deleted.effects';
+import { OrderDetailsRestoreEffects } from './store/effects/order-details-restore.effects';
 import { OrderNumberPipe } from './pipes/order-number.pipe';
 
 @NgModule({
@@ -50,7 +51,15 @@ import { OrderNumberPipe } from './pipes/order-number.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([UploadOrderFileEffects, GetOrderFilesEffects, GetOrderDetailsEffects, SearchArticlesEffects, OrderDetailsAddNewEffects]),
+    EffectsModule.forRoot([
+      UploadOrderFileEffects,
+      GetOrderFilesEffects,
+      GetOrderDetailsEffects,
+      SearchArticlesEffects,
+      OrderDetailsAddNewEffects,
+      OrderDetailsSetDeletedEffects,
+      OrderDetailsRestoreEffects
+    ]),
   ],
   providers: [HttpClientModule, HttpClient],
   bootstrap: [AppComponent]

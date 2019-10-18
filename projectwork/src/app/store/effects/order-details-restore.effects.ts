@@ -6,31 +6,31 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 
 import { IAppState } from '../../store/state';
 import { actionTypes, updateOrderDetails, applicationError } from '../actions';
-import { OrderDetailsAddNewService } from '../../orders/edit-order/order-details-add-new.service';
 import { currentOrderId } from '../selectors'
+import { OrderDetailsRestoreService } from '../../orders/edit-order/order-details-restore.service';
 
 @Injectable()
-export class OrderDetailsAddNewEffects {
+export class OrderDetailsRestoreEffects {
   @Effect()
   getOrderDetails$ = this.actions$.pipe(
-    ofType(actionTypes.atAddNewOrderDetails))
+    ofType(actionTypes.atRestoreOrderDetails))
     .pipe(
       switchMap((action) => {
-        console.log("Order Details AddNew Effect");
-        return this.orderDetailsAddNewService.post(action["orderId"], action["materialId"], action["quantity"]);
+        console.log("Order Details Set Deleted Effect");
+        return this.orderDetailsRestoreService.post(action["detailsId"]);
       }),
-      //catchError(error => of(applicationError({error: error}))),
+      catchError(error => of(applicationError({error: error}))),
       switchMap(response => {
         console.log("Response");
         console.dir(response);
         if (response.status === 200) {
-          return this.appStore.pipe(select(currentOrderId)).pipe(map(orderId => updateOrderDetails({orderId: orderId, mode: 1})));
+          return this.appStore.pipe(select(currentOrderId)).pipe(map(orderId => updateOrderDetails({orderId: orderId, mode: 0})));
         } else {
           return of(applicationError({error: response.error}));
         }
       })
     );
 
-  constructor(private actions$: Actions, private appStore: Store<IAppState>, private orderDetailsAddNewService: OrderDetailsAddNewService) {}
+  constructor(private actions$: Actions, private appStore: Store<IAppState>, private orderDetailsRestoreService: OrderDetailsRestoreService) {}
 
 }

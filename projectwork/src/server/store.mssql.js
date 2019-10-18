@@ -37,7 +37,7 @@ exports.orderFiles = function(orderId) {
         }
     });
 }
-exports.orderDetails = function(orderId) {
+exports.orderDetails = function(orderId, mode) {
     return new Promise(async (resolve, reject) => {
         try {
             const pool = await new mssql.ConnectionPool(config.development.mssql_config).connect();
@@ -45,6 +45,7 @@ exports.orderDetails = function(orderId) {
 
             request.input('UserID', mssql.Int, 1);
             request.input('OrderID', mssql.Int, orderId);
+            request.input('Mode', mssql.Int, mode);
             const result = await request.execute('B2BX_OrderDetails');
             resolve(result);
         }

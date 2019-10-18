@@ -12,7 +12,8 @@ export class GetOrderDetailsEffects {
     ofType(actionTypes.atUpdateOrderDetails))
     .pipe(
       switchMap((action) => {
-        return this.orderDetailsService.get(action["orderId"]);
+        console.log(`Effect Details ${action["orderId"]} ${action["mode"]}`);
+        return this.orderDetailsService.get(action["orderId"], action["mode"]);
       }),
       catchError(error => of(applicationError({error: error}))),
       switchMap(response => {

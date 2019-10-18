@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { IAppState } from '../store/state';
+import { setCurrentOrderId, updateOrderFilesList } from '../store/actions';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  resetState() {
+    this.appStore.dispatch(setCurrentOrderId({orderId: 0}));
+  }
+  constructor(private appStore: Store<IAppState>) { }
 
   ngOnInit() {
   }

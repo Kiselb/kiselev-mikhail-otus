@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { IAppState } from '../../store/state';
 import { currentOrderId, currentOrderFiles } from '../../store/selectors';
-import { updateOrderFilesList } from '../../store/actions';
+import { setCurrentOrderId, updateOrderFilesList } from '../../store/actions';
 
 @Component({
   selector: 'app-create-order',
@@ -30,10 +30,12 @@ export class CreateOrderComponent implements OnInit {
   constructor(private appStore: Store<IAppState>) { }
 
   ngOnInit() {
+    console.dir(this.appStore);
     this.getCurrentOrderId$.subscribe(orderId => {
       this.appStore.dispatch(updateOrderFilesList({orderId: orderId}));
       this.orderFilesTest$.subscribe(
         (result) => {
+          console.log(`Current Order ID: ${orderId}`)
           console.log("files list changed");
           console.dir(result);
       });

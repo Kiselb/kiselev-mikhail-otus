@@ -125,6 +125,9 @@
 .order__details__rows-row-current {
     background-color: cornsilk !important;
 }
+.order__details__rows-row-deleted {
+    background-color: rgb(244, 221, 255) !important;
+}
 .order__details__row-attr {
     font-size: 1em;
     line-height: normal;
