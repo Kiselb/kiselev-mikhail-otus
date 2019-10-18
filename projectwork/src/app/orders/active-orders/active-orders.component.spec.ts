@@ -1,4 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Store, select } from '@ngrx/store';
+import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
+import { IAppState } from '../../store/state';
+import { appReducers } from '../../store/reducers';
+import { OrderNumberPipe } from '../../pipes/order-number.pipe';
 
 import { ActiveOrdersComponent } from './active-orders.component';
 
@@ -8,7 +16,17 @@ describe('ActiveOrdersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActiveOrdersComponent ]
+      declarations: [
+        ActiveOrdersComponent,
+        OrderNumberPipe
+      ],
+      imports: [
+        RouterModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        StoreModule.forRoot(appReducers)
+      ]
     })
     .compileComponents();
   }));

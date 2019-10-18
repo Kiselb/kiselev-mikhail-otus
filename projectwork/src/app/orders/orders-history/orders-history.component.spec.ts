@@ -1,4 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrderNumberPipe } from '../../pipes/order-number.pipe';
 
 import { OrdersHistoryComponent } from './orders-history.component';
 
@@ -8,7 +12,16 @@ describe('OrdersHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrdersHistoryComponent ]
+      declarations: [
+        OrdersHistoryComponent,
+        OrderNumberPipe
+      ],
+      imports: [
+        RouterModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule
+      ]
     })
     .compileComponents();
   }));

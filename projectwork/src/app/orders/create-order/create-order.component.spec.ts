@@ -1,4 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Store, select } from '@ngrx/store';
+import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
+import { IAppState } from '../../store/state';
+import { appReducers } from '../../store/reducers'
 
 import { CreateOrderComponent } from './create-order.component';
 
@@ -8,7 +15,14 @@ describe('CreateOrderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateOrderComponent ]
+      declarations: [ CreateOrderComponent ],
+      imports: [
+        RouterModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        StoreModule.forRoot(appReducers)
+      ]
     })
     .compileComponents();
   }));

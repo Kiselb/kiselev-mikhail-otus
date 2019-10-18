@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { SearchArticlesEffects } from './search-articles.effects';
 
@@ -12,7 +13,12 @@ describe('SearchArticlesEffects', () => {
     TestBed.configureTestingModule({
       providers: [
         SearchArticlesEffects,
-        provideMockActions(() => actions$)
+        provideMockActions(() => actions$),
+        HttpClientModule,
+        HttpClient
+      ],
+      imports: [
+        HttpClientModule
       ]
     });
 
