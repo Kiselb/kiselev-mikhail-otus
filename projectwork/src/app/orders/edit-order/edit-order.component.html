@@ -25,7 +25,7 @@
     </div>
     <div class="order__details__rows">
         <!--<div class="orders-list__order" *ngFor="let order of (ordersActiveCommunicationService.ordersResponse | async)" (click)="setCurrentOrderId(order.OrderID)" [attr.orderId]="order.OrderID" [ngClass]="{'orders-list__order-current': order.OrderID == (getCurrentOrderId$ | async)}">-->
-        <div class="order__details__rows-row" *ngFor="let item of getCurrentOrderDetails$ | async">
+        <div class="order__details__rows-row" *ngFor="let item of getCurrentOrderDetails$ | async" (click)="setCurrentOrderDetailsId(item.DetailsID)" [attr.orderDetailsId]="item.DetailsID" [ngClass]="{'order__details__rows-row-current': item.DetailsID == (getCurrentOrderDetailsId$ | async)}">
             <span class="order__details__row-attr order__details__row-attr-place attr-action">&#9741;</span>
             <span class="order__details__row-attr order__details__row-attr-place attr-source">&#9986;</span>
             <span class="order__details__row-attr order__details__row-attr-place attr-quantity">{{item.Quantity | number: "1.0-0"}}</span>
@@ -49,15 +49,20 @@
 </div>
 <div class="dialog-add" [ngClass]="{'dialog-add-active': typeDialogActive === 1}">
     <div class="dialog-add__search">
-        <input type="text" class="dialog-add__search__input" placeholder="Ведите строку поиска">
-        <button class="dialog-add__search__button">Найти</button>
-        <button class="dialog-add__search__button">Сбросить</button>
+        <input type="text" class="dialog-add__input" placeholder="Ведите строку поиска" [formControl]="ctrlSearchPattern">
+        <button class="dialog-add__button" (click)="searchArticles()">Найти</button>
+        <button class="dialog-add__button" (click)="resetPattern()">Сбросить</button>
     </div>
     <div class="dialog-add__results">
-
+        <div class="dialog-add__results__row" *ngFor="let item of getArticlesSearchResults$ | async" [attr.materialId]="item.MaterialID" (click)="setCurrentSearchMaterialId(item.MaterialID)" [ngClass]="{'dialog-add__results__row-current': item.MaterialID === (getCurrentSearchMaterialId())}">
+            <span class="dialog-add__results__row-attr dialog-add__results__row-attr-place dialog-add__results__row-attr-manufpartid">{{item.ManufactPartID}}</span>
+            <span class="dialog-add__results__row-attr dialog-add__results__row-attr-place dialog-add__results__row-attr-partid">{{item.PartID}}</span>
+            <span class="dialog-add__results__row-attr dialog-add__results__row-attr-place dialog-add__results__row-attr-partname">{{item.PartName}}</span>
+        </div>                                                                                                                                                                                                                                                                                                                                                                            
     </div>
-    <div class="dialog-add__options">
-
+    <div class="dialog-add__commands">
+        <input type="number" class="dialog-add__input" placeholder="Ведите количество" [formControl]="ctrlArticleQuantity">
+        <button class="dialog-add__button" (click)="addArticleToOrder()">Добавить</button>
     </div>
 </div>
 <div class="dialog-block" [ngClass]="{'dialog-block-active': typeDialogActive === 2}">

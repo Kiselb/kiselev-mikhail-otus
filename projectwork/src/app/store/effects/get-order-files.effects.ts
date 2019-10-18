@@ -12,11 +12,14 @@ export class GetOrderFilesEffects {
     ofType(actionTypes.atUpdateOrderFilesList))
     .pipe(
       switchMap((action) => {
+        //console.log("GetOrderFilesEffects OrderID: " + action["orderId"]);
         return this.updateOrderFilesListService.get(action["orderId"])
       }),
       catchError(error => of(applicationError({error: error}))),
       switchMap(response => {
         if (response.status === 200) {
+          //console.log("GetOrderFilesEffects: updateOrderFilesListSuccess");
+          //console.dir(response.body);
           return of(updateOrderFilesListSuccess({data: response.body}));
         } else {
           return of(applicationError({error: response.error}));

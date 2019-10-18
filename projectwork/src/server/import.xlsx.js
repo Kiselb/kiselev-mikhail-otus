@@ -38,14 +38,16 @@ exports.registerFileEx = function(fileName, orderId, sheetName, firstRow, lastRo
         workbook.xlsx.readFile(config.development.dstpath + fileName) //'I:\\USR\\MDB\\Misc\\TEST\\' + fileName)
         .then(workbook => new Promise((resolve, reject) => {
             const worksheet = workbook.getWorksheet(sheetName);
+            console.log(`Sheet params:${fileName}, ${orderId}, ${worksheet}, ${sheetName}, ${firstRow}, ${lastRow}, ${columnArticle}, ${columnQuantity}`);
             if (worksheet) {
                 resolve(xls2xml(fileName, orderId, worksheet, sheetName, firstRow, lastRow, columnArticle, columnQuantity));
             } else {
+                console.log(`Лист '${sheetName}' в файле '${fileName}' не найден`);
                 reject(`Лист '${sheetName}' в файле '${fileName}' не найден`);
             }
         }))
         .then(xml => storeMSSQL.registerFile(xml, orderId))
         .then(result => resolve({value: result.value}))
-        .catch(error => reject(error));
+        .catch(error => { console.log(`XLSX Error: ${error}`); return reject(error);});
     });
 }

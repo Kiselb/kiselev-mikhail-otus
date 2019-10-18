@@ -36,3 +36,15 @@ export const currentUserId = createSelector(
     selectCurrency,
     (state: ICurrency) => state.user
 );
+export const articlesSearchCriteria = createSelector(
+    selectCurrency,
+    (state: ICurrency) => state.articlesSearch.criteria 
+);
+export const articlesSearchResults = createSelector(
+    selectCurrency,
+    (state: ICurrency) => state.articlesSearch.results
+);
+export const currentOrderDetailsId = createSelector(
+    selectCurrency,
+    (state: ICurrency) => state.orderDetails
+);

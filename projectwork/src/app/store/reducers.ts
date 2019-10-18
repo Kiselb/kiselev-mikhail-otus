@@ -42,6 +42,11 @@ export const currencyReducer = (state = currencyInitialState, action): ICurrency
                 ...state,
                 order: { ...state.order, details: action.data.filter(() => true)}
             };
+        case actionTypes.atArticlesSearchSuccess:
+            return {
+                ...state,
+                articlesSearch: { ...state.articlesSearch, results: action.data.filter(() => true)}
+            }
         case actionTypes.atOrdersHistorySuccess:
             return {
                 ...state,
@@ -51,6 +56,11 @@ export const currencyReducer = (state = currencyInitialState, action): ICurrency
             return {
                 ...state,
                 order: { ...state.order, id: action.orderId, files: [], error: false, details: []}
+            };
+        case actionTypes.atSetCurrentOrderDetailsId:
+            return {
+                ...state,
+                orderDetails: action.orderDetailsId
             };
         default:
             return state;

@@ -12,14 +12,11 @@ export class GetOrderDetailsEffects {
     ofType(actionTypes.atUpdateOrderDetails))
     .pipe(
       switchMap((action) => {
-        console.log("Effect");
         return this.orderDetailsService.get(action["orderId"]);
       }),
       catchError(error => of(applicationError({error: error}))),
       switchMap(response => {
         if (response.status === 200) {
-          console.log("Response:");
-          console.dir(response.body);
           return of(updateOrderDetailsSuccess({data: response.body}));
         } else {
           return of(applicationError({error: response.error}));

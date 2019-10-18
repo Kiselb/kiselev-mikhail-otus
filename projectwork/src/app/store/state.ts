@@ -61,11 +61,17 @@ export interface IOrderInfo {
     sumValue: number;
     sumCurrency: string;
 }
+export interface IArtclesSearch {
+    criteria: string;
+    results: any[];
+}
 export interface ICurrency {
     user: number;
     file: IFile;
     order: IOrder;
     history: IOrderInfo[];
+    articlesSearch: IArtclesSearch;
+    orderDetails: number;
 
 }
 export interface IAppState {
@@ -94,5 +100,10 @@ export const currencyInitialState: ICurrency = {
         error: false,
         details: []
     },
-    history: []
+    history: [],
+    articlesSearch: {
+        criteria: "",
+        results: []
+    },
+    orderDetails: 0
 }

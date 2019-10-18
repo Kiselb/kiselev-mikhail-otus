@@ -15,6 +15,7 @@ exports.registerFile = function(xml, orderId) {
         }
         catch(error) {
             reject(error);
+            console.log(`Error: ${error}`)
         }
     });
 }
@@ -26,6 +27,9 @@ exports.orderFiles = function(orderId) {
 
             request.input('OrderID', mssql.Int, orderId);
             const result = await request.execute('B2BX_OrderFiles');
+
+            //console.log("Order Files: " + orderId);
+            //console.dir(result);
             resolve(result);
         }
         catch(error) {
@@ -42,6 +46,25 @@ exports.orderDetails = function(orderId) {
             request.input('UserID', mssql.Int, 1);
             request.input('OrderID', mssql.Int, orderId);
             const result = await request.execute('B2BX_OrderDetails');
+            resolve(result);
+        }
+        catch(error) {
+            reject(error);
+        }
+    });
+}
+exports.orderDetailsAddNew = function(orderId, articleId, quantity) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const pool = await new mssql.ConnectionPool(config.development.mssql_config).connect();
+            const request = await new mssql.Request(pool);
+
+            request.input('UserID', mssql.Int, 1);
+            request.input('OrderID', mssql.Int, orderId);
+            request.input('ArticleID', mssql.Int, articleId);
+            request.input('Quantity', mssql.Int, quantity);
+            request.output('OrderDetailsID', mssql.Int, 0);
+            const result = await request.execute('B2BX_OrderDetailsAddNew');
             resolve(result);
         }
         catch(error) {

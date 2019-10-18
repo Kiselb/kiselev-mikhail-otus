@@ -13,6 +13,9 @@ export enum actionTypes {
     atUpdateOrderDetails = '[Order Details] Update',
     atUpdateOrderDetailsSuccess = '[Order Details] Update Success',
 
+    atSetCurrentOrderDetailsId = '[Order Details] Set Current',
+    atAddNewOrderDetails = '[Order Details] AddNew',
+
     atSetCurrentOrderId = '[Order] Current Set',
     atUpdateOrderHeader = '[Order] Header Update',
     atUpdateOrderHeaderSuccess = '[Order] Header Update Success',
@@ -28,6 +31,9 @@ export enum actionTypes {
     atOrdersHistory = '[Orders] History',
     atOrdersHistorySuccess = '[Orders] History Success',
 
+    atArticlesSearch = '[Articles] Search',
+    atArticlesSearchSuccess = '[Articles] Search Success',
+
     atApplicationError = '[Application] Error'
 }
 
@@ -41,6 +47,8 @@ export const updateOrderFilesList = createAction(actionTypes.atUpdateOrderFilesL
 export const updateOrderFilesListSuccess = createAction(actionTypes.atUpdateOrderFilesListSuccess, props<{data: IOrderFile[]}>());
 export const updateOrderDetails = createAction(actionTypes.atUpdateOrderDetails, props<{orderId: number}>());
 export const updateOrderDetailsSuccess = createAction(actionTypes.atUpdateOrderDetailsSuccess, props<{data: any}>());
+export const setCurrentOrderDetailsId = createAction(actionTypes.atSetCurrentOrderDetailsId, props<{orderDetailsId: number}>());
+export const addNewOrderDetails = createAction(actionTypes.atAddNewOrderDetails, props<{orderId: number, materialId: number, quantity: number}>())
 
 export const setCurrentOrderId = createAction(actionTypes.atSetCurrentOrderId, props<{orderId: number}>())
 export const updateOrderHeader = createAction(actionTypes.atUpdateOrderHeader, props<{orderId: number, refNo: string, comments: string}>());
@@ -52,4 +60,8 @@ export const placeOrderSuccess = createAction(actionTypes.atPlaceOrderSuccess, p
 
 export const ordersHistory = createAction(actionTypes.atOrdersHistory, props<{userid: number, ctiteria: string}>());
 export const ordersHistorySuccess = createAction(actionTypes.atOrdersHistorySuccess);
+
+export const articlesSearch = createAction(actionTypes.atArticlesSearch, props<{criteria: string}>());
+export const articlesSearchSuccess = createAction(actionTypes.atArticlesSearchSuccess, props<{data: any}>());
+
 export const applicationError = createAction(actionTypes.atApplicationError, props<{error: string}>());

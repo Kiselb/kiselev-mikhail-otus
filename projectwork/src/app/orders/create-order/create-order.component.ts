@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { IAppState } from '../../store/state';
-import { currentOrderFiles } from '../../store/selectors';
+import { currentOrderId, currentOrderFiles } from '../../store/selectors';
 import { updateOrderFilesList } from '../../store/actions';
 
 @Component({
@@ -14,6 +14,7 @@ import { updateOrderFilesList } from '../../store/actions';
 export class CreateOrderComponent implements OnInit {
 
   key: number;
+  getCurrentOrderId$: Observable<number> = this.appStore.pipe(select(currentOrderId));
   orderFiles$: Observable<any> = this.appStore.pipe(select(currentOrderFiles));
   orderFilesTest$: Observable<any> = this.appStore.pipe(select(currentOrderFiles));
   
@@ -29,12 +30,13 @@ export class CreateOrderComponent implements OnInit {
   constructor(private appStore: Store<IAppState>) { }
 
   ngOnInit() {
-    this.appStore.dispatch(updateOrderFilesList({orderId: 0}));
-    this.orderFilesTest$.subscribe(
-      (result) => {
-        console.log("files list changed");
-        console.dir(result);
-     }
-    )
+    this.getCurrentOrderId$.subscribe(orderId => {
+      this.appStore.dispatch(updateOrderFilesList({orderId: orderId}));
+      this.orderFilesTest$.subscribe(
+        (result) => {
+          console.log("files list changed");
+          console.dir(result);
+      });
+    })
   }
 }
